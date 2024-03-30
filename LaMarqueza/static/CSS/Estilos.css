@@ -1,0 +1,605 @@
+@import url('https://fonts.googleapis.com/css2?family=Ink+Free&display=swap');
+/* Este es un comentario en CSS */
+
+.nav-link:hover {
+    color: #6CAE75 !important;
+    /* Cambia el color al pasar el mouse */
+}
+
+.nav-link {
+    color: #417B4E;
+    /* Color del enlace */
+    font-size: 18px;
+    /* Tamaño de la fuente */
+    font-weight: bold;
+    /* Grosor de la fuente */
+}
+
+.nav-link:focus {
+    color: #6CAE75 !important;
+    /* Amarillo */
+}
+
+
+/* Clases para cambiar el color de fondo de "Iniciar sesión" */
+.hover-iniciosesion:hover {
+    background-color: #ffffff !important;
+    /* Blanco al pasar el mouse */
+    transition: color 0.5s ease-in-out !important;
+    /* Transición suave del color */
+}
+
+.hover-iniciosesion {
+    background-color: #008000 !;
+    /* Verde por defecto */
+    transition: color 0.5s ease-in-out;
+    /* Transición suave del color */
+}
+
+
+/* Clases para cambiar el color de "Pedidos" */
+.hover-PedidosSun:hover {
+    color: #008000;
+    /* Verde al pasar el mouse */
+    transition: color 0.5s ease-in-out;
+    /* Transición suave del color */
+}
+
+.hover-PedidosSun {
+    color: #3B7AA4;
+    /* Azul por defecto */
+    font-weight: 700;
+    /* Grosor de la fuente */
+    transition: color 0.5s ease-in-out;
+    /* Transición suave del color */
+}
+
+.hover-PedidosSun:focus {
+    color: #3B7AA4;
+    /* Verde al pasar el mouse */
+}
+
+/* Clases para cambiar el color de "Pedidos" */
+.hover-FincaM:hover {
+    color: #6CAE75;
+    /* Verde al pasar el mouse */
+    transition: color 0.5s ease-in-out;
+    /* Transición suave del color */
+}
+
+.hover-FincaM {
+    color: #417B4E;
+    /* Azul por defecto */
+    font-weight: 700;
+    /* Grosor de la fuente */
+    transition: color 0.5s ease-in-out;
+    /* Transición suave del color */
+}
+
+.hover-FincaM:focus {
+    color: #6CAE75;
+    /* Verde al pasar el mouse */
+}
+
+/* Clases para cambiar botones del carrusel forma y color */
+.carousel .carousel-indicators button {
+    background-color: #f5de0d;
+    /* Color de los botones del carrusel */
+    width: 15px;
+    /* Ancho del botón */
+    height: 15px;
+    /* Alto del botón */
+    border-radius: 100%;
+    /* Borde redondeado para hacer los botones circulares */
+}
+
+/* Clases para cambiar el tamaño de los iconos de control del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 50px;
+    /* Altura del icono */
+    width: 50px;
+    /* Ancho del icono */
+    outline: rgb(190, 22, 22);
+    /* Color del contorno del icono */
+    background-size: 100%, 100%;
+    /* Tamaño de la imagen de fondo del icono */
+    border-radius: 100%;
+    /* Borde redondeado para hacer los iconos circulares */
+    background-image: none !important;
+    /* Elimina la imagen de fondo predeterminada */
+
+}
+
+/* Clase para cambiar el icono de control siguiente del carrusel */
+.carousel-control-next-icon:after {
+    content: '>';
+    /* Carácter que se muestra como icono */
+    font-size: 70px;
+    /* Tamaño del icono */
+    color: rgb(0, 0, 0);
+    /* Color del icono (negro) */
+}
+
+/* Clase para cambiar el icono de control anterior del carrusel */
+.carousel-control-prev-icon:after {
+    content: '<';
+    /* Carácter que se muestra como icono */
+    font-size: 70px;
+    /* Tamaño del icono */
+    color: rgb(0, 0, 0);
+    /* Color del icono (negro) */
+}
+
+.btnInicio {
+    /* Cambia el color de fondo del botón a #613D1F */
+    background-color: #008000 !important;
+    /* Cambia el color del borde del botón a #613D1F */
+    border-color: #008000 !important;
+    border-radius: 0% !important;
+
+}
+
+/* Esta regla se aplica a cualquier elemento con la clase .btn cuando se pasa el mouse sobre él (hover) */
+.btnInicio:hover {
+    /* Cambia el color de fondo del botón a blanco */
+    background-color: white !important;
+    /* Mantiene el color del borde del botón en #613D1F */
+    border-color: #008000 !important;
+    /* Cambia el color del texto del botón a #613D1F */
+    color: #008000 !important;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold !important;
+}
+
+/* Esta regla se aplica a cualquier botón cuando está activo (es decir, cuando se presiona) */
+.btnInicio:active {
+    /* Cambia el color de fondo del botón a café (#613D1F) */
+    background-color: #008000 !important;
+    /* Cambia el color del borde del botón a #e66f0d */
+    border-color: #008000 !important;
+    /* Cambia el color del texto del botón a blanco */
+    color: white !important;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold;
+}
+
+.btnver:active {
+    border: none !important;
+}
+
+#togglePassword {
+    border: none !important;
+    background-color: transparent !important;
+    top: 52% !important;
+    right: 20px !important;
+}
+
+.OlvideMclave {
+    color: #000000 !important;
+    font-weight: bold;
+    font-size: 75%;
+}
+
+.VerClave {
+    width: 25px;
+    height: 25px;
+}
+
+
+
+.btnregistrarme {
+    /* Cambia el color de fondo del botón a #613D1F */
+    background-color: #008000 !important;
+    /* Cambia el color del borde del botón a #613D1F */
+    border-color: #008000 !important;
+    border-radius: 0% !important;
+    padding: 9px;
+
+
+}
+
+
+/* Esta regla se aplica a cualquier elemento con la clase .btn cuando se pasa el mouse sobre él (hover) */
+.btnregistrarme:hover {
+    /* Cambia el color de fondo del botón a blanco */
+    background-color: white !important;
+    /* Mantiene el color del borde del botón en #613D1F */
+    border-color: #008000 !important;
+    /* Cambia el color del texto del botón a #613D1F */
+    color: #008000 !important;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold !important;
+}
+
+/* Esta regla se aplica a cualquier botón cuando está activo (es decir, cuando se presiona) */
+.btnregistrarme:active {
+    /* Cambia el color de fondo del botón a café (#613D1F) */
+    background-color: #008000 !important;
+    /* Cambia el color del borde del botón a #e66f0d */
+    border-color: #008000 !important;
+    /* Cambia el color del texto del botón a blanco */
+    color: white !important;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold;
+}
+
+
+#exampleModalLabel {
+    color: #008000 !important;
+    font-weight: bold;
+    font-size: 75%;
+    margin-left: 35%;
+
+}
+
+.btnregistrarme {
+    font-weight: bold;
+    font-size: 75%;
+    margin-left: 35%;
+
+}
+
+.productos {
+    padding-top: 20px;
+    /*Agrega a productos un espaciado superior*/
+}
+
+.ColorA {
+    text-decoration: none !important;
+}
+
+.titulos {
+    text-decoration: underline;
+    /* Agrega un subrayado a los títulos */
+    font-size: 40px;
+}
+
+/* Esta regla se aplica a cualquier elemento con la clase .btn-ver-mas */
+.btn-ver-mas {
+    /* Aumenta el margen superior del botón */
+    margin-top: 50px !important;
+    /* Cambia el tipo de visualización del elemento a bloque. Los elementos de bloque ocupan todo el ancho disponible y siempre comienzan en una nueva línea en el documento. */
+    display: block;
+    /* Establece los márgenes del elemento. El valor 0 se aplica a los márgenes superior e inferior del elemento, y auto se aplica a los márgenes izquierdo y derecho. Cuando los márgenes izquierdo y derecho se establecen en auto, el navegador automáticamente calcula y asigna un margen igual a ambos lados, centrando así el elemento horizontalmente en su contenedor. */
+    margin: 0 auto;
+}
+
+
+/* Esta regla se aplica a cualquier elemento con la clase .card */
+.Mproducto {
+    /* La propiedad transition se utiliza para cambiar las propiedades de un elemento de manera suave durante un período de tiempo especificado. En este caso, se aplica a la propiedad transform y dura 0.5 segundos. */
+    transition: transform.5s;
+}
+
+.Mproducto:hover {
+    /* La propiedad transform se utiliza para aplicar transformaciones 2D o 3D a un elemento. En este caso, se utiliza la función scale para aumentar el tamaño del elemento a 1.1 veces su tamaño original. */
+    transform: scale(1.1);
+}
+
+/* Estilo para pantallas con un ancho máximo de 600px (típicamente móviles) */
+@media screen and (max-width: 600px) {
+    .img-huevos {
+        width: 70% !important;
+        /* Ajusta este valor según tus necesidades */
+        height: auto !important;
+        /* Ajusta este valor según tus necesidades */
+        margin-left: 10%;
+        margin-bottom: 5%;
+    }
+}
+
+
+.card-title {
+    font-size: 20px;
+    /* Tamaño de la fuente */
+}
+
+/* Esta regla se aplica a cualquier elemento con la clase .card cuando se pasa el mouse sobre él (hover) */
+
+
+.col a {
+    text-decoration: none !important;
+}
+
+/* Esta regla se aplica a cualquier elemento con la clase .btn */
+.btnProductos {
+    /* Cambia el color de fondo del botón a #613D1F */
+    background-color: #613D1F;
+    /* Cambia el color del borde del botón a #613D1F */
+    border-color: #613D1F;
+
+}
+
+/* Esta regla se aplica a cualquier elemento con la clase .btn cuando se pasa el mouse sobre él (hover) */
+.btnProductos:hover {
+    /* Cambia el color de fondo del botón a blanco */
+    background-color: white;
+    /* Mantiene el color del borde del botón en #613D1F */
+    border-color: #613D1F;
+    /* Cambia el color del texto del botón a #613D1F */
+    color: #613D1F;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold;
+}
+
+/* Esta regla se aplica a cualquier botón cuando está activo (es decir, cuando se presiona) */
+.btnProductos:active {
+    /* Cambia el color de fondo del botón a café (#613D1F) */
+    background-color: #613D1F !important;
+    /* Cambia el color del borde del botón a #e66f0d */
+    border-color: #613D1F !important;
+    /* Cambia el color del texto del botón a blanco */
+    color: white !important;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold;
+}
+
+.Nosotros {
+    text-align: center;
+    /*Se centra el texto*/
+    padding-top: 60px;
+    /*Agrega a productos un espaciado superior*/
+
+}
+
+.NosotrosText {
+    padding-top: 20px;
+    /*Agrega a productos un espaciado superior*/
+
+    text-align: center;
+    /*Se centra el texto*/
+
+}
+
+.btnnosotros {
+    /* Cambia el color de fondo del botón a #613D1F */
+    background-color: #0eb33f;
+    /* Cambia el color del borde del botón a #613D1F */
+    border-color: #0eb33f;
+
+}
+
+/* Esta regla se aplica a cualquier elemento con la clase .btn cuando se pasa el mouse sobre él (hover) */
+.btnnosotros:hover {
+    /* Cambia el color de fondo del botón a blanco */
+    background-color: white;
+    /* Mantiene el color del borde del botón en #613D1F */
+    border-color: #0eb33f;
+    /* Cambia el color del texto del botón a #613D1F */
+    color: #0eb33f;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold;
+}
+
+/* Esta regla se aplica a cualquier botón cuando está activo (es decir, cuando se presiona) */
+.btnnosotros:active {
+    /* Cambia el color de fondo del botón a café (#613D1F) */
+    background-color: #0eb33f !important;
+    /* Cambia el color del borde del botón a #e66f0d */
+    border-color: #0eb33f !important;
+    /* Cambia el color del texto del botón a blanco */
+    color: white !important;
+    /* Hace que el texto del botón sea negrita */
+    font-weight: bold;
+}
+
+.timg {
+    height: 374px;
+    border-radius: 0% !important;
+}
+
+.Nosotros .card {
+    border: none;
+    border-radius: 0% !important;
+}
+
+.PiePagFinca {
+    font-size: 190%;
+    padding: 10%;
+    text-align: center;
+    font-family: 'Ink Free', cursive;
+    text-align: start;
+
+}
+
+@media screen and (max-width: 935px) {
+    .PiePagFinca {
+        font-size: 170%;
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .PiePagFinca {
+        font-size: 150%;
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+
+    }
+
+    .info {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 0% !important;
+        /* Mueve el enlace un poco a la derecha */
+
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .PiePagFinca {
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+        font-size: 120%;
+
+    }
+
+    .info {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 0% !important;
+        /* Mueve el enlace un poco a la derecha */
+
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .PiePagFinca {
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+        font-size: 100%;
+
+    }
+
+    .info {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 0% !important;
+        /* Mueve el enlace un poco a la derecha */
+
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .PiePagFinca {
+        font-size: 110%;
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+
+    }
+}
+
+
+
+@media screen and (max-width: 575px) {
+    .PiePagFinca {
+        font-size: 220%;
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+
+    }
+
+    .Fcafe2 {
+        background-color: #613D1F;
+        color: #ffffff;
+        border: none;
+        padding-bottom: 0% !important;
+
+    }
+
+    .info {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 20% !important;
+        /* Mueve el enlace un poco a la derecha */
+
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .PiePagFinca {
+        font-size: 170%;
+        padding: 8%;
+        text-align: center;
+        font-family: 'Ink Free', cursive;
+        text-align: start;
+
+    }
+}
+
+.Fcafe {
+    background-color: #613D1F;
+    color: #ffffff;
+    border: none;
+    border-radius: 0% !important;
+}
+
+
+.info {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 100%;
+
+
+}
+
+.iconoInfo {
+    width: 20px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.card-container {
+    background-color: #613D1F;
+    /* Este es un color café común */
+}
+
+.textNosotros {
+    padding-top: 10%;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20%;
+    padding-bottom: 5%;
+}
+
+.NosotrosPag{
+    font-size: 260%;
+    margin-top: 5%;
+
+}
+
+.cardNosostros {
+    margin-top: 15%;
+}
+
+.EspacioCardNosotros{
+    margin-top: 6%;
+    
+}
+
+.EspacioCardNosotros2{
+    margin-bottom: 4%;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.productoscol{
+    margin-bottom: 10%;
+}
+
+.modal-image {
+    max-width: 300px;
+    height: auto;
+}
+#Agregar{
+    background-color: #008000 !important;
+    border-color: #008000 !important;
+    margin-bottom: 3%;
+    font-weight: bold;
+    font-size: 75%;
+}
+
+#Agregar:hover{
+    background-color: #ffffff !important;
+    border-color: #008000 !important;
+    color: #008000;
+    margin-bottom: 3%;
+    font-weight: bold;
+    font-size: 75%;
+}

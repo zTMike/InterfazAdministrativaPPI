@@ -1,0 +1,127 @@
+{% extends "Principal.html" %}
+{% load static %}
+{% block Titulo %}Nosotros{% endblock Titulo %}
+
+{% block Boddy %}
+<!-- Seccion Quienes Somos -->
+<a href="{% url 'nosotros' %}">
+    <h5 class="card-title titulos verde-principal text-center NosotrosPag azul-oscuro">
+        Quienes Somos</h5>
+</a>
+<div class="d-flex justify-content-center Nosotros">
+    <div class="mb-3" style="max-width: 90%">
+        <div class="row">
+            <!-- Seccion Quienes Somos 1-->
+            <div class="col col-lg-6">
+                <img src='{% static "IMG/Finca.jpg" %}' class="img-fluid rounded-circle w-100" alt="..." />
+            </div>
+            <div class="col-md-5">
+                <div class="card-body">
+
+
+                    <p class="card-text NosotrosText cardNosostros">
+                        En Finca La Marquesa, nos enorgullecemos de ser una finca agrícola dedicada a la producción de
+                        alimentos frescos y de alta calidad en el municipio de Santo Domingo, Antioquia.
+                        Fundada hace más de tres generaciones, nuestra finca es reconocida por su compromiso con la
+                        excelencia en la agricultura y el respeto por la naturaleza.
+                        Desde nuestros humildes comienzos como una pequeña granja familiar, hemos crecido hasta
+                        convertirnos en un referente en la región, ofreciendo una amplia variedad de productos agrícolas
+                        que incluyen huevos, frutas y verduras frescas, así como semillas y fertilizantes de la más alta
+                        calidad.
+
+
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Seccion Quienes Somos 2-->
+<div class="d-flex justify-content-center Nosotros">
+    <div class="mb-3" style="max-width: 90% ">
+        <div class="row">
+
+            <div class="col-md-5">
+                <div class="card-body">
+                    <a href="{% url 'nosotros' %}">
+                        <h5 class="card-title titulos marron-oscuro EspacioCardNosotros">Compromisos</h5>
+                    </a>
+
+                    <p class="card-text NosotrosText">
+                        Estamos comprometidos con la transparencia y la honestidad en todo lo que hacemos, desde el
+                        cultivo hasta la entrega de nuestros productos a nuestros clientes.
+                        En Finca La Marquesa, no solo nos dedicamos a la agricultura, sino que también nos esforzamos
+                        por construir una comunidad fuerte y próspera en torno a nuestra finca.
+                        Valoramos las relaciones cercanas con nuestros clientes y nos enorgullece ser parte de la vida
+                        diaria de las personas que disfrutan de nuestros productos en sus hogares y negocios.
+
+
+
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="col col-lg-6">
+                <img src='{% static "IMG/Campesino.jpg" %}' class="img-fluid rounded-circle w-100" alt="..." />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seccion Mision y vision-->
+<div class="d-flex justify-content-center Nosotros EspacioCardNosotros" style="margin-left: 5%;">
+    <div class="mb-3" style="max-width: 90%">
+        <div class="row">
+
+            <div class="col-md-5">
+                <div class="card-body">
+                    <a href="{% url 'nosotros' %}">
+                        <h5 class="card-title titulos azul-oscuro">Mision</h5>
+                    </a>
+
+                    <p class="card-text NosotrosText">
+                        En Finca La Marquesa, nuestra misión es cultivar y ofrecer productos agrícolas frescos y de alta
+                        calidad, cultivados de manera sostenible y respetuosa con el medio ambiente.
+                        Nos esforzamos por satisfacer las necesidades de nuestros clientes proporcionando alimentos
+                        saludables y nutritivos, mientras apoyamos a la comunidad local y promovemos la conservación de
+                        la tierra y los recursos naturales.
+
+
+
+
+                    </p>
+
+                </div>
+
+            </div>
+            <!-- Seccion Vision-->
+            <div class="col-md-5">
+                <div class="card-body">
+                    <a href="{% url 'nosotros' %}">
+                        <h5 class="card-title titulos naranja">Vision</h5>
+                    </a>
+
+                    <p class="card-text NosotrosText">
+                        Nuestra visión en Finca La Marquesa es ser reconocidos como líderes en la producción agrícola
+                        sostenible y de calidad en la región.
+                        Nos esforzamos por seguir innovando y mejorando nuestras prácticas agrícolas para garantizar la
+                        excelencia en cada paso del proceso de producción.
+                        Buscamos ser una fuente confiable de alimentos frescos y saludables para nuestros clientes,
+                        contribuyendo al bienestar de las personas y del planeta.
+
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<p class="card-text NosotrosText EspacioCardNosotros2 text-center">
+    ¡Gracias por visitar Finca La Marquesa <br> y ser parte de nuestra historia!
+</p>
+{% endblock Boddy %}

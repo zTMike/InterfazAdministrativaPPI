@@ -1,0 +1,72 @@
+{% extends "Principal.html" %}
+{% load static %}
+{% block Titulo %}Productos{% endblock Titulo %}
+
+{% block Boddy %}
+<div>
+    <div class="container productos">
+        <!-- Productos -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-6 productos">
+            {% for a in productosquerry %}
+            {% if a.estado %}
+
+
+
+            <div class="col ">
+                <!-- Agrega el id del producto al data-bs-target -->
+                <a data-bs-toggle="modal" data-bs-target="#ModalProductos{{ a.id_producto_pro  }}">
+                    <div class="card shadow-sm Mproducto img-huevos productoscol">
+                        <img src='{{a.foto.url}}' />
+                        <div class="card-body">
+                            <h5 class="card-title">{{a.nombre_pro}}</h5>
+                            <p>${{a.precio_pro}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+
+
+
+
+            <!-- Seccion InfoProductos -->
+            <div class="modal fade" id="ModalProductos{{ a.id_producto_pro  }}" tabindex="-1"
+                aria-labelledby="ModalProductosLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h5 class="modal-title w-100" id="ModalProductosLabel">{{ a.nombre_pro }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src='{{a.foto.url}}' class='modal-image img-fluid' />
+                                <p>${{a.precio_pro}}</p>
+                            </div>
+                            <form class="text-center">
+                                <div class="mb-3 w-50 mx-auto">
+                                    <label class="form-label">Ingrese La Cantidad</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                </div>
+                                <div class=" justify-content-center">
+                                    <button type="button" id="Agregar" class="btn btn-secondary">Agregar al
+                                        carrito</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock Boddy %}
