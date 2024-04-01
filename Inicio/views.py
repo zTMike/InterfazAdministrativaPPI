@@ -12,3 +12,11 @@ def contactenos(request):
 def nosotros(request):
     return render(request, 'Nosotros.html')
 
+def iniciarsesion(request):
+    return render(request, 'registration/login.html')
+
+def registrarse(request):
+    return render(request, 'registration/register.html')
+
+
+

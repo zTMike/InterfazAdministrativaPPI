@@ -1,0 +1,37 @@
+{% extends "Principal.html" %}
+{% load static %}
+{% block Titulo %}Login{% endblock Titulo %}
+
+
+{% block Boddy %}
+
+<div class="container d-flex justify-content-center align-items-center loginbot">
+
+    <div class="d-flex">
+        
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            
+            
+    
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password">
+                <a href="" class="OlvideMclave"> Olvide Mi Contraseña</a>
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            <a href="{% url "registrarse" %}">
+                <button type="button" class="btn btn-secondary ml-1">Registrarse</button>
+            </a>
+        </form>
+        
+    </div>
+    
+</div>
+
+
+{% endblock Boddy %}

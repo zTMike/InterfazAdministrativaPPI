@@ -10,17 +10,20 @@ from django.contrib import messages
 # Create your views here.
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
+
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            return redirect('index.html')
         else:
-            messages.error(request, 'Usuario o contraseña inválidos.')
-            return render(request, 'login.html')
-    else:
-        return render(request, 'login.html')
+            try:
+                User.objects.get(email=email)
+                messages.error(request, 'Contraseña incorrecta.')
+            except User.DoesNotExist:
+                messages.error(request, 'No existe una cuenta con ese correo electrónico.')
+    return render(request, 'registration/login.html')
 
 def register_view(request):
     if request.method == 'POST':
@@ -29,7 +32,7 @@ def register_view(request):
         password2 = request.POST['password2']
         if password1 != password2:
             # Las contraseñas no coinciden
-            return HttpResponseRedirect(reverse('register'))
+            return HttpResponseRedirect(reverse('registrarse'))
         User.objects.create_user(username=email, email=email, password=password1)
     return HttpResponseRedirect(reverse('index'))
 

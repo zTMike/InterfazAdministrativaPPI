@@ -171,8 +171,8 @@
 #togglePassword {
     border: none !important;
     background-color: transparent !important;
-    top: 52% !important;
-    right: 20px !important;
+    top: 51% !important;
+    right: 459px !important;
 }
 
 .OlvideMclave {
@@ -602,4 +602,8 @@
     margin-bottom: 3%;
     font-weight: bold;
     font-size: 75%;
+}
+
+.loginbot{
+    height: 80vh;
 }
