@@ -12,18 +12,20 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
 
+        
+        user = authenticate(request, username=email, password=password)
+        
         if user is not None:
             login(request, user)
-            return redirect('index.html')
+            return redirect('index')
         else:
             try:
                 User.objects.get(email=email)
                 messages.error(request, 'Contraseña incorrecta.')
             except User.DoesNotExist:
                 messages.error(request, 'No existe una cuenta con ese correo electrónico.')
-    return render(request, 'registration/login.html')
+        return render(request, 'registration/login.html')
 
 def register_view(request):
     if request.method == 'POST':
@@ -39,3 +41,6 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+
+

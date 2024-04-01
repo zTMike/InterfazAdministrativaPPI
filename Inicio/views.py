@@ -8,7 +8,6 @@ def index(request):
 def contactenos(request):
     return render(request, 'Contactenos.html')
 
-
 def nosotros(request):
     return render(request, 'Nosotros.html')
 
@@ -17,6 +16,8 @@ def iniciarsesion(request):
 
 def registrarse(request):
     return render(request, 'registration/register.html')
+
+
 
 
 
