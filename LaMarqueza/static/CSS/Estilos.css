@@ -607,3 +607,38 @@
 .loginbot{
     height: 80vh;
 }
+
+.containermap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajusta esto según tus necesidades */
+    width: 100%; /* Asegúrate de que el contenedor ocupe todo el ancho disponible */
+}
+
+.map-container {
+    position: relative;
+    width: 80%; /* Ajusta esto para cambiar el tamaño del mapa */
+    height: 80%; /* Ajusta esto para cambiar el tamaño del mapa */
+    overflow: hidden;
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.H1Contacto {
+    text-align: center;
+    color: #4CAF50; /* Cambia esto al color que prefieras */
+    font-size: 2.5em; /* Cambia esto al tamaño que prefieras */
+    padding: 20px 0; /* Añade un poco de espacio arriba y abajo del título */
+}
+
+.card-centered {
+    margin-left: 40%;
+}
+
