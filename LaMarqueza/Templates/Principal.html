@@ -57,17 +57,27 @@
                     <li class="nav-item">
                         <a class="nav-link verde-oscuro" href="{% url 'contactenos' %}">Contactenos</a>
                     </li>
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated %}'
-                        {{ user.username | upper}}
-                        <a class="nav-link verde-oscuro" href="{% url 'logout' %}">Cerrar Sesion</a>
-                        {% else %}
-                        <a href="{% url "iniciarsesion" %}"> <button type="button " class="btn btn-primary btnInicio" >
-                            Iniciar Sesion
-                        </button></a>
-                        
 
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        {% if request.user.is_superuser %}
+                        <a href="{% url 'admin:index' %}" class="nav-link verde-oscuro">Admin</a>
+                        {% else %}
+                        <a href="" class="nav-link verde-oscuro">Mi Perfil</a>
                         {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link verde-oscuro" href="{% url 'logout' %}">Cerrar Sesion</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'iniciarsesion' %}">
+                            <button type="button " class="btn btn-primary btnInicio">
+                                Iniciar Sesion
+                            </button>
+                        </a>
+                    </li>
+                    {% endif %}
 
 
                     </li>
