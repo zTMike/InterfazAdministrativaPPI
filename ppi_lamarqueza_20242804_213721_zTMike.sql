@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -125,7 +125,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$720000$ewEruPbvdgPo4eCme4TyBp$wVCu6QtDCMndlZJrIuyjbGBc8L6KXtog85fXVRHCHdU=','2024-03-30 17:47:58.448629',1,'ztmike','','','ztmike.yt@gmail.com',1,1,'2024-03-29 15:05:39.142958'),(2,'pbkdf2_sha256$720000$zMOAivj18CLvT7ZGB5be0T$+g8uh74CRTdzzWzFcOVfO8JPfc0azl4Ur7UEyVooLnA=',NULL,0,'he.fa.g.i@hotmail.com','','','he.fa.g.i@hotmail.com',0,1,'2024-03-30 16:06:19.431198');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$720000$ewEruPbvdgPo4eCme4TyBp$wVCu6QtDCMndlZJrIuyjbGBc8L6KXtog85fXVRHCHdU=','2024-04-29 02:01:37.880448',1,'ztmike.yt@gmail.com','','','ztmike.yt@gmail.com',1,1,'2024-03-29 15:05:39.000000'),(2,'pbkdf2_sha256$720000$zMOAivj18CLvT7ZGB5be0T$+g8uh74CRTdzzWzFcOVfO8JPfc0azl4Ur7UEyVooLnA=',NULL,0,'he.fa.g.i@hotmail.com','','','he.fa.g.i@hotmail.com',0,1,'2024-03-30 16:06:19.431198');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +207,7 @@ CREATE TABLE `django_admin_log` (
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +216,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2024-03-29 15:28:39.338563','1','Administrador',1,'[{\"added\": {}}]',11,1),(2,'2024-03-29 15:29:07.133988','1','Hector Fabio',1,'[{\"added\": {}}]',12,1),(3,'2024-03-29 15:32:22.041429','4','Fertilizantes',1,'[{\"added\": {}}]',10,1),(4,'2024-03-29 15:34:59.476290','1','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(5,'2024-03-29 15:41:52.854998','2','2',1,'[{\"added\": {}}]',8,1),(6,'2024-03-29 16:26:51.074068','1234991936','1234991936',2,'[{\"changed\": {\"fields\": [\"Id usuario usu\"]}}]',12,1),(7,'2024-03-29 16:32:28.884924','2','2',2,'[{\"changed\": {\"fields\": [\"Estado ven\"]}}]',8,1),(8,'2024-03-29 16:33:09.017818','3','3',1,'[{\"added\": {}}]',8,1),(9,'2024-03-29 16:36:43.726319','1','1',1,'[{\"added\": {}}]',7,1),(10,'2024-03-29 16:37:05.184609','1','1',2,'[{\"changed\": {\"fields\": [\"Cantidad ven\"]}}]',7,1),(11,'2024-03-29 16:38:11.727317','1','1',2,'[{\"changed\": {\"fields\": [\"Cantidad ven\"]}}]',7,1),(12,'2024-03-29 16:38:19.633290','1','1',2,'[{\"changed\": {\"fields\": [\"Cantidad ven\"]}}]',7,1),(13,'2024-03-29 20:28:02.618689','3','3',2,'[{\"changed\": {\"fields\": [\"Estado ord\"]}}]',8,1),(14,'2024-03-30 01:57:50.834247','2','Usuario',1,'[{\"added\": {}}]',11,1),(15,'2024-03-30 03:54:42.257485','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(16,'2024-03-30 12:51:25.233211','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(17,'2024-03-30 12:51:42.099507','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(18,'2024-03-30 13:42:54.647772','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(19,'2024-03-30 13:43:34.697832','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(20,'2024-03-30 15:19:47.131606','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Nombre pro\", \"Descripcion pro\", \"Precio pro\", \"Foto\"]}}]',9,1),(21,'2024-03-30 15:19:59.412825','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(22,'2024-03-30 15:20:12.032247','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(23,'2024-03-30 15:20:40.815706','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(24,'2024-03-30 15:22:13.586234','2','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(25,'2024-03-30 15:24:51.891046','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(26,'2024-03-30 15:25:00.451621','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(27,'2024-03-30 15:27:05.882521','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(28,'2024-03-30 15:27:09.585939','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(29,'2024-03-30 15:28:29.399545','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(30,'2024-03-30 15:28:29.402548','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1);
+INSERT INTO `django_admin_log` VALUES (1,'2024-03-29 15:28:39.338563','1','Administrador',1,'[{\"added\": {}}]',11,1),(2,'2024-03-29 15:29:07.133988','1','Hector Fabio',1,'[{\"added\": {}}]',12,1),(3,'2024-03-29 15:32:22.041429','4','Fertilizantes',1,'[{\"added\": {}}]',10,1),(4,'2024-03-29 15:34:59.476290','1','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(5,'2024-03-29 15:41:52.854998','2','2',1,'[{\"added\": {}}]',8,1),(6,'2024-03-29 16:26:51.074068','1234991936','1234991936',2,'[{\"changed\": {\"fields\": [\"Id usuario usu\"]}}]',12,1),(7,'2024-03-29 16:32:28.884924','2','2',2,'[{\"changed\": {\"fields\": [\"Estado ven\"]}}]',8,1),(8,'2024-03-29 16:33:09.017818','3','3',1,'[{\"added\": {}}]',8,1),(9,'2024-03-29 16:36:43.726319','1','1',1,'[{\"added\": {}}]',7,1),(10,'2024-03-29 16:37:05.184609','1','1',2,'[{\"changed\": {\"fields\": [\"Cantidad ven\"]}}]',7,1),(11,'2024-03-29 16:38:11.727317','1','1',2,'[{\"changed\": {\"fields\": [\"Cantidad ven\"]}}]',7,1),(12,'2024-03-29 16:38:19.633290','1','1',2,'[{\"changed\": {\"fields\": [\"Cantidad ven\"]}}]',7,1),(13,'2024-03-29 20:28:02.618689','3','3',2,'[{\"changed\": {\"fields\": [\"Estado ord\"]}}]',8,1),(14,'2024-03-30 01:57:50.834247','2','Usuario',1,'[{\"added\": {}}]',11,1),(15,'2024-03-30 03:54:42.257485','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(16,'2024-03-30 12:51:25.233211','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(17,'2024-03-30 12:51:42.099507','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(18,'2024-03-30 13:42:54.647772','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(19,'2024-03-30 13:43:34.697832','1','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(20,'2024-03-30 15:19:47.131606','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Nombre pro\", \"Descripcion pro\", \"Precio pro\", \"Foto\"]}}]',9,1),(21,'2024-03-30 15:19:59.412825','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Foto\"]}}]',9,1),(22,'2024-03-30 15:20:12.032247','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(23,'2024-03-30 15:20:40.815706','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(24,'2024-03-30 15:22:13.586234','2','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(25,'2024-03-30 15:24:51.891046','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(26,'2024-03-30 15:25:00.451621','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(27,'2024-03-30 15:27:05.882521','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(28,'2024-03-30 15:27:09.585939','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(29,'2024-03-30 15:28:29.399545','1','Abono AAA 25Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(30,'2024-03-30 15:28:29.402548','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(31,'2024-04-23 03:18:15.862273','1','ztmike.yt@gmail.com',2,'[{\"changed\": {\"fields\": [\"Username\"]}}]',4,1),(32,'2024-04-29 01:43:54.311402','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(33,'2024-04-29 01:44:02.177096','2','Abono AAA 50Kg',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(34,'2024-04-29 02:01:46.350713','2','Abono AAA 50Kg',3,'',9,1),(35,'2024-04-29 02:01:50.564322','1','Abono AAA 25Kg',3,'',9,1),(36,'2024-04-29 02:03:24.299515','3','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(37,'2024-04-29 02:05:18.812334','3','Abono AAA 50Kg',3,'',9,1),(38,'2024-04-29 02:07:00.519873','4','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(39,'2024-04-29 02:15:03.332964','5','Abono AAA 50Kg',1,'[{\"added\": {}}]',9,1),(40,'2024-04-29 02:15:18.695085','6','231',1,'[{\"added\": {}}]',9,1),(41,'2024-04-29 02:15:48.280332','6','231',2,'[{\"changed\": {\"fields\": [\"Estado\"]}}]',9,1),(42,'2024-04-29 02:15:56.054440','6','231',3,'',9,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('7lk1q9u71d1szi6nbj9qubf5y0mnqr27','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1rqNtF:8EcOTsDdo3EJDCYYxwyRQW-yAMCy9C6yajs1Tc3KwaE','2024-04-13 01:52:13.579472'),('kq472v3z59t1xueczaoycp6nj793rmt4','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1rqIn6:PGWQb5_wDzsRwhB6OcyXHwVaVChbvStPLvi3m0mFK7o','2024-04-12 20:25:32.984662'),('v17owcfjvs8z8h9hoae1rf10nkwe0zvw','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1rqPmQ:HNcrXlHtPhHKb7E8aLikuHBX14UjDRkLUzmUD22MFBM','2024-04-13 03:53:18.295722');
+INSERT INTO `django_session` VALUES ('7lk1q9u71d1szi6nbj9qubf5y0mnqr27','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1rqNtF:8EcOTsDdo3EJDCYYxwyRQW-yAMCy9C6yajs1Tc3KwaE','2024-04-13 01:52:13.579472'),('kq472v3z59t1xueczaoycp6nj793rmt4','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1rqIn6:PGWQb5_wDzsRwhB6OcyXHwVaVChbvStPLvi3m0mFK7o','2024-04-12 20:25:32.984662'),('v17owcfjvs8z8h9hoae1rf10nkwe0zvw','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1rqPmQ:HNcrXlHtPhHKb7E8aLikuHBX14UjDRkLUzmUD22MFBM','2024-04-13 03:53:18.295722'),('xfhyon29vdq2t0196b0flcgkfu0esfzc','.eJxVjDsOgzAQRO_iOrJs1j9SpucM1trrjUkikDBUUe4ekCiSaqR5b-YtIm5rjVsrSxxJXIUWl98uYX6W6QD0wOk-yzxP6zImeSjypE0OM5XX7XT_Diq2uq_ZdeQtcc9EoNBazQaSyQY5G_bc6Zyd61JvEPqiIHjcIwAkUCmgFp8v_u04Lg:1s1GKn:R576_jslzHr4-FsNROZM1fq4rZqYgjwJyx0KT5pwoyk','2024-05-13 02:01:37.892509');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,7 +342,7 @@ CREATE TABLE `productos_producto` (
   PRIMARY KEY (`id_producto_pro`),
   KEY `Productos_producto_categoria_pro_id_1f0eb3e3_fk_Productos` (`categoria_pro_id`),
   CONSTRAINT `Productos_producto_categoria_pro_id_1f0eb3e3_fk_Productos` FOREIGN KEY (`categoria_pro_id`) REFERENCES `productos_categoria` (`id_categoria_cat`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -351,7 +351,7 @@ CREATE TABLE `productos_producto` (
 
 LOCK TABLES `productos_producto` WRITE;
 /*!40000 ALTER TABLE `productos_producto` DISABLE KEYS */;
-INSERT INTO `productos_producto` VALUES (1,'Abono AAA 25Kg','abono AAA 25kg Plantas y arboles',200,22000,4,'productos/Semillas.jpg',1),(2,'Abono AAA 50Kg','Abono AAA 50Kg Fertiliza tu tierra',20,40000,4,'productos/Fertilizante_5FDhmkc.jpg',1);
+INSERT INTO `productos_producto` VALUES (4,'Abono AAA 50Kg','dasd',2312,23123,4,'productos/Fertilizante.jpg',1),(5,'Abono AAA 50Kg','231',231,231,4,'productos/Semillas.jpg',1);
 /*!40000 ALTER TABLE `productos_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,7 +438,6 @@ CREATE TABLE `ventas_detalle_orden` (
 
 LOCK TABLES `ventas_detalle_orden` WRITE;
 /*!40000 ALTER TABLE `ventas_detalle_orden` DISABLE KEYS */;
-INSERT INTO `ventas_detalle_orden` VALUES (1,1,20500.00,20500.00,1,3);
 /*!40000 ALTER TABLE `ventas_detalle_orden` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,4 +479,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-30 13:21:02
+-- Dump completed on 2024-04-28 21:37:22
