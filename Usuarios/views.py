@@ -24,19 +24,35 @@ def login_view(request):
                 User.objects.get(email=email)
                 messages.error(request, 'Contraseña incorrecta.')
             except User.DoesNotExist:
-                messages.error(request, 'No existe una cuenta con ese correo electrónico.')
-        return render(request, 'registration/login.html')
+                messages.error(request, 'Cuenta No Existe.')
+        return redirect('iniciarsesion')
 
 def register_view(request):
+    email = request.POST['email']
     if request.method == 'POST':
-        email = request.POST['email']
-        password1 = request.POST['password']
+        password = request.POST['password']
         password2 = request.POST['password2']
-        if password1 != password2:
-            # Las contraseñas no coinciden
-            return HttpResponseRedirect(reverse('registrarse'))
-        User.objects.create_user(username=email, email=email, password=password1)
-    return HttpResponseRedirect(reverse('index'))
+         # Comprueba si los campos están vacíos
+        if not email or not password or not password2:
+            messages.error(request, 'Todos los campos son obligatorios')
+            return redirect('registrarse')
+        else:
+            if password != password2:
+                # Las contraseñas no coinciden
+                messages.error(request, 'Las contraseñas no coinciden')
+                return redirect('registrarse')
+            else:
+                # Las contraseñas coinciden
+                email = request.POST['email']
+                username = request.POST['email']
+                password= request.POST['password']
+                User.objects.create_user(username=username, email=email, password=password)
+                return redirect('index')
+
+        # Aquí continúa tu lógica de registro...
+
+    # Si el método no es POST, renderiza la página de registro normalmente
+    return render(request, 'registration/register.html')
 
 def logout_view(request):
     logout(request)

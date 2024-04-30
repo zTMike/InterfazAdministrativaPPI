@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import getpass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,9 +29,8 @@ SECRET_KEY = 'django-insecure-o+iv=#mfw$8#(^5#lw&13f7u7h!xb1+p*qdg%sd0)gaz$*asd&
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-MEDIA_URL = '/Media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Application definition
@@ -88,11 +88,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LaMarqueza.wsgi.application'
 
+usuario = getpass.getuser()
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
+if usuario == 'zTMike':
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ppi_lamarqueza',
@@ -102,6 +101,24 @@ DATABASES = {
         'PORT': '3306',        # El puerto por defecto de MySQL es 3306
     }
 }
+else:
+    DATABASES = {
+    'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'ppi_lamarqueza',
+    'USER': 'root',
+    'PASSWORD': '1234',
+    'HOST': 'localhost',   # O la dirección IP de tu servidor de base de datos
+    'PORT': '3306',        # El puerto por defecto de MySQL es 3306
+}
+}
+
+
+
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+
 
 
 # Password validation
@@ -150,5 +167,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/Media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
 
-LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index.html'
 LOGOUT_REDIRECT_URL = 'index'

@@ -1,0 +1,28 @@
+{% extends "Principal.html" %}
+{% load static %}
+{% block Titulo %}Administrador{% endblock Titulo %}
+
+{% block Boddy %}
+<ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="{% url "usuarios" %}">Usuarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url "productosadmin" %}">Productos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Ventas</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" aria-disabled="true">Perfil</a>
+    </li>
+  </ul>
+  <div style="padding: 10%;">
+  {% block Administrador%}
+
+
+  {% endblock Administrador%}
+  </div>
+  
+
+{% endblock Boddy %}

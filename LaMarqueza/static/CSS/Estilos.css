@@ -639,6 +639,18 @@
 }
 
 .card-centered {
-    margin-left: 40%;
+
+    margin-left:  40%;
+}
+.my-image {
+    width: 100%!important;
+    height: 70%!important;
+}
+
+.card-container2 {
+    background-color: #0e6d2b;
+}
+.card-container3 {
+    background-color: #ffffff!important;
 }
 

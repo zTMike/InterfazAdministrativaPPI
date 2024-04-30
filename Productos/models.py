@@ -23,3 +23,6 @@ class producto (models.Model):
     
     def __str__(self):
         return self.nombre_pro
+    def delete(self, *args, **kwargs):
+        self.foto.delete(save=False)
+        super().delete(*args, **kwargs)
