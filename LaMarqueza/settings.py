@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import getpass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -87,11 +88,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LaMarqueza.wsgi.application'
 
+usuario = getpass.getuser()
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
+if usuario == 'zTMike':
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ppi_lamarqueza',
@@ -101,6 +101,24 @@ DATABASES = {
         'PORT': '3306',        # El puerto por defecto de MySQL es 3306
     }
 }
+else:
+    DATABASES = {
+    'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'ppi_lamarqueza',
+    'USER': 'root',
+    'PASSWORD': '1234',
+    'HOST': 'localhost',   # O la dirección IP de tu servidor de base de datos
+    'PORT': '3306',        # El puerto por defecto de MySQL es 3306
+}
+}
+
+
+
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+
 
 
 # Password validation

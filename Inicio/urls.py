@@ -13,5 +13,8 @@ urlpatterns = [
     path('iniciarsesion/', iniciarsesion, name='iniciarsesion'),
     path('registrarse/', registrarse, name='registrarse'),
     path('',include('Usuarios.urls')),
+    path('administrador/', administrador,name='administrador'),
+    path('usuarios/', usuarios,name='usuarios'),
+    path('Admin/Productos/', productosadmin,name='productosadmin'),
 ]
 # Compare this snippet from Inicio/views.py:

@@ -17,3 +17,4 @@ def productos(request):
         ]
         print(productos)  # Imprime en consola
         return render(request, 'Productos.html', {'productosquerry': productos})
+
