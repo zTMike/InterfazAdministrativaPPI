@@ -7,22 +7,27 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">ID Producto</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Rol</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Existencias</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Estados</th>
+                    <th scope="col">Foto</th>
                 </tr>
             </thead>
             <tbody>
-                {% for usuario in usuarios %}
+                {% for productos in productos %}
                     <tr>
-                        <th scope="row">{{ usuario.id }}</th>
-                        <td>{{ usuario.first_name }}</td>
-                        <td>{{ usuario.last_name }}</td>
-                        <td>{{ usuario.email }}</td>
-                        
+                        <th scope="row">{{ productos.id_producto_pro }}</th>
+                        <td>{{ productos.nombre_pro }}</td>
+                        <td>{{ productos.descripcion_pro }}</td>
+                        <td>{{ productos.existencia_pro }}</td>
+                        <td>{{ productos.precio_pro }}</td>
+                        <td>{{ productos.categoria_pro_id }}</td>
+                        <td>{{ productos.estado }}</td>
+                        <td><img src='/Media/{{productos.foto }}' style="width: 200px; height: auto;" /></td>
                     </tr>
                 {% endfor %}
             </tbody>

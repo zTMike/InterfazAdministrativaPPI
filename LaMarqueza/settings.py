@@ -89,6 +89,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'LaMarqueza.wsgi.application'
 
 usuario = getpass.getuser()
+print(usuario)
 
 if usuario == 'zTMike':
     DATABASES = {
@@ -96,7 +97,7 @@ if usuario == 'zTMike':
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ppi_lamarqueza',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '0000',
         'HOST': 'localhost',   # O la dirección IP de tu servidor de base de datos
         'PORT': '3306',        # El puerto por defecto de MySQL es 3306
     }
@@ -138,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'Usuarios.suario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

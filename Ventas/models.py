@@ -1,6 +1,7 @@
 from django.db import models
-from Usuarios.models import usuario
+from django.contrib.auth.models import User
 from Productos.models import producto
+from Usuarios.models import Usuario
 
 # Create your models here.
 class orde_venta(models.Model):
@@ -12,7 +13,7 @@ class orde_venta(models.Model):
     ]
 
     id_orden_ord = models.AutoField(primary_key=True)
-    id_usuario_ord = models.ForeignKey(usuario, on_delete=models.CASCADE)
+    id_usuario_ord = models.ForeignKey('Usuarios.Usuario', models.DO_NOTHING, db_column='id_usuario_ord')
     fecha_ord = models.DateField()
     total_ord = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     estado_ord = models.CharField(max_length=1, choices=ESTADO_CHOICES, default='P')
@@ -24,9 +25,10 @@ class orde_venta(models.Model):
     
 class detalle_orden(models.Model):
     id_detalle_det = models.AutoField(primary_key=True)
-    id_orden_det= models.ForeignKey(orde_venta, on_delete=models.CASCADE)
-    id_producto_det = models.ForeignKey(producto, on_delete=models.CASCADE)
+    id_orden_det= models.ForeignKey(orde_venta,on_delete=models.PROTECT)
+    id_producto_det = models.ForeignKey(producto,on_delete=models.PROTECT)
     cantidad_det = models.IntegerField()
+    cantidad_entregada_det = models.IntegerField(default=0)
     precio_det = models.DecimalField(max_digits=9, decimal_places=2)
     subtotal_det = models.DecimalField(max_digits=9, decimal_places=2)
 

@@ -15,7 +15,7 @@ class producto (models.Model):
     id_producto_pro = models.AutoField(primary_key=True)
     nombre_pro = models.CharField(max_length=50)
     descripcion_pro = models.TextField()
-    categoria_pro = models.ForeignKey(categoria, on_delete=models.CASCADE)
+    categoria_pro = models.ForeignKey(categoria,on_delete=models.PROTECT)
     existencia_pro = models.IntegerField()
     precio_pro = models.IntegerField()
     foto=models.ImageField(upload_to='productos', null=True, blank=True)
