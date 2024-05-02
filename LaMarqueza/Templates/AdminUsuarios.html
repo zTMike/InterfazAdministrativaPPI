@@ -4,6 +4,7 @@
 {% block Administrador %}
     <div>
         <h1>Usuarios</h1>
+        <a href="{% url 'crear_usuario' %}" class="btn btn-primary float-right">Crear Usuario</a>
         <table class="table">
             <thead>
                 <tr>
@@ -11,15 +12,17 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Correo</th>
+                    <th scope="col">Telefono</th>
                 </tr>
             </thead>
             <tbody>
                 {% for usuario in usuarios %}
                     <tr>
-                        <th scope="row">{{ usuario.id }}</th>
-                        <td>{{ usuario.first_name }}</td>
-                        <td>{{ usuario.last_name }}</td>
-                        <td>{{ usuario.email }}</td>
+                        <th scope="row"><a href="{% url 'usuario_detalles' usuario.id_usuario_usu %}">{{ usuario.id_usuario_usu }}</a></th>
+                        <td>{{ usuario.nombre_usu }}</td>
+                        <td>{{ usuario.apellido_usu }}</td>
+                        <td>{{ usuario.correo_usu }}</td>
+                        <td>{{ usuario.telefono_usu }}</td>
                         
                     </tr>
                 {% endfor %}

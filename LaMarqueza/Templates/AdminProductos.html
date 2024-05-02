@@ -3,7 +3,8 @@
 
 {% block Administrador %}
     <div>
-        <h1>Usuarios</h1>
+        <h1>Productos</h1>
+        <a href="{% url 'crearproducto' %}" class="btn btn-primary float-right">Crear Categoria</a>
         <table class="table">
             <thead>
                 <tr>
@@ -20,14 +21,14 @@
             <tbody>
                 {% for productos in productos %}
                     <tr>
-                        <th scope="row">{{ productos.id_producto_pro }}</th>
+                        <th scope="row"><a href="{% url 'producto_detalles' productos.id_producto_pro %}">{{ productos.id_producto_pro }}</th>
                         <td>{{ productos.nombre_pro }}</td>
                         <td>{{ productos.descripcion_pro }}</td>
                         <td>{{ productos.existencia_pro }}</td>
                         <td>{{ productos.precio_pro }}</td>
                         <td>{{ productos.categoria_pro_id }}</td>
                         <td>{{ productos.estado }}</td>
-                        <td><img src='/Media/{{productos.foto }}' style="width: 200px; height: auto;" /></td>
+                        <td><img src='/Media/productos/{{productos.foto }}' style="width: 200px; height: auto;" /></td>
                     </tr>
                 {% endfor %}
             </tbody>

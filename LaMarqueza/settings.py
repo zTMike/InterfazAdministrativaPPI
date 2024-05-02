@@ -94,12 +94,12 @@ print(usuario)
 if usuario == 'zTMike':
     DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ppi_lamarqueza',
-        'USER': 'root',
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'PRIMERABD',
+        'USER': 'AdminPrimeraBD',
         'PASSWORD': '0000',
-        'HOST': 'localhost',   # O la dirección IP de tu servidor de base de datos
-        'PORT': '3306',        # El puerto por defecto de MySQL es 3306
+        'HOST': 'localhost',
+        'PORT': '1521',
     }
 }
 else:
@@ -139,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-AUTH_USER_MODEL = 'Usuarios.suario'
+AUTH_USER_MODEL = 'Usuarios.Usuario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -167,6 +167,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/Media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+
 
 LOGOUT_REDIRECT_URL = 'index.html'
 LOGOUT_REDIRECT_URL = 'index'

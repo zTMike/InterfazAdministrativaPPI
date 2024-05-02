@@ -1,0 +1,41 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+    
+<form method="post" >
+        {% csrf_token %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_usuario_usu">ID:</label><br>
+        <input type="text" id="id_usuario_usu" name="id_usuario_usu" value="{{ usuario.id_usuario_usu }}" readonly><br>
+        <label for="nombre_usu">Nombre:</label><br>
+        <input type="text" id="nombre_usu" name="nombre_usu" value="{{ usuario.nombre_usu }}"><br>
+        <label for="apellido_usu">Apellido:</label><br>
+        <input type="text" id="apellido_usu" name="apellido_usu" value="{{ usuario.apellido_usu }}"><br>
+        <label for="correo_usu">Correo:</label><br>
+        <input type="text" id="correo_usu" name="correo_usu" value="{{ usuario.correo_usu }}"><br>
+        <label for="telefono_usu">Teléfono:</label><br>
+        <input type="text" id="telefono_usu" name="telefono_usu" value="{{ usuario.telefono_usu }}"><br>
+        <label for="is_staff">Es staff:</label><br>
+        <input type="checkbox" id="is_staff" name="is_staff" {% if usuario.is_staff %}checked{% endif %}><br>
+        <label for="is_active">Está activo:</label><br>
+        <input type="checkbox" id="is_active" name="is_active" {% if usuario.is_active %}checked{% endif %}><br>
+        <input type="submit" name="action" value="Actualizar">
+        <input type="submit" name="action" value="Eliminar" id="delete-button">
+        <script>
+            document.getElementById('delete-button').addEventListener('click', function(e) {
+                if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+                    e.preventDefault();
+                }
+            });
+            </script>
+ </form>
+
+{% endblock Administrador %}

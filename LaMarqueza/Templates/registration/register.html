@@ -10,20 +10,41 @@
 
         <form method="post" action="{% url 'registrer' %}">
             {% csrf_token %}
-            <div class="mb-3">
+
+            <div class="mb-1">
+                <label for="nombre" class="form-label">Nombre *</label>
+                <input type="text" class="form-control" id="nombre" name="nombre">
+            </div>
+            
+            <div class="mb-1">
+                <label for="apellido" class="form-label">Apellido *</label>
+                <input type="text" class="form-control" id="apellido" name="apellido">
+            </div>
+            
+            <div class="mb-1">
+                <label for="telefono" class="form-label">Teléfono *</label>
+                <input type="text" class="form-control" id="telefono" name="telefono">
+            </div>
+            
+            <div class="mb-1">
+                <label for="documento" class="form-label">Documento *</label>
+                <input type="text" class="form-control" id="documento" name="documento">
+            </div>
+
+            <div class="mb-1">
                 <label for="email" class="form-label">Correo electrónico *</label>
                 <input type="email" class="form-control" id="email" name="email">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="password" class="form-label">Contraseña *</label>
                 <input type="password" class="form-control" id="password" name="password">
             </div>
 
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="password2" class="form-label">Confirmar contraseña *</label>
                 <input type="password" class="form-control" id="password2" name="password2">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}

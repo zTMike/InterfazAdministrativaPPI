@@ -1,0 +1,33 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+    
+<form method="post">
+        {% csrf_token %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_usuario_usu">ID:</label><br>
+        <input type="text" id="id_usuario_usu" name="id_usuario_usu" value="{{ usuario.id_usuario_usu }}"><br>
+        <label for="nombre_usu">Nombre:</label><br>
+        <input type="text" id="nombre_usu" name="nombre_usu" value="{{ usuario.nombre_usu }}"><br>
+        <label for="apellido_usu">Apellido:</label><br>
+        <input type="text" id="apellido_usu" name="apellido_usu" value="{{ usuario.apellido_usu }}"><br>
+        <label for="correo_usu">Correo:</label><br>
+        <input type="text" id="correo_usu" name="correo_usu" value="{{ usuario.correo_usu }}"><br>
+        <label for="telefono_usu">Teléfono:</label><br>
+        <input type="text" id="telefono_usu" name="telefono_usu" value="{{ usuario.telefono_usu }}"><br>
+        <label for="password_usu">Contraseña:</label><br>
+        <input type="password" id="password_usu" name="password_usu"><br>
+        <label for="is_staff">Staff:</label><br>
+        <input type="checkbox" id="is_staff" name="is_staff" {% if usuario.is_staff %}checked{% endif %}><br>
+        <input type="submit" name="action" value="Crear Usuario">
+    </form>
+
+{% endblock Administrador %}

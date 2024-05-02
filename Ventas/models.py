@@ -33,7 +33,7 @@ class detalle_orden(models.Model):
     subtotal_det = models.DecimalField(max_digits=9, decimal_places=2)
 
     def save(self, *args, **kwargs):
-        self.precio_def = self.id_producto_ven.precio_pro  # Asume que 'precio' es el campo del precio en el modelo 'producto'
+        self.precio_def = self.id_producto_ven.precio_pro 
         self.subtotal_def = self.precio_det * self.cantidad_def
         super().save(*args, **kwargs)
 

@@ -1,0 +1,48 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+    
+<form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <label for="id_producto">ID del Producto:</label><br>
+        <input type="text" id="id_producto" name="id_producto" value="{{ producto.id_producto_pro }}" readonly><br>
+        <label for="nombre_pro">Nombre del Producto:</label><br>
+        <input type="text" id="nombre_pro" name="nombre_pro" value="{{ producto.nombre_pro }}"><br>
+        <label for="descripcion_pro">Descripción:</label><br>
+        <input type="text" id="descripcion_pro" name="descripcion_pro" value="{{ producto.descripcion_pro }}"><br>
+        <label for="precio_pro">Precio:</label><br>
+        <input type="text" id="precio_pro" name="precio_pro" value="{{ producto.precio_pro }}"><br>
+        <label for="existencia_pro">Existencias:</label><br>
+        <input type="text" id="existencia_pro" name="existencia_pro" value="{{ producto.existencia_pro }}"><br>
+        <label for="categoria_pro">Categoría:</label><br>
+        <input type="text" id="categoria_pro" name="categoria_pro" value="{{ producto.categoria_pro }}"><br>
+        <label for="estado">Estado:</label><br>
+        <input type="checkbox" id="estado" name="estado" value="on" {% if producto.estado %}checked{% endif %}><br>
+        <label for="foto">Foto actual:</label><br>
+        <img src='/Media/productos/{{producto.foto }}' style="width: 200px; height: auto;" />
+        <br>
+        <br>
+        <input type="file" name="foto_pro">
+        
+        <br>
+        <input type="submit" name="action" value="Actualizar">
+        <input type="submit" name="action" value="Eliminar" id="delete-button">
+        <script>
+            document.getElementById('delete-button').addEventListener('click', function(e) {
+                if (!confirm('¿Estás seguro de que quieres eliminar esta categoría?')) {
+                    e.preventDefault();
+                }
+            });
+        </script>
+ </form>
+
+{% endblock Administrador %}

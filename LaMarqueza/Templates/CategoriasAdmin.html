@@ -1,0 +1,31 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+    <div>
+        <h1>Categorias</h1>
+        <a href="{% url 'crearcategoria' %}" class="btn btn-primary float-right">Crear Categoria</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID Categoria</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                    <tr>
+                        
+                        <th scope="row"><a href="{% url 'categoria_detalles' categoria.id_categoria_cat %}">{{ categoria.id_categoria_cat }}</th>
+                        <td>{{ categoria.nombre_cat }}</td>
+                        <td>{{ categoria.descripcion_cat }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock Administrador %}

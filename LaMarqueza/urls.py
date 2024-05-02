@@ -24,7 +24,7 @@ from LaMarqueza.views import *
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('administrator/', admin.site.urls),
     path('', include('django.contrib.auth.urls')),
     path('', index,name='index'),
     path('',include('Usuarios.urls')),
