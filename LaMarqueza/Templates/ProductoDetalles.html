@@ -25,13 +25,15 @@
         <input type="text" id="existencia_pro" name="existencia_pro" value="{{ producto.existencia_pro }}"><br>
         <label for="categoria_pro">Categoría:</label><br>
         <input type="text" id="categoria_pro" name="categoria_pro" value="{{ producto.categoria_pro }}"><br>
-        <label for="estado">Estado:</label><br>
-        <input type="checkbox" id="estado" name="estado" value="on" {% if producto.estado %}checked{% endif %}><br>
+        <label for="estado_pro">Estado:</label><br>
+        <input type="checkbox" id="estado_pro" name="estado_pro"  {% if producto.estado_pro %}checked{% endif %}><br>
         <label for="foto">Foto actual:</label><br>
-        <img src='/Media/productos/{{producto.foto }}' style="width: 200px; height: auto;" />
+        <img src='/Media/productos/{{producto.foto_pro }}' style="width: 200px; height: auto;" />
         <br>
         <br>
         <input type="file" name="foto_pro">
+        
+        <label for="foto_pro">La imagen debe de tener un tamaño 500px x 500px:</label><br>
         
         <br>
         <input type="submit" name="action" value="Actualizar">

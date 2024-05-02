@@ -18,11 +18,11 @@
             <tbody>
                 {% for usuario in usuarios %}
                     <tr>
-                        <th scope="row"><a href="{% url 'usuario_detalles' usuario.id_usuario_usu %}">{{ usuario.id_usuario_usu }}</a></th>
-                        <td>{{ usuario.nombre_usu }}</td>
-                        <td>{{ usuario.apellido_usu }}</td>
-                        <td>{{ usuario.correo_usu }}</td>
-                        <td>{{ usuario.telefono_usu }}</td>
+                        <th scope="row"><a href="{% url 'usuario_detalles' usuario.ID_USUARIO_USU %}">{{ usuario.ID_USUARIO_USU }}</a></th>
+                        <td>{{ usuario.NOMBRE_USU }}</td>
+                        <td>{{ usuario.APELLIDO_USU }}</td>
+                        <td>{{ usuario.CORREO_USU }}</td>
+                        <td>{{ usuario.TELEFONO_USU }}</td>
                         
                     </tr>
                 {% endfor %}

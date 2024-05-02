@@ -17,9 +17,9 @@
                 {% for categoria in categorias %}
                     <tr>
                         
-                        <th scope="row"><a href="{% url 'categoria_detalles' categoria.id_categoria_cat %}">{{ categoria.id_categoria_cat }}</th>
-                        <td>{{ categoria.nombre_cat }}</td>
-                        <td>{{ categoria.descripcion_cat }}</td>
+                        <th scope="row"><a href="{% url 'categoria_detalles' categoria.ID_CATEGORIA_CAT %}">{{ categoria.ID_CATEGORIA_CAT }}</th>
+                        <td>{{ categoria.NOMBRE_CAT }}</td>
+                        <td>{{ categoria.DESCRIPCION_CAT }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

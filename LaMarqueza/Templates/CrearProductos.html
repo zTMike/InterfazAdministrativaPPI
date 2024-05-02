@@ -25,11 +25,12 @@
         <label for="categoria_pro">Categoría:</label><br>
         <select id="categoria_pro" name="categoria_pro">
             {% for categoria in categorias %}
-            <option value="{{ categoria.id_categoria_cat }}">{{ categoria.nombre_cat }}</option>
+            <option value="{{ categoria.ID_CATEGORIA_CAT }}">{{ categoria.NOMBRE_CAT }}</option>
             {% endfor %}
         </select><br>
         <label for="foto_pro">Foto:</label><br>
         <input type="file" id="foto_pro" name="foto_pro"><br>
+        <label for="foto_pro">La imagen debe de tener un tamaño 500px x 500px:</label><br>
         <label for="estado_pro">Estado:</label><br>
         <input type="checkbox" id="estado_pro" name="estado_pro" {% if usuario.is_staff %}checked{% endif %}><br>
         <br>

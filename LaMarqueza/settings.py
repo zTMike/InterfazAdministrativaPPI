@@ -95,7 +95,7 @@ if usuario == 'zTMike':
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'PRIMERABD',
+        'NAME': 'xe',
         'USER': 'AdminPrimeraBD',
         'PASSWORD': '0000',
         'HOST': 'localhost',
@@ -171,3 +171,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
 
 LOGOUT_REDIRECT_URL = 'index.html'
 LOGOUT_REDIRECT_URL = 'index'
+
+MIGRATION_MODULES = {
+    'Usuarios': None,
+    'Productos': None,
+    'Ventas': None,
+    
+}

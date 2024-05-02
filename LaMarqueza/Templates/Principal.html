@@ -60,7 +60,7 @@
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        {% if request.user.is_superuser %}
+                        {% if request.user.is_staff %}
                         <a href="{% url 'administrador' %}" class="nav-link verde-oscuro">Admin</a>
                         {% else %}
                         <a href="" class="nav-link verde-oscuro">Mi Perfil</a>

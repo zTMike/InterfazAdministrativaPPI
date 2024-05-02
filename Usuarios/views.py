@@ -16,8 +16,7 @@ def login_view(request):
     if request.method == 'POST':
         correo_usu = request.POST['email']
         contrasena_usu = request.POST['password']
-        print(correo_usu)
-        print(contrasena_usu)
+        
     
     user = authenticate(request, username=correo_usu, password=contrasena_usu)
     
@@ -116,11 +115,10 @@ def crear_usuario(request):
             return redirect('crear_usuario')
         else:
             with connection.cursor() as cursor:
-                cursor.execute("""
-                    INSERT INTO Usuarios_usuario (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, `is_staff`,`is_active`)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_staff,is_active])
-                connection.commit()
+               cursor.execute("""INSERT INTO Usuarios_usuario (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                            """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_active, is_staff])
+                            
             messages.success(request, 'Usuario Creado Correctamente')
             return redirect('usuarios')
     return render(request, 'CrearUsuario.html')
@@ -146,7 +144,9 @@ def usuario_detalles (request, id_usuario_usu):
             
             
         }
-        print(usuario.get('is_staff'))
+        usuario['is_active'] = bool(int(usuario['is_active']))
+        usuario['is_staff'] = bool(int(usuario['is_staff']))
+        
     
     if request.method == 'POST':
 
@@ -173,13 +173,12 @@ def usuario_detalles (request, id_usuario_usu):
                 connection.commit()
                 messages.error(request, 'Usuario Actualizado Correctamente')
             print('Usuario actualizado')
+
             with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM Usuarios_usuario WHERE id_usuario_usu = %s", [id_usuario_usu])
                 row = cursor.fetchone()
-                if row is None:
-                    messages.error(request, 'Usuario Actualizado Correctamente')
                 usuario = {
-                   'id_usuario_usu': row[0],
+                    'id_usuario_usu': row[0],
                     'nombre_usu': row[1],
                     'apellido_usu': row[2],
                     'correo_usu': row[3],
@@ -189,6 +188,10 @@ def usuario_detalles (request, id_usuario_usu):
                     'is_active': row[7],
                     'is_staff': row[8]
                 }
+                
+                usuario['is_active'] = bool(int(usuario['is_active']))
+                usuario['is_staff'] = bool(int(usuario['is_staff']))
+                print(usuario)
             return render(request, 'UsuarioDetalles.html', {'usuario': usuario})
         elif action == 'Eliminar':
             # Eliminar el usuario

@@ -21,14 +21,20 @@
             <tbody>
                 {% for productos in productos %}
                     <tr>
-                        <th scope="row"><a href="{% url 'producto_detalles' productos.id_producto_pro %}">{{ productos.id_producto_pro }}</th>
-                        <td>{{ productos.nombre_pro }}</td>
-                        <td>{{ productos.descripcion_pro }}</td>
-                        <td>{{ productos.existencia_pro }}</td>
-                        <td>{{ productos.precio_pro }}</td>
-                        <td>{{ productos.categoria_pro_id }}</td>
-                        <td>{{ productos.estado }}</td>
-                        <td><img src='/Media/productos/{{productos.foto }}' style="width: 200px; height: auto;" /></td>
+                        <th scope="row"><a href="{% url 'producto_detalles' productos.ID_PRODUCTO_PRO %}">{{ productos.ID_PRODUCTO_PRO }}</th>
+                        <td>{{ productos.NOMBRE_PRO }}</td>
+                        <td>{{ productos.DESCRIPCION_PRO }}</td>
+                        <td>{{ productos.EXISTENCIA_PRO }}</td>
+                        <td>${{ productos.PRECIO_PRO }}</td>
+                        <td>{{ productos.CATEGORIA_PRO_ID }}</td>
+                        <td>
+                            {% if productos.ESTADO_PRO == '1' %}
+                                Activado
+                            {% else %}
+                                Desactivado
+                            {% endif %}
+                        </td>
+                        <td><img src='/Media/productos/{{productos.FOTO_PRO }}' style="width: 200px; height: auto;" /></td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -8,18 +8,15 @@
         <!-- Productos -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-6 productos">
             {% for a in productosquerry %}
-            {% if a.estado %}
-
-
-
+            {% if a.ESTADO_PRO == '1' %}
             <div class="col ">
                 <!-- Agrega el id del producto al data-bs-target -->
-                <a data-bs-toggle="modal" data-bs-target="#ModalProductos{{ a.id_producto_pro  }}">
+                <a data-bs-toggle="modal" data-bs-target="#ModalProductos{{ a.ID_PRODUCTO  }}">
                     <div class="card shadow-sm Mproducto img-huevos productoscol">
-                        <img src='/Media/productos/{{a.foto}}'/>
+                        <img src='/Media/productos/{{a.FOTO_PRO}}'/>
                         <div class="card-body">
-                            <h5 class="card-title">{{a.nombre_pro}}</h5>
-                            <p>${{a.precio_pro}}</p>
+                            <h5 class="card-title">{{a.NOMBRE_PRO}}</h5>
+                            <p>${{a.PRECI_PRO}}</p>
                         </div>
                     </div>
                 </a>
@@ -43,7 +40,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-center">
-                                <img src='/Media/productos/{{a.foto}}' class='modal-image img-fluid' />
+                                <img src='/Media/productos/{{a.foto_pro}}' class='modal-image img-fluid' />
                                 <p>${{a.precio_pro}}</p>
                             </div>
                             <form class="text-center">

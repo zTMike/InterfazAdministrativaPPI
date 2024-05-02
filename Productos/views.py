@@ -6,6 +6,7 @@ from django.http import Http404
 from django.conf import settings
 import os
 
+
 # Create your views here.
 def productos(request):
 
@@ -16,20 +17,31 @@ def productos(request):
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
+        print(productos)
+
+        
         return render(request, 'Productos.html', {'productosquerry': productos})
 
 def crearproducto(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre_pro')
         descripcion = request.POST.get('descripcion_pro')
-        precio = request.POST.get('precio_pro')
+        precio = int(float(request.POST.get('precio_pro').replace(',', '.')))
         stock = request.POST.get('stock_pro')
         categoria = request.POST.get('categoria_pro')
         foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
         estado = 1 if request.POST.get('estado_pro') == 'on' else 0
+        print(estado)
+        with connection.cursor() as cursor:
+        
+            cursor.execute("SELECT MAX(ID_PRODUCTO_PRO) FROM PRODUCTOS_PRODUCTO")
+            max_id = cursor.fetchone()[0]
+
+           
+            id_producto_pro = 1 if max_id is None else max_id + 1
 
         
-        if not nombre or not descripcion or not precio or not stock or not categoria or not estado or not foto:
+        if not nombre or not descripcion or not precio or not stock or not categoria  or not foto:
             messages.error(request, 'Todos los campos son obligatorios')
             return redirect('crearproducto')
         else:
@@ -41,9 +53,9 @@ def crearproducto(request):
 
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    INSERT INTO productos_producto (nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id,estado,foto)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
-                """, [nombre, descripcion, precio, stock, categoria, estado, foto.name])  # Guardar solo el nombre de la foto en la base de datos
+                    INSERT INTO productos_producto (id_producto_pro,nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id,estado_pro,foto_pro)
+                    VALUES (%s,%s, %s, %s, %s, %s, %s, %s)
+                """, [id_producto_pro,nombre, descripcion, precio, stock, categoria, estado, foto.name])  # Guardar solo el nombre de la foto en la base de datos
                 connection.commit()
             messages.success(request, 'Producto Creado Correctamente')
             return redirect('productosadmin')
@@ -62,12 +74,13 @@ def crearproducto(request):
 
 def productosadmin(request):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_producto")
+        cursor.execute("SELECT * FROM productos_producto ORDER BY id_producto_pro")
         column_names = [col[0] for col in cursor.description]
         productos = [
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
+        print(productos)
         return render(request, 'AdminProductos.html', {'productos': productos})
 
 def producto_detalles(request, id_producto_pro):
@@ -82,10 +95,12 @@ def producto_detalles(request, id_producto_pro):
             'descripcion_pro': row[2],
             'existencia_pro': row[3],
             'precio_pro': row[4],
-            'foto': row[5],
-            'estado': row[6],
+            'foto_pro': row[5],
+            'estado_pro': row[6],
             'categoria_pro': row[7]
         }
+    producto['estado_pro'] = bool(int(producto['estado_pro']))
+       
         
 
     if request.method == 'POST':
@@ -93,13 +108,12 @@ def producto_detalles(request, id_producto_pro):
         if action == 'Actualizar':
             nombre = request.POST.get('nombre_pro')
             descripcion = request.POST.get('descripcion_pro')
-            precio = request.POST.get('precio_pro')
-            existencias = request.POST.get('existencia_pro')
+            precio = int(request.POST.get('precio_pro').split(',')[0])
+            existencias = int(request.POST.get('existencia_pro'))
             categoria = request.POST.get('categoria_pro')
-            estado = 1 if request.POST.get('estado') == 'on' else 0
+            estado = 1 if request.POST.get('estado_pro') == 'on' else 0
             foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
-            print('Soy foto antes de if')
-            print(foto)
+            print(estado)
             if foto is None:
                 with connection.cursor() as cursor:
                     cursor.execute("""
@@ -109,7 +123,7 @@ def producto_detalles(request, id_producto_pro):
                         precio_pro = %s,
                         existencia_pro = %s,
                         categoria_pro_id = %s,
-                        estado = %s
+                        estado_pro = %s
                         WHERE id_producto_pro = %s
                     """, [nombre, descripcion, precio, existencias, categoria, estado, id_producto_pro])
                     connection.commit()
@@ -125,10 +139,11 @@ def producto_detalles(request, id_producto_pro):
                         'descripcion_pro': row[2],
                         'existencia_pro': row[3],
                         'precio_pro': row[4],
-                        'foto': row[5],
-                        'estado': row[6],
+                        'foto_pro': row[5],
+                        'estado_pro': row[6],
                         'categoria_pro': row[7]
                     }
+                producto['estado_pro'] = bool(int(producto['estado_pro']))
                 return render(request, 'ProductoDetalles.html', {'producto': producto})
             else:
                 ruta_foto = os.path.join(settings.BASE_DIR, 'Media', 'productos', foto.name)
@@ -136,7 +151,7 @@ def producto_detalles(request, id_producto_pro):
                     for chunk in foto.chunks():
                         destination.write(chunk)
 
-                print(foto.name)
+                
 
                 with connection.cursor() as cursor:
                     cursor.execute("""
@@ -146,8 +161,8 @@ def producto_detalles(request, id_producto_pro):
                         precio_pro = %s,
                         existencia_pro = %s,
                         categoria_pro_id = %s,
-                        estado = %s,
-                        foto = %s
+                        estado_pro = %s,
+                        foto_pro = %s
                         WHERE id_producto_pro = %s
                     """, [nombre, descripcion, precio, existencias, categoria, estado, foto.name, id_producto_pro])
                     connection.commit()
@@ -163,10 +178,11 @@ def producto_detalles(request, id_producto_pro):
                         'descripcion_pro': row[2],
                         'existencia_pro': row[3],
                         'precio_pro': row[4],
-                        'foto': row[5],
-                        'estado': row[6],
+                        'foto_pro': row[5],
+                        'estado_pro': row[6],
                         'categoria_pro': row[7]
                     }
+                    producto['estado_pro'] = bool(int(request.POST.get('estado_pro')))
                 return render(request, 'ProductoDetalles.html', {'producto': producto})
         elif action == 'Eliminar':
             with connection.cursor() as cursor:
@@ -201,6 +217,7 @@ def categoria_detalles(request, id_categoria_cat):
             'descripcion_cat': row[2]
             # Añade aquí los demás campos de tu tabla de categorías
         }
+        print(categoria)
 
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -241,9 +258,22 @@ def categoria_detalles(request, id_categoria_cat):
 
     return render(request, 'CategoriaDetalles.html', {'categoria': categoria})
 def crearcategoria(request):
+    
+
+
     if request.method == 'POST':
+        with connection.cursor() as cursor:
+        
+            cursor.execute("SELECT MAX(ID_CATEGORIA_CAT) FROM PRODUCTOS_CATEGORIA")
+            max_id = cursor.fetchone()[0]
+
+           
+            next_id = 1 if max_id is None else max_id + 1
+
+
         nombre = request.POST.get('nombre_cat')
         descripcion = request.POST.get('descripcion_cat')
+        
         
         if not nombre or not descripcion:
             messages.error(request, 'Todos los campos son obligatorios')
@@ -251,9 +281,9 @@ def crearcategoria(request):
         else:
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    INSERT INTO productos_categoria (nombre_cat, descripcion_cat)
-                    VALUES (%s, %s)
-                """, [nombre, descripcion])
+                    INSERT INTO productos_categoria (id_categoria_cat,nombre_cat, descripcion_cat)
+                    VALUES (%s, %s, %s)
+                """, [next_id,nombre, descripcion])
                 connection.commit()
             messages.success(request, 'Categoria Creada Correctamente')
             return redirect('categoriasadmin')
