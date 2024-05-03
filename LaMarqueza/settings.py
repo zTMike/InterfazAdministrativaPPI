@@ -172,9 +172,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
 LOGOUT_REDIRECT_URL = 'index.html'
 LOGOUT_REDIRECT_URL = 'index'
 
-MIGRATION_MODULES = {
-    'Usuarios': None,
-    'Productos': None,
-    'Ventas': None,
-    
-}
