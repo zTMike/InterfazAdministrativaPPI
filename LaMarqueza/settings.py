@@ -88,7 +88,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LaMarqueza.wsgi.application'
 
+MIGRATION_MODULES = {
+    'Usuarios': None,
+    'Productos': None,
+    'Ventas': None,
+}
 
+usuario = getpass.getuser()
 
 if usuario == 'zTMike':
     DATABASES = {
