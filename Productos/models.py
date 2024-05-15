@@ -5,6 +5,10 @@ class categoria (models.Model):
     id_categoria_cat = models.AutoField(primary_key=True)
     nombre_cat = models.CharField(max_length=50)
     descripcion_cat = models.TextField()
+
+    class Meta:
+        db_table = 'categorias'
+    
     def __str__(self):
         texto= "{0}"
         return texto.format(self.nombre_cat)
@@ -20,7 +24,9 @@ class producto (models.Model):
     precio_pro = models.IntegerField()
     foto=models.ImageField(upload_to='productos', null=True, blank=True)
     estado=models.BooleanField(default=True)
-    
+    class Meta:
+        db_table = 'productos'
+        
     def __str__(self):
         return self.nombre_pro
     def delete(self, *args, **kwargs):

@@ -18,7 +18,8 @@ class orde_venta(models.Model):
     total_ord = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
     estado_ord = models.CharField(max_length=1, choices=ESTADO_CHOICES, default='P')
    
-   
+    class Meta:
+            db_table = 'ordenes'
 
     def __str__(self):
         return str(self.id_orden_ord)
@@ -37,6 +38,7 @@ class detalle_orden(models.Model):
         self.subtotal_def = self.precio_det * self.cantidad_def
         super().save(*args, **kwargs)
 
-    
+    class Meta:
+            db_table = 'detalles_ordenes'
     def __str__(self):
         return str(self.id_detalle_det)

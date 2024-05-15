@@ -141,8 +141,7 @@ def usuario_detalles (request, id_usuario_usu):
             'ultimologin': row[6],
             'is_active': row[7],
             'is_staff': row[8]
-            
-            
+                
         }
         usuario['is_active'] = bool(int(usuario['is_active']))
         usuario['is_staff'] = bool(int(usuario['is_staff']))

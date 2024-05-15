@@ -88,8 +88,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LaMarqueza.wsgi.application'
 
-usuario = getpass.getuser()
-print(usuario)
+
 
 if usuario == 'zTMike':
     DATABASES = {
