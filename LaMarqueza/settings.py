@@ -101,8 +101,8 @@ if usuario == 'zTMike':
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'xe',
-        'USER': 'AdminPrimeraBD',
-        'PASSWORD': '0000',
+        'USER': 'adminmarquesa',
+        'PASSWORD': '31415926',
         'HOST': 'localhost',
         'PORT': '1521',
     }

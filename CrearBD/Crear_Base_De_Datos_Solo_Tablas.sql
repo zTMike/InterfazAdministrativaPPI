@@ -11,7 +11,7 @@ CREATE TABLE categorias (
   nombre_cat VARCHAR2(50) NOT NULL,
   descripcion_cat VARCHAR2(255) NOT NULL,
   PRIMARY KEY (id_categoria_cat)
-) TABLESPACE primerabd;
+) TABLESPACE lamarquesabd;
 
 -- Tabla productos_producto
 CREATE TABLE productos (
@@ -24,7 +24,7 @@ CREATE TABLE productos (
   estado_pro VARCHAR2(1) NOT NULL,
   categoria_pro_id NUMBER(10) NOT NULL,
   PRIMARY KEY (id_producto_pro)
-) TABLESPACE primerabd;
+) TABLESPACE lamarquesabd;
 
 -- Tabla usuarios_usuario
 CREATE TABLE usuarios (
@@ -38,7 +38,7 @@ CREATE TABLE usuarios (
   is_active VARCHAR2(1) NOT NULL,
   is_staff VARCHAR2(1) NOT NULL,
   PRIMARY KEY (id_usuario_usu)
-) TABLESPACE primerabd;
+) TABLESPACE lamarquesabd;
 
 -- Tabla ventas_orde_venta
 CREATE TABLE ordenes (
@@ -48,7 +48,7 @@ CREATE TABLE ordenes (
   estado_ord VARCHAR2(1) NOT NULL,
   id_usuario_ord NUMBER(10) NOT NULL,
   PRIMARY KEY (id_orden_ord)
-) TABLESPACE primerabd;
+) TABLESPACE lamarquesabd;
 
 -- Tabla ventas_detalle_orden
 CREATE TABLE detalles_ordenes (
@@ -60,4 +60,4 @@ CREATE TABLE detalles_ordenes (
   id_producto_det_id NUMBER(10) NOT NULL,
   id_orden_det_id NUMBER(10) NOT NULL,
   PRIMARY KEY (id_detalle_det)
-) TABLESPACE primerabd;
+) TABLESPACE lamarquesabd;
