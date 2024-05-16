@@ -72,7 +72,7 @@ def logout_view(request):
 def usuarios(request):
 
    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM usuarios_usuario")
+        cursor.execute("SELECT * FROM usuarios")
         column_names = [col[0] for col in cursor.description]
         usuariosquery = [
             dict(zip(column_names, row))
@@ -115,7 +115,7 @@ def crear_usuario(request):
             return redirect('crear_usuario')
         else:
             with connection.cursor() as cursor:
-               cursor.execute("""INSERT INTO Usuarios_usuario (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
+               cursor.execute("""INSERT INTO usuarios (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
                                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                             """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_active, is_staff])
                             
@@ -127,7 +127,7 @@ def crear_usuario(request):
 def usuario_detalles (request, id_usuario_usu):
 
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM Usuarios_usuario WHERE id_usuario_usu = %s", [id_usuario_usu])
+        cursor.execute("SELECT * FROM usuarios WHERE id_usuario_usu = %s", [id_usuario_usu])
         row = cursor.fetchone()
         if row is None:
             raise Http404("Usuario no existe")
@@ -160,7 +160,7 @@ def usuario_detalles (request, id_usuario_usu):
             
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    UPDATE Usuarios_usuario 
+                    UPDATE usuarios 
                     SET nombre_usu = %s, 
                         apellido_usu = %s, 
                         correo_usu = %s, 
@@ -174,7 +174,7 @@ def usuario_detalles (request, id_usuario_usu):
             print('Usuario actualizado')
 
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM Usuarios_usuario WHERE id_usuario_usu = %s", [id_usuario_usu])
+                cursor.execute("SELECT * FROM usuarios WHERE id_usuario_usu = %s", [id_usuario_usu])
                 row = cursor.fetchone()
                 usuario = {
                     'id_usuario_usu': row[0],
@@ -195,7 +195,7 @@ def usuario_detalles (request, id_usuario_usu):
         elif action == 'Eliminar':
             # Eliminar el usuario
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM Usuarios_usuario WHERE id_usuario_usu = %s", [id_usuario_usu])
+                cursor.execute("DELETE FROM usuarios WHERE id_usuario_usu = %s", [id_usuario_usu])
                 connection.commit()
                 
             return redirect('usuarios')

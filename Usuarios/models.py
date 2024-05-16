@@ -24,13 +24,15 @@ class UsuarioManager(BaseUserManager):
         return self.create_user(id_usuario_usu ,correo_usu, contrasena_usu, **extra_fields)
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
-    id_usuario_usu = models.IntegerField(primary_key=True)
+    id_usuario_usu = models.PositiveIntegerField(primary_key=True)
     nombre_usu = models.CharField(max_length=50)
     apellido_usu = models.CharField(max_length=50)
-    correo_usu = models.EmailField(unique=True)
-    telefono_usu = models.CharField(max_length=10, blank=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    correo_usu = models.EmailField(max_length=50, unique=True)
+    telefono_usu = models.CharField(max_length=15, blank=True, null=True)
+    password = models.CharField(max_length=128)
+    last_login = models.DateField(blank=True, null=True)
+    is_active = models.CharField(max_length=1 , default='1')
+    is_staff = models.CharField(max_length=1 ,default='0')
     
 
     objects = UsuarioManager()

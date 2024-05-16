@@ -3,6 +3,10 @@ DROP TABLE ordenes;
 DROP TABLE productos;
 DROP TABLE categorias;
 DROP TABLE usuarios;
+-- Mover Chek a constrains 
+-- Mover Unique a constrains
+-- Mover Primary Key a constrains
+-- Mover Foreign Key a constrains
 
 
 -- Tabla productos_categoria
@@ -14,7 +18,7 @@ CREATE TABLE categorias (
 ) TABLESPACE lamarquesabd;
 
 -- Tabla productos_producto
-CREATE TABLE productos (
+CREATE TABLE productos ( 
   id_producto_pro NUMBER(10) NOT NULL CHECK(id_producto_pro > 0),
   nombre_pro VARCHAR2(50) NOT NULL,
   descripcion_pro VARCHAR2(255) NOT NULL,

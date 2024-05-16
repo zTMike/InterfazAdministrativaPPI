@@ -11,7 +11,7 @@ import os
 def productos(request):
 
    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_producto")
+        cursor.execute("SELECT * FROM productos")
         column_names = [col[0] for col in cursor.description]
         productos = [
             dict(zip(column_names, row))
@@ -34,7 +34,7 @@ def crearproducto(request):
         print(estado)
         with connection.cursor() as cursor:
         
-            cursor.execute("SELECT MAX(ID_PRODUCTO_PRO) FROM PRODUCTOS_PRODUCTO")
+            cursor.execute("SELECT MAX(ID_PRODUCTO_PRO) FROM productos")
             max_id = cursor.fetchone()[0]
 
            
@@ -53,7 +53,7 @@ def crearproducto(request):
 
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    INSERT INTO productos_producto (id_producto_pro,nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id,estado_pro,foto_pro)
+                    INSERT INTO productos (id_producto_pro,nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id,estado_pro,foto_pro)
                     VALUES (%s,%s, %s, %s, %s, %s, %s, %s)
                 """, [id_producto_pro,nombre, descripcion, precio, stock, categoria, estado, foto.name])  # Guardar solo el nombre de la foto en la base de datos
                 connection.commit()
@@ -62,7 +62,7 @@ def crearproducto(request):
     
     # Obtener todas las categorías
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_categoria")
+        cursor.execute("SELECT * FROM productos")
         column_names = [col[0] for col in cursor.description]
         categorias = [
             dict(zip(column_names, row))
@@ -74,7 +74,7 @@ def crearproducto(request):
 
 def productosadmin(request):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_producto ORDER BY id_producto_pro")
+        cursor.execute("SELECT * FROM productos ORDER BY id_producto_pro")
         column_names = [col[0] for col in cursor.description]
         productos = [
             dict(zip(column_names, row))
@@ -85,7 +85,7 @@ def productosadmin(request):
 
 def producto_detalles(request, id_producto_pro):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_producto WHERE id_producto_pro = %s", [id_producto_pro])
+        cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
         row = cursor.fetchone()
         if row is None:
             raise Http404("Producto no existe")
@@ -117,7 +117,7 @@ def producto_detalles(request, id_producto_pro):
             if foto is None:
                 with connection.cursor() as cursor:
                     cursor.execute("""
-                        UPDATE productos_producto
+                        UPDATE productos
                         SET nombre_pro = %s,
                         descripcion_pro = %s,
                         precio_pro = %s,
@@ -129,7 +129,7 @@ def producto_detalles(request, id_producto_pro):
                     connection.commit()
                 messages.success(request, 'Producto Actualizado Correctamente')
                 with connection.cursor() as cursor:
-                    cursor.execute("SELECT * FROM productos_producto WHERE id_producto_pro = %s", [id_producto_pro])
+                    cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
                     row = cursor.fetchone()
                     if row is None:
                         messages.error(request, 'Producto no encontrado')
@@ -155,7 +155,7 @@ def producto_detalles(request, id_producto_pro):
 
                 with connection.cursor() as cursor:
                     cursor.execute("""
-                        UPDATE productos_producto
+                        UPDATE productos
                         SET nombre_pro = %s,
                         descripcion_pro = %s,
                         precio_pro = %s,
@@ -168,7 +168,7 @@ def producto_detalles(request, id_producto_pro):
                     connection.commit()
                 messages.success(request, 'Producto Actualizado Correctamente')
                 with connection.cursor() as cursor:
-                    cursor.execute("SELECT * FROM productos_producto WHERE id_producto_pro = %s", [id_producto_pro])
+                    cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
                     row = cursor.fetchone()
                     if row is None:
                         messages.error(request, 'Producto no encontrado')
@@ -186,7 +186,7 @@ def producto_detalles(request, id_producto_pro):
                 return render(request, 'ProductoDetalles.html', {'producto': producto})
         elif action == 'Eliminar':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM productos_producto WHERE id_producto_pro = %s", [id_producto_pro])
+                cursor.execute("DELETE FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
                 connection.commit()
 
             return redirect('productosadmin')
@@ -198,7 +198,7 @@ def producto_detalles(request, id_producto_pro):
 def categoriasadmin(request):
     
    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_categoria")
+        cursor.execute("SELECT * FROM categorias")
         column_names = [col[0] for col in cursor.description]
         categorias = [
             dict(zip(column_names, row))
@@ -207,7 +207,7 @@ def categoriasadmin(request):
         return render(request, 'CategoriasAdmin.html', {'categorias': categorias})
 def categoria_detalles(request, id_categoria_cat):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_categoria WHERE id_categoria_cat = %s", [id_categoria_cat])
+        cursor.execute("SELECT * FROM categorias WHERE id_categoria_cat = %s", [id_categoria_cat])
         row = cursor.fetchone()
         if row is None:
             raise Http404("Categoria no existe")
@@ -228,7 +228,7 @@ def categoria_detalles(request, id_categoria_cat):
 
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    UPDATE productos_categoria
+                    UPDATE categorias
                     SET nombre_cat = %s,
                     descripcion_cat = %s
                     WHERE id_categoria_cat = %s
@@ -237,7 +237,7 @@ def categoria_detalles(request, id_categoria_cat):
                 messages.error(request, 'Categoria Actualizada Correctamente')
 
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM productos_categoria WHERE id_categoria_cat = %s", [id_categoria_cat])
+                cursor.execute("SELECT * FROM categorias WHERE id_categoria_cat = %s", [id_categoria_cat])
                 row = cursor.fetchone()
                 if row is None:
                     messages.error(request, 'Categoria Actualizada Correctamente')
@@ -251,7 +251,7 @@ def categoria_detalles(request, id_categoria_cat):
 
         elif action == 'Eliminar':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM productos_categoria WHERE id_categoria_cat = %s", [id_categoria_cat])
+                cursor.execute("DELETE FROM categorias WHERE id_categoria_cat = %s", [id_categoria_cat])
                 connection.commit()
 
             return redirect('categoriasadmin')
@@ -264,7 +264,7 @@ def crearcategoria(request):
     if request.method == 'POST':
         with connection.cursor() as cursor:
         
-            cursor.execute("SELECT MAX(ID_CATEGORIA_CAT) FROM PRODUCTOS_CATEGORIA")
+            cursor.execute("SELECT MAX(ID_CATEGORIA_CAT) FROM categorias")
             max_id = cursor.fetchone()[0]
 
            
@@ -281,7 +281,7 @@ def crearcategoria(request):
         else:
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    INSERT INTO productos_categoria (id_categoria_cat,nombre_cat, descripcion_cat)
+                    INSERT INTO categorias (id_categoria_cat,nombre_cat, descripcion_cat)
                     VALUES (%s, %s, %s)
                 """, [next_id,nombre, descripcion])
                 connection.commit()
