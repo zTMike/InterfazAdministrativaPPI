@@ -7,7 +7,7 @@ from django.conf import settings
 import os
 
 
-# Create your views here.
+# Mostrar Productos
 def productos(request):
 
    with connection.cursor() as cursor:
@@ -17,11 +17,11 @@ def productos(request):
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
-        print(productos)
+        
 
         
         return render(request, 'Productos.html', {'productosquerry': productos})
-
+#Administrar Productos
 def crearproducto(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre_pro')
@@ -31,7 +31,7 @@ def crearproducto(request):
         categoria = request.POST.get('categoria_pro')
         foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
         estado = 1 if request.POST.get('estado_pro') == 'on' else 0
-        print(estado)
+        
         with connection.cursor() as cursor:
         
             cursor.execute("SELECT MAX(ID_PRODUCTO_PRO) FROM productos")
@@ -62,7 +62,7 @@ def crearproducto(request):
     
     # Obtener todas las categorías
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos")
+        cursor.execute("SELECT * FROM categorias")
         column_names = [col[0] for col in cursor.description]
         categorias = [
             dict(zip(column_names, row))
@@ -71,7 +71,6 @@ def crearproducto(request):
 
     # Pasar las categorías a la plantilla
     return render(request, 'CrearProductos.html', {'categorias': categorias})
-
 def productosadmin(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM productos ORDER BY id_producto_pro")
@@ -80,9 +79,8 @@ def productosadmin(request):
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
-        print(productos)
+        
         return render(request, 'AdminProductos.html', {'productos': productos})
-
 def producto_detalles(request, id_producto_pro):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
@@ -113,7 +111,7 @@ def producto_detalles(request, id_producto_pro):
             categoria = request.POST.get('categoria_pro')
             estado = 1 if request.POST.get('estado_pro') == 'on' else 0
             foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
-            print(estado)
+            
             if foto is None:
                 with connection.cursor() as cursor:
                     cursor.execute("""
@@ -192,9 +190,7 @@ def producto_detalles(request, id_producto_pro):
             return redirect('productosadmin')
 
     return render(request, 'ProductoDetalles.html', {'producto': producto})
-
-
-
+#Administrar Categorias
 def categoriasadmin(request):
     
    with connection.cursor() as cursor:
@@ -217,7 +213,7 @@ def categoria_detalles(request, id_categoria_cat):
             'descripcion_cat': row[2]
             # Añade aquí los demás campos de tu tabla de categorías
         }
-        print(categoria)
+        
 
     if request.method == 'POST':
         action = request.POST.get('action')

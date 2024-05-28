@@ -1,0 +1,54 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+    <div>
+        
+        
+        {% with detalles.0 as detalle %}
+        <h1>Detalles de orden id:{{ detalle.ID_ORDEN_DET_ID }}</h1>
+        
+        <form method="POST" action="{% url "actualizar_orden" %}">
+            
+            {% csrf_token %}
+            <label for="estado">Estado de la orden:</label>
+            <select name="estado" id="estado">
+                <option value="Pendiente" {% if detalle.ESTADO_ORD == "P" %}selected{% endif %}>Pendiente</option>
+                <option value="Aprobado" {% if detalle.ESTADO_ORD == "A" %}selected{% endif %}>Aprobado</option>
+                <option value="Cancelado" {% if detalle.ESTADO_ORD == "C" %}selected{% endif %}>Cancelado</option>
+                <option value="Entregado" {% if detalle.ESTADO_ORD == "E" %}selected{% endif %}>Entregado</option>
+            </select>
+            <input type="hidden" name="id_orden" value="{{ detalle.ID_ORDEN_DET_ID }}">
+            <button type="submit">Actualizar estado</button>
+        </form>
+        {% endwith %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID Detalle</th>
+                    <th scope="col">ID Producto</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Cantidad Entregada</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <label for=""> {{ detalles.ID_DETALLE_DET}}</label>
+                {% for item in detalles %}
+                    <tr>
+                        <th scope="row"><a href="{% url "Detalles_detalles_orden" item.ID_DETALLE_DET %}">{{ item.ID_DETALLE_DET }}</th>
+                        <td>{{ item.NOMBRE_PRO }}</td>
+                        <td>{{ item.CANTIDAD_DET }}</td>
+                        <td>{{ item.CANTIDAD_ENTREGADA_DET }}</td>
+                        <td>${{ item.PRECIO_DET }}</td>
+                        <td>${{ item.SUBTOTAL_DET }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock Administrador %}

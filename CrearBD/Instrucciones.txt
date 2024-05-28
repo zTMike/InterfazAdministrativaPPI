@@ -1,0 +1,5 @@
+1)Ejecutar scrip de Creacion de tablas
+2)Ejecutar Scrip de Creacion de relaciones (Constrains)
+3)realizar un py .\manage.py migrate
+4)realizar un py .\manage.py runserver
+5)todo OK

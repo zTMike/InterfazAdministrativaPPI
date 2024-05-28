@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="stat" />
     <link type="text/css" rel="stylesheet" href='{% static "CSS/Colores.css" %}' />
     <link type="text/css" rel="stylesheet" href='{% static "CSS/Estilos.css" %}' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
                 style="line-height: 0.8">
                 <img src='{% static "IMG/granja.png" %}' alt="Bootstrap" width="54" height="54"
                     style="border-radius: 33%" />
-                Finca <br />La Marqueza
+                Finca <br />La Marquesa
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -57,19 +58,35 @@
                     <li class="nav-item">
                         <a class="nav-link verde-oscuro" href="{% url 'contactenos' %}">Contactenos</a>
                     </li>
+                    
+                    
+                    
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        {% if request.user.is_staff %}
-                        <a href="{% url 'administrador' %}" class="nav-link verde-oscuro">Admin</a>
-                        {% else %}
-                        <a href="" class="nav-link verde-oscuro">Mi Perfil</a>
-                        {% endif %}
+                        <a class="nav-link verde-oscuro" href="{% url 'carrito' request.user.id_usuario_usu %}">
+                            <i class="fas fa-shopping-cart"></i> carrito
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link verde-oscuro" href="{% url 'logout' %}">Cerrar Sesion</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle verde-oscuro" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if request.user.is_staff %}
+                                Admin
+                            {% else %}
+                                Mi Perfil
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if request.user.is_staff %}
+                                <li><a class="dropdown-item " href="{% url 'administrador' %}">Admin</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item " href="{% url 'perfil' %}">Mi Perfil</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider "></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar Sesion</a></li>
+                        </ul>
                     </li>
-                    {% else %}
+                {% else %}
                     <li class="nav-item">
                         <a href="{% url 'iniciarsesion' %}">
                             <button type="button " class="btn btn-primary btnInicio">
@@ -77,7 +94,8 @@
                             </button>
                         </a>
                     </li>
-                    {% endif %}
+                {% endif %}
+                    
 
 
                     </li>
@@ -103,7 +121,7 @@
                         style="border-radius: 100%" />
                     <p>
                         <span class="naranja">Finca</span> <br />
-                        <span class="verde-oscuro">La Marqueza</span>
+                        <span class="verde-oscuro">La Marquesa</span>
                     </p>
                 </a>
             </div>
@@ -125,7 +143,7 @@
                 <h5 class="card-title">Contactenos</h5>
                 <a href="#" class="iconoInfo">
                     <img src='{% static "IMG/facebook-square.svg" %}' class="iconoInfo" alt="" /> Finca
-                    La Marqueza
+                    La Marquesa
                 </a>
                 <br />
                 <a href="#" class="iconoInfo">
@@ -149,6 +167,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script src='{% static "JS/JavaScript.js" %}'></script>
+    
 </body>
 
 </html>

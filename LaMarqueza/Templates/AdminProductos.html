@@ -4,7 +4,7 @@
 {% block Administrador %}
     <div>
         <h1>Productos</h1>
-        <a href="{% url 'crearproducto' %}" class="btn btn-primary float-right">Crear Categoria</a>
+        <a href="{% url 'crearproducto' %}" class="btn btn-primary float-right">Crear Producto</a>
         <table class="table">
             <thead>
                 <tr>
@@ -28,7 +28,7 @@
                         <td>${{ productos.PRECIO_PRO }}</td>
                         <td>{{ productos.CATEGORIA_PRO_ID }}</td>
                         <td>
-                            {% if productos.ESTADO_PRO == '1' %}
+                            {% if productos.ESTADO_PRO == 1 %}
                                 Activado
                             {% else %}
                                 Desactivado

@@ -16,6 +16,8 @@ def login_view(request):
     if request.method == 'POST':
         correo_usu = request.POST['email']
         contrasena_usu = request.POST['password']
+    else:
+        return redirect('iniciarsesion')
         
     
     user = authenticate(request, username=correo_usu, password=contrasena_usu)
@@ -80,16 +82,6 @@ def usuarios(request):
         ]
         return render(request, 'AdminUsuarios.html', {'usuarios': usuariosquery})
 
-def productosadmin(request):
-
-   with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos_producto")
-        column_names = [col[0] for col in cursor.description]
-        productos = [
-            dict(zip(column_names, row))
-            for row in cursor.fetchall()
-        ]
-        return render(request, 'ProductosAdmin.html', {'productos': productos})
 
 def iniciarsesion(request):
     return render(request, 'registration/login.html')
@@ -107,7 +99,7 @@ def crear_usuario(request):
         password = request.POST.get('password_usu')
         
         password = make_password(password)
-        print(password)
+        
         is_staff = 1 if request.POST.get('is_staff', False) == 'on' else 0
         is_active = 1
         if not nombre or not apellido or not correo or not telefono or not password:
@@ -171,7 +163,7 @@ def usuario_detalles (request, id_usuario_usu):
                 """, [nombre, apellido, correo, telefono, is_staff, is_active, id_usuario_usu])
                 connection.commit()
                 messages.error(request, 'Usuario Actualizado Correctamente')
-            print('Usuario actualizado')
+            
 
             with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM usuarios WHERE id_usuario_usu = %s", [id_usuario_usu])
@@ -190,7 +182,7 @@ def usuario_detalles (request, id_usuario_usu):
                 
                 usuario['is_active'] = bool(int(usuario['is_active']))
                 usuario['is_staff'] = bool(int(usuario['is_staff']))
-                print(usuario)
+                
             return render(request, 'UsuarioDetalles.html', {'usuario': usuario})
         elif action == 'Eliminar':
             # Eliminar el usuario
@@ -200,3 +192,36 @@ def usuario_detalles (request, id_usuario_usu):
                 
             return redirect('usuarios')
     return render(request, 'UsuarioDetalles.html', {'usuario': usuario})
+
+
+
+def perfil(request):
+    usuario_id = request.user.id_usuario_usu  # Asegúrate de que esto obtiene el ID correcto del usuario
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT 
+                ordenes.id_orden_ord,
+                ordenes.fecha_ord,
+                ordenes.total_ord,
+                detalles_ordenes.cantidad_det,
+                detalles_ordenes.cantidad_entregada_det,
+                detalles_ordenes.precio_det,
+                detalles_ordenes.subtotal_det,
+                productos.nombre_pro,
+                productos.foto_pro,
+                ordenes.estado_ord
+            FROM 
+                ordenes
+            INNER JOIN 
+                detalles_ordenes ON ordenes.id_orden_ord = detalles_ordenes.id_orden_det_id
+            INNER JOIN 
+                productos ON detalles_ordenes.id_producto_det_id = productos.id_producto_pro
+            WHERE 
+                ordenes.id_usuario_ord = %s
+        """, [usuario_id])
+
+        detalles_pedidos = cursor.fetchall()
+    
+
+    return render(request, 'Perfil.html', {'detalles_pedidos': detalles_pedidos,})

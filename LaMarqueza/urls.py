@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from Productos.views import *
 from Usuarios.views import *
 from LaMarqueza.views import *
+from Ventas.views import *
 
 
 urlpatterns = [
@@ -29,6 +30,7 @@ urlpatterns = [
     path('', index,name='index'),
     path('',include('Usuarios.urls')),
     path('',include('Productos.urls')),
+    path('',include('Ventas.urls')),
     path('Productos/', productos,name='productos'),
     path('Nosotros/', nosotros,name='nosotros'),
     path('Contactenos/', contactenos,name='contactenos'),
@@ -36,6 +38,8 @@ urlpatterns = [
     path('Iniciarsesion/', iniciarsesion, name='iniciarsesion'),
     path('Registrarse/', registrarse, name='registrarse'),
     path('Administrador/', administrador,name='administrador'),
+
+
     
 
 ]

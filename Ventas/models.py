@@ -8,7 +8,7 @@ class orde_venta(models.Model):
     ESTADO_CHOICES = [
         ('P', 'Pendiente'),
         ('A', 'Aprovado'),
-        ('R', 'Rechazado'),
+        ('C', 'Cancelado'),
         ('E', 'Entregado'),
     ]
 
@@ -42,3 +42,29 @@ class detalle_orden(models.Model):
             db_table = 'detalles_ordenes'
     def __str__(self):
         return str(self.id_detalle_det)
+    
+class Carrito(models.Model):
+    id_carrito_car = models.AutoField(primary_key=True)
+    total_car = models.DecimalField(max_digits=10, decimal_places=2)
+    id_usuario_car = models.ForeignKey('Usuarios.Usuario', models.DO_NOTHING, db_column='id_usuario_ord')
+
+    class Meta:
+        db_table = 'carritos'
+
+    def __str__(self):
+        return str(self.id_carrito_car)
+
+
+class DetalleCarrito(models.Model):
+    id_detalle_dcar = models.AutoField(primary_key=True)
+    cantidad_dcar = models.IntegerField()
+    precio_dcar = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal_dcar = models.DecimalField(max_digits=10, decimal_places=2)
+    id_producto_dcar = models.ForeignKey(producto,on_delete=models.PROTECT)
+    id_carrito_dcar = models.ForeignKey(Carrito, on_delete=models.PROTECT)
+
+    class Meta:
+        db_table = 'detalles_carritos'
+
+    def __str__(self):
+        return str(self.id_detalle_dcar)

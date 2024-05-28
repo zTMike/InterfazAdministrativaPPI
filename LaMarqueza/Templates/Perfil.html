@@ -1,0 +1,111 @@
+{% extends "Principal.html" %}
+{% load static %}
+{% block Titulo %}Productos{% endblock Titulo %}
+
+{% block Boddy %}
+<style>
+    .oculto {
+        display: none;
+    }
+    
+    table {
+        margin: 0 auto;
+    }
+    .container2 {
+        margin-left: 41%;
+    }
+    .container3 {
+        margin-left: 39%;
+    }
+</style>
+
+    {% for pedido in detalles_pedidos %}
+    {% ifchanged pedido.0 %}
+       
+    <table class="table " style="max-width: 300px; /* Ajusta este valor según tus necesidades */">
+        <tr class="titulo-pedido" id="pedido{{ pedido.0 }}">
+            <th style="white-space: nowrap; padding: 5px;">Pedido</th>
+            <th style="white-space: nowrap; padding: 5px;">Fecha</th>
+            <th style="white-space: nowrap; padding: 5px;">Total</th>
+            <th style="white-space: nowrap; padding: 5px;">Estado</th>
+            {% if pedido.9 != 'C' %}
+            <th style="white-space: nowrap; padding: 5px;">Cancelar Pedido</th>
+            {% else %}
+            <td style="white-space: nowrap; padding: 5px;"></td>
+            {% endif %}
+
+           
+        </tr>
+        <tr >
+            <td style="white-space: nowrap; padding: 5px;">{{ pedido.0 }}</td>
+            <td style="white-space: nowrap; padding: 5px;">{{ pedido.1 }}</td>
+            <td style="white-space: nowrap; padding: 5px;">${{ pedido.2 }}</td>
+            <td style="white-space: nowrap; padding: 5px;">
+                {% if pedido.9 == 'P' %}
+                    Pendiente
+                {% elif pedido.9 == 'A' %}
+                    Aprobado
+                {% elif pedido.9 == 'C' %}
+                    Cancelado
+                {% elif pedido.9 == 'E' %}
+                    Entregado
+                {% else %}
+                    {{ pedido.9 }}
+                {% endif %}
+            </td>
+            {% if pedido.9 != 'C' %}
+            <td style="white-space: nowrap; padding: 5px;">
+                <a class="btn btn-danger" href="{% url 'cancelarpedido' pedido.0 %}">Cancelar</a>
+            </td>>
+            {% else %}
+            <td style="white-space: nowrap; padding: 5px;"></td>
+            {% endif %}
+
+        </tr>
+    </table>
+        
+    {% endifchanged %}
+    <div class="container2">
+    <table class="pedido{{ pedido.0 }} oculto table table-bordered" >
+        <tr>
+            <th class="text-center">Producto</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Cantidad entregada</th>
+            <th class="text-center">Precio</th>
+            <th class="text-center">Subtotal</th>
+            
+            <th>Imagen</th>
+        </tr>
+        <tr>
+            <td class="text-center align-middle">{{ pedido.7 }}</td>
+            <td class="text-center align-middle">{{ pedido.3 }}</td>
+            <td class="text-center align-middle">{{ pedido.4 }}</td>
+            <td class="text-center align-middle">${{ pedido.5 }}</td>
+            <td class="text-center align-middle">${{ pedido.6 }}</td>
+            <td class="text-center align-middle"><img src="/Media/productos/{{ pedido.8 }}" alt="{{ pedido.7 }}" style="width: 100px;"></td>
+        </tr>
+    </table>
+    </div>
+    {% ifchanged pedido.0 %}
+        </div>
+    {% endifchanged %}
+    {% endfor %}
+    
+
+<script>
+    var titulos = document.getElementsByClassName('titulo-pedido');
+    for (var i = 0; i < titulos.length; i++) {
+        titulos[i].addEventListener('click', function() {
+            var id = this.id.replace('pedido', '');
+            var elementos = document.getElementsByClassName('pedido' + id);
+            for (var j = 0; j < elementos.length; j++) {
+                if (elementos[j].style.display === 'none') {
+                    elementos[j].style.display = 'block';
+                } else {
+                    elementos[j].style.display = 'none';
+                }
+            }
+        });
+    }
+</script>
+{% endblock Boddy %}

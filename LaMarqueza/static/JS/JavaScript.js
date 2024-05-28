@@ -21,3 +21,5 @@ document.getElementById('Cerrar').addEventListener('click', function () {
     }
     
 });
+
+

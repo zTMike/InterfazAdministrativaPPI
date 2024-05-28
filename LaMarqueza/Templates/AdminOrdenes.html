@@ -1,0 +1,45 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+    <div>
+        <h1>Ordenes</h1>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID Orden</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Fecha Creacion</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for orden in ordenes %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'Detalles_Orden' orden.ID_ORDEN_ORD %}">{{ orden.ID_ORDEN_ORD }}</th>
+                        <td>{{ orden.ID_USUARIO_ORD }}</td>
+                        <td>{{ orden.FECHA_ORD }}</td>
+                        <td>
+                            
+                            {% if orden.ESTADO_ORD == 'A' %}
+                                Aprobado
+                            {% elif orden.ESTADO_ORD == 'C' %}
+                                Cancelado
+                            {% elif orden.ESTADO_ORD == 'P' %}
+                                Pendiente
+                            {% else %}
+                                Entregado
+                            {% endif %}
+                        </td>
+                        <td>${{ orden.TOTAL_ORD }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock Administrador %}
