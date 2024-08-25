@@ -1,5 +1,21 @@
+Crear el contenedor en oracledb
+1)Abrir CMD
+2)Ingresar SQLPLUS
+3)Ingresar usuario system y clave de tu oracle
+4)modificar el archivo de Crear_Espacio_usuario y poner tu ruta donde se guarda el archibo .bdf
+5)Copiar el archivo y pegarlo en el cmd
+
+
+
+
+Crear bd y ejecutar proyecto
 1)Ejecutar scrip de Creacion de tablas
 2)Ejecutar Scrip de Creacion de relaciones (Constrains)
 3)realizar un py .\manage.py migrate
-4)realizar un py .\manage.py runserver
-5)todo OK
+4)pip install django-jazzmin
+5)pip install mysqlclient
+6)pip install oracledb
+7)pip install pillow
+8)realizar un py .\manage.py runserver
+9)todo OK
+

@@ -25,7 +25,7 @@ CREATE TABLE productos (
 ) TABLESPACE lamarquesabd;
 
 CREATE TABLE usuarios (
-  id_usuario_usu NUMBER(10) NOT NULL,
+  id_usuario_usu NUMBER(15) NOT NULL,
   nombre_usu VARCHAR2(50) NOT NULL,
   apellido_usu VARCHAR2(50) NOT NULL,
   correo_usu VARCHAR2(50) NOT NULL,
