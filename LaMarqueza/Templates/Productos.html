@@ -28,37 +28,51 @@
             <!-- Seccion InfoProductos -->
             <div class="modal fade" id="ModalProductos{{ a.ID_PRODUCTO_PRO  }}" tabindex="-1"
                 aria-labelledby="ModalProductosLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header text-center">
                                 <h5 class="modal-title w-100" id="ModalProductosLabel">{{ a.NOMBRE_PRO }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-center">
-                                <div class="modal-body text-center">
-                                <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
-                                <p> Precio: ${{a.PRECIO_PRO}}</p>
-                                <p>Descripccion:<br> {{a.DESCRIPCION_PRO}}</p>
-                            </div>
-                               
-                            </div>
-                            <form class="text-center" method="POST" action="{% url 'agregar_carrito'%}">
-                                <div class="mb-3 w-50 mx-auto">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="usuario" value="{{ request.user.id_usuario_usu }}">
-                                    <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
-                                    <input type="hidden" name="precio" value="{{ a.PRECIO_PRO }}">
-                                    <input type="hidden" name="nombre" value="{{ a.NOMBRE_PRO }}">
-
-                                    <label class="form-label">Ingrese La Cantidad</label>
-                                    <input type="number" name="cantidad" class="form-control" id="exampleInputEmail1" min="1" aria-describedby="emailHelp">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
+                                        <p> Precio: ${{a.PRECIO_PRO}}</p>
+                                        <p>Descripccion:<br> {{a.DESCRIPCION_PRO}}</p>
+                                        <form class="text-center mt-3" method="POST" action="{% url 'agregar_carrito' %}">
+                                            <div class="mb-3 w-75 mx-auto">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="usuario" value="{{ request.user.id_usuario_usu }}">
+                                                <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
+                                                <input type="hidden" name="precio" value="{{ a.PRECIO_PRO }}">
+                                                <input type="hidden" name="nombre" value="{{ a.NOMBRE_PRO }}">
+                            
+                                                <label class="form-label">Ingrese La Cantidad</label>
+                                                <input type="number" name="cantidad" class="form-control" id="exampleInputEmail1" min="1" aria-describedby="emailHelp">
+                                            </div>
+                                            <div class="justify-content-center">
+                                                <button type="submit" id="Agregar" class="btn btn-secondary">Agregar al carrito</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <form class="text-center mt-3" method="POST" action="{% url 'agregar_resena' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="usuario" value="{{ request.user.id_usuario_usu }}">
+                                            <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
+                                            <div class="mb-3 w-75 mx-auto">
+                                                <label class="form-label">Ingrese su reseña</label>
+                                                <textarea name="resena" class="form-control" rows="3" required></textarea>
+                                            </div>
+                                            <div class="justify-content-center">
+                                                <button type="submit" class="btn btn-primary">Enviar reseña</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class=" justify-content-center">
-                                    <button type="submit" id="Agregar" class="btn btn-secondary">Agregar al carrito</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

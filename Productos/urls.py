@@ -8,5 +8,5 @@ urlpatterns = [
     path('admin/crearCategoria/', crearcategoria,name='crearcategoria'),
     path('admin/productos/<int:id_producto_pro>/', producto_detalles, name='producto_detalles'),
     path('admin/categoria/<int:id_categoria_cat>/', categoria_detalles, name='categoria_detalles'),
-    
+    path('admin/producto/resena', agregar_resena,name='agregar_resena'),
 ]

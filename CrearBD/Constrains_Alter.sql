@@ -90,4 +90,14 @@ ADD CONSTRAINT fk_productos_dcar FOREIGN KEY (id_producto_dcar) REFERENCES produ
 ALTER TABLE detalles_carritos
 ADD CONSTRAINT fk_carrito FOREIGN KEY (id_carrito_dcar) REFERENCES carritos(id_carrito_car);
 
+-- Crea una restricción de clave primaria en la columna id_resena_re de la tabla resenas
+ALTER TABLE resenas
+ADD CONSTRAINT pk_resenas PRIMARY KEY (id_resena_re);
 
+-- Crea una restricción de clave foránea en la columna id_producto_re de la tabla resenas que hace referencia a id_producto_pro en la tabla productos
+ALTER TABLE resenas
+ADD CONSTRAINT fk_productos_resenas FOREIGN KEY (id_producto_re) REFERENCES productos(id_producto_pro);
+
+-- Crea una restricción de clave foránea en la columna id_usuario_re de la tabla resenas que hace referencia a id_usuario_usu en la tabla usuarios
+ALTER TABLE resenas
+ADD CONSTRAINT fk_usuarios_resenas FOREIGN KEY (id_usuario_re) REFERENCES usuarios(id_usuario_usu);

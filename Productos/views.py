@@ -5,7 +5,33 @@ from django.contrib import messages
 from django.http import Http404
 from django.conf import settings
 import os
+from django.contrib.auth.decorators import login_required
 
+@login_required
+def agregar_resena(request):
+    
+    if request.method == 'POST':
+        
+        resena= request.POST.get('resena')
+        producto = request.POST.get('producto')
+        usuario = request.POST.get('usuario')
+        with connection.cursor() as cursor:
+        
+            cursor.execute("SELECT MAX(ID_RESENA_RE) FROM resenas")
+            max_id = cursor.fetchone()[0]
+
+           
+            next_id = 1 if max_id is None else max_id + 1
+
+            id_resena_re = next_id
+            
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO resenas (id_resena_re,id_producto_re, id_usuario_re,resena_re)
+                    VALUES (%s, %s, %s, %s)
+                """, [id_resena_re,producto,usuario,resena])
+                connection.commit()
+    return redirect('productos')
 
 # Mostrar Productos
 def productos(request):
