@@ -94,10 +94,8 @@ MIGRATION_MODULES = {
     'Ventas': None,
 }
 
-usuario = getpass.getuser()
-
-if usuario == 'zTMike':
-    DATABASES = {
+# Database
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'xe',
@@ -106,17 +104,6 @@ if usuario == 'zTMike':
         'HOST': 'localhost',
         'PORT': '1521',
     }
-}
-else:
-    DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'ppi_lamarqueza',
-    'USER': 'root',
-    'PASSWORD': '1234',
-    'HOST': 'localhost',   # O la dirección IP de tu servidor de base de datos
-    'PORT': '3306',        # El puerto por defecto de MySQL es 3306
-}
 }
 
 
