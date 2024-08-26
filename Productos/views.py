@@ -50,9 +50,7 @@ def productos(request):
             for row in cursor.fetchall()
         ]
 
-        print(resenas)
-        print("\n")
-        print(productos)
+        
         
 
         return render(request, 'Productos.html', {'productosquerry': productos,'resenasquerry':resenas})
