@@ -37,16 +37,25 @@ def agregar_resena(request):
 def productos(request):
 
    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos")
+        cursor.execute("SELECT * FROM productos where estado_pro = 1")
         column_names = [col[0] for col in cursor.description]
         productos = [
             dict(zip(column_names, row))
             for row in cursor.fetchall()
+        ] 
+        cursor.execute("SELECT resenas.id_resena_re,resenas.id_producto_re,resenas.resena_re,usuarios.nombre_usu FROM resenas inner join usuarios on resenas.id_usuario_re = usuarios.id_usuario_usu")
+        column_names = [col[0] for col in cursor.description]
+        resenas = [
+            dict(zip(column_names, row))
+            for row in cursor.fetchall()
         ]
+
+        print(resenas)
+        print("\n")
+        print(productos)
         
 
-        
-        return render(request, 'Productos.html', {'productosquerry': productos})
+        return render(request, 'Productos.html', {'productosquerry': productos,'resenasquerry':resenas})
 #Administrar Productos
 def crearproducto(request):
     if request.method == 'POST':

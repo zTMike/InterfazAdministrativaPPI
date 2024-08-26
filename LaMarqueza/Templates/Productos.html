@@ -38,6 +38,7 @@
                             <div class="modal-body text-center">
                                 <div class="row">
                                     <div class="col-md-6">
+                                        
                                         <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
                                         <p> Precio: ${{a.PRECIO_PRO}}</p>
                                         <p>Descripccion:<br> {{a.DESCRIPCION_PRO}}</p>
@@ -64,12 +65,28 @@
                                             <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 <label class="form-label">Ingrese su reseña</label>
-                                                <textarea name="resena" class="form-control" rows="3" required></textarea>
+                                                <textarea name="resena" class="form-control" rows="3" required style="resize: none;"></textarea>
                                             </div>
                                             <div class="justify-content-center">
                                                 <button type="submit" class="btn btn-primary">Enviar reseña</button>
                                             </div>
                                         </form>
+                                        <!-- Reseñas -->
+                                        <div class="mt-3">
+                                            <h5>Reseñas</h5>
+                                            <div class="reseñas-scroll" style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
+                                                {% for b in resenasquerry %}
+                                                {% if b.ID_PRODUCTO_RE == a.ID_PRODUCTO_PRO %}
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ b.NOMBRE_USU }}</h5>
+                                                        <p class="card-text">{{ b.RESENA_RE }}</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
