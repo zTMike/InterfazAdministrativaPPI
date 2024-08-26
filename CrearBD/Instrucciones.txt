@@ -19,3 +19,5 @@ Crear bd y ejecutar proyecto
 8)realizar un py .\manage.py runserver
 9)todo OK
 
+holi
+
