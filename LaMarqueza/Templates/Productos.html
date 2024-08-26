@@ -38,8 +38,16 @@
                             <div class="modal-body text-center">
                                 <div class="row">
                                     <div class="col-md-6">
+                                
+                                        <!-- Botón en forma de corazón -->
+                                        <div class="position-relative">
+                                            <!-- Botón en forma de corazón -->
+                                            <button type="button" id="heart-button-{{ a.ID_PRODUCTO_PRO }}" class="btn btn-outline-danger position-absolute" style="top: 10px; right: 10px;" onclick="toggleHeart(this)">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
+                                            <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
+                                        </div>
                                         
-                                        <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
                                         <p> Precio: ${{a.PRECIO_PRO}}</p>
                                         <p>Descripccion:<br> {{a.DESCRIPCION_PRO}}</p>
                                         <form class="text-center mt-3" method="POST" action="{% url 'agregar_carrito' %}">

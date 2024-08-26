@@ -26,6 +26,8 @@
     padding-right: 15px; /* Añade un poco de espacio para el scroll */
 }
 
+
+
 /* Clases para cambiar el color de fondo de "Iniciar sesión" */
 .hover-iniciosesion:hover {
     background-color: #ffffff !important;
