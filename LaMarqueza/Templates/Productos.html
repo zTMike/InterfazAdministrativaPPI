@@ -38,7 +38,16 @@
                             <div class="modal-body text-center">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
+                                
+                                        <!-- Botón en forma de corazón -->
+                                        <div class="position-relative">
+                                            <!-- Botón en forma de corazón -->
+                                            <button type="button" id="heart-button-{{ a.ID_PRODUCTO_PRO }}" class="btn btn-outline-danger position-absolute" style="top: 10px; right: 10px;" onclick="toggleHeart(this)">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
+                                            <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
+                                        </div>
+                                        
                                         <p> Precio: ${{a.PRECIO_PRO}}</p>
                                         <p>Descripccion:<br> {{a.DESCRIPCION_PRO}}</p>
                                         <form class="text-center mt-3" method="POST" action="{% url 'agregar_carrito' %}">
@@ -64,12 +73,28 @@
                                             <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 <label class="form-label">Ingrese su reseña</label>
-                                                <textarea name="resena" class="form-control" rows="3" required></textarea>
+                                                <textarea name="resena" class="form-control" rows="3" required style="resize: none;"></textarea>
                                             </div>
                                             <div class="justify-content-center">
                                                 <button type="submit" class="btn btn-primary">Enviar reseña</button>
                                             </div>
                                         </form>
+                                        <!-- Reseñas -->
+                                        <div class="mt-3">
+                                            <h5>Reseñas</h5>
+                                            <div class="reseñas-scroll" style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
+                                                {% for b in resenasquerry %}
+                                                {% if b.ID_PRODUCTO_RE == a.ID_PRODUCTO_PRO %}
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ b.NOMBRE_USU }}</h5>
+                                                        <p class="card-text">{{ b.RESENA_RE }}</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

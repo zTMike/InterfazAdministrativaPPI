@@ -20,6 +20,13 @@
     /* Amarillo */
 }
 
+.reseñas-scroll {
+    max-height: 200px; /* Ajusta la altura según tus necesidades */
+    overflow-y: auto;
+    padding-right: 15px; /* Añade un poco de espacio para el scroll */
+}
+
+
 
 /* Clases para cambiar el color de fondo de "Iniciar sesión" */
 .hover-iniciosesion:hover {
