@@ -43,11 +43,7 @@ def productos(request):
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
-<<<<<<< Updated upstream
-=======
 
-       
->>>>>>> Stashed changes
         
 
         
