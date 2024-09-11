@@ -3,6 +3,7 @@
 
 {% block Administrador %}
     <div>
+        
         <h1>Productos</h1>
         <a href="{% url 'crearproducto' %}" class="btn btn-primary float-right">Crear Producto</a>
         <table class="table">
@@ -19,6 +20,7 @@
                 </tr>
             </thead>
             <tbody>
+                
                 {% for productos in productos %}
                     <tr>
                         <th scope="row"><a href="{% url 'producto_detalles' productos.ID_PRODUCTO_PRO %}">{{ productos.ID_PRODUCTO_PRO }}</th>

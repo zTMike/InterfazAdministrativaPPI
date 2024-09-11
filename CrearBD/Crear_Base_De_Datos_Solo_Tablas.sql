@@ -82,3 +82,4 @@ CREATE TABLE favoritos (
   id_producto_fa NUMBER(10) NOT NULL,
   id_usuario_fa NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
+

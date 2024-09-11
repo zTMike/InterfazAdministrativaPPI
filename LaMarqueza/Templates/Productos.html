@@ -4,6 +4,7 @@
 
 {% block Boddy %}
 <div>
+    {% load static %}
     <div class="container productos">
         <!-- Productos -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-6 productos">
@@ -71,13 +72,13 @@
                                                 <input type="hidden" name="nombre" value="{{ a.NOMBRE_PRO }}">
 
                                                 <label class="form-label">Ingrese La Cantidad</label>
-                                                <input type="number" name="cantidad" class="form-control"
-                                                    id="exampleInputEmail1" min="1" aria-describedby="emailHelp">
-                                            </div>
+                                                <input type="text" name="cantidad" class="form-control cantidad" id="cantidad" min="1" aria-describedby="emailHelp"><br>
+                                                <div class="cantidadError" style="color: red; display: none;"></div>
+                                                </div>
                                             <div class="justify-content-center">
-                                                <button type="submit" id="Agregar" class="btn btn-secondary">Agregar al
-                                                    carrito</button>
+                                                <button type="submit" id="Agregar" class="btn btn-secondary Agregar" disabled>Agregar al carrito</button>
                                             </div>
+                                            
                                         </form>
                                     </div>
                                     <div class="col-md-6">
@@ -89,11 +90,13 @@
                                             <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 <label class="form-label">Ingrese su reseña</label>
-                                                <textarea name="resena" class="form-control" rows="3" required
-                                                    style="resize: none;"></textarea>
-                                            </div>
+                                                <textarea name="resena" class="form-control resena" rows="3" id="resena" required style="resize: none;"></textarea><br>
+                                                <div class="resenaError" style="color: red; display: none;"></div>
+                                        </div>
                                             <div class="justify-content-center">
-                                                <button type="submit" class="btn btn-primary">Enviar reseña</button>
+                                                
+                                                <button type="submit" id="EnviarResena" class="btn btn-primary EnviarResena" disabled>Enviar reseña</button>
+                                               
                                             </div>
                                         </form>
                                         <!-- Reseñas -->
@@ -120,7 +123,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                                csrf
+                                                
                                                 {% endif %}
                                                 {% endfor %}
                                             </div>
@@ -136,8 +139,7 @@
             {% endfor %}
         </div>
     </div>
-
+    
 </div>
-
 
 {% endblock Boddy %}
