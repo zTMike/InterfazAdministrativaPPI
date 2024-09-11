@@ -14,7 +14,7 @@
         </ul>
         {% endif %}
         <label for="id_producto">ID del Producto:</label><br>
-        <input type="text" id="id_producto" name="id_producto" value="{{ producto.id_producto_pro }}" readonly><br>
+        <input type="text" id="id_producto" name="id_producto" value="{{ producto.id_producto_pro }}" readonly title="Ingrese un nombre menor a 50 caracteres y que no contenga caracteres especiales "><br>
         <label for="nombre_pro">Nombre del Producto:</label><br>
         <input type="text" id="nombre_pro" name="nombre_pro" value="{{ producto.nombre_pro }}"><br>
         <label for="descripcion_pro">Descripción:</label><br>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Contraseña</title>
+    <style>
+        .valid { color: green; }
+        .invalid { color: red; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="password">Contraseña:</label><br>
+        <input type="password" id="password" name="password" title="Ingrese una contraseña que cumpla con los criterios"><br>
+        <ul id="criteria-list" class="hidden">
+            <li id="length" class="invalid">Al menos 8 caracteres</li>
+            <li id="uppercase" class="invalid">Al menos una letra mayúscula</li>
+            <li id="lowercase" class="invalid">Al menos una letra minúscula</li>
+            <li id="number" class="invalid">Al menos un número</li>
+            <li id="special" class="invalid">Al menos un carácter especial (!@#$%^&*)</li>
+        </ul>
+    </form>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const criteriaList = document.getElementById('criteria-list');
+        const lengthCriteria = document.getElementById('length');
+        const uppercaseCriteria = document.getElementById('uppercase');
+        const lowercaseCriteria = document.getElementById('lowercase');
+        const numberCriteria = document.getElementById('number');
+        const specialCriteria = document.getElementById('special');
+
+        // Mostrar la lista de criterios cuando el mouse está sobre el campo de entrada o cuando se está escribiendo
+        passwordInput.addEventListener('focus', function() {
+            criteriaList.classList.remove('hidden');
+        });
+
+        passwordInput.addEventListener('blur', function() {
+            criteriaList.classList.add('hidden');
+        });
+
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+
+            // Verificar longitud
+            if (password.length >= 8) {
+                lengthCriteria.classList.remove('invalid');
+                lengthCriteria.classList.add('valid');
+            } else {
+                lengthCriteria.classList.remove('valid');
+                lengthCriteria.classList.add('invalid');
+            }
+
+            // Verificar mayúsculas
+            if (/[A-Z]/.test(password)) {
+                uppercaseCriteria.classList.remove('invalid');
+                uppercaseCriteria.classList.add('valid');
+            } else {
+                uppercaseCriteria.classList.remove('valid');
+                uppercaseCriteria.classList.add('invalid');
+            }
+
+            // Verificar minúsculas
+            if (/[a-z]/.test(password)) {
+                lowercaseCriteria.classList.remove('invalid');
+                lowercaseCriteria.classList.add('valid');
+            } else {
+                lowercaseCriteria.classList.remove('valid');
+                lowercaseCriteria.classList.add('invalid');
+            }
+
+            // Verificar números
+            if (/\d/.test(password)) {
+                numberCriteria.classList.remove('invalid');
+                numberCriteria.classList.add('valid');
+            } else {
+                numberCriteria.classList.remove('valid');
+                numberCriteria.classList.add('invalid');
+            }
+
+            // Verificar caracteres especiales
+            if (/[*%]/.test(password)) {
+                specialCriteria.classList.remove('invalid');
+                specialCriteria.classList.add('valid');
+            } else {
+                specialCriteria.classList.remove('valid');
+                specialCriteria.classList.add('invalid');
+            }
+        });
+    </script>
+</body>
+</html>

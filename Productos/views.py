@@ -50,6 +50,8 @@ def productos(request):
             for row in cursor.fetchall()
         ]
 
+        
+
 
         
         

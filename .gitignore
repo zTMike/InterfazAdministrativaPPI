@@ -1,2 +1,12 @@
+# Ignorar archivos compilados de Python
 *.pyc
 __pycache__/
+
+# Ignorar otros archivos y directorios comunes
+*.log
+*.sqlite3
+*.env
+*.DS_Store
+node_modules/
+dist/
+build/
