@@ -5,6 +5,7 @@
 {% block Boddy %}
 
 {% if carrito.0 == 'Vacio' %}
+
 <div class="container">
     <h1 class="my-4 text-center">Carrito</h1>
     <p class="my-4 text-center">El carrito está vacío</p>
@@ -32,19 +33,19 @@
             </thead>
             <tbody>
                 {% for item in carrito %}
-                    <tr>
-                        <td>{{ item.NOMBRE_PRODUCTO_DCAR }}</td>
-                        <td>{{ item.CANTIDAD_DCAR }}</td>
-                        <td>${{ item.PRECIO_DCAR }}</td>
-                        <td>${{ item.SUBTOTAL_DCAR }}</td>
-                        <td>
-                            <form method="POST" action="{% url 'eliminar_del_carrito' item.ID_DETALLE_DCAR %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="carrito_id" value="{{ item.ID_CARRITO_DCAR }}">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>{{ item.NOMBRE_PRODUCTO_DCAR }}</td>
+                    <td>{{ item.CANTIDAD_DCAR }}</td>
+                    <td>${{ item.PRECIO_DCAR }}</td>
+                    <td>${{ item.SUBTOTAL_DCAR }}</td>
+                    <td>
+                        <td method="POST" action="{% url 'eliminar_del_carrito' item.ID_DETALLE_DCAR %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="carrito_id" value="{{ item.ID_CARRITO_DCAR }}">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
@@ -55,7 +56,7 @@
             </tfoot>
         </table>
     </div>
-    
+
     <form class="text-center" method="POST" action="{% url 'totalizar'%}">
         {% csrf_token %}
         <input type="hidden" name="carrito" value="{{ carrito }}">
