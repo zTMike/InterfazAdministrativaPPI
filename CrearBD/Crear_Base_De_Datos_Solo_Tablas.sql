@@ -76,3 +76,9 @@ CREATE TABLE resenas (
   id_usuario_re NUMBER(10) NOT NULL,
   resena_re VARCHAR2(255) NOT NULL
 ) TABLESPACE lamarquesabd;
+
+CREATE TABLE favoritos (
+  id_favoritos NUMBER(10) NOT NULL,
+  id_producto_fa NUMBER(10) NOT NULL,
+  id_usuario_fa NUMBER(10) NOT NULL
+) TABLESPACE lamarquesabd;

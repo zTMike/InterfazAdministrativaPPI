@@ -13,7 +13,7 @@
                 <!-- Agrega el id del producto al data-bs-target -->
                 <a data-bs-toggle="modal" data-bs-target="#ModalProductos{{ a.ID_PRODUCTO_PRO  }}">
                     <div class="card shadow-sm Mproducto img-huevos productoscol">
-                        <img src='/Media/productos/{{a.FOTO_PRO}}'/>
+                        <img src='/Media/productos/{{a.FOTO_PRO}}' />
                         <div class="card-body">
                             <h5 class="card-title">{{a.NOMBRE_PRO}}</h5>
                             <p>${{a.PRECIO_PRO}}</p>
@@ -33,47 +33,64 @@
                         <div class="modal-content">
                             <div class="modal-header text-center">
                                 <h5 class="modal-title w-100" id="ModalProductosLabel">{{ a.NOMBRE_PRO }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-center">
                                 <div class="row">
                                     <div class="col-md-6">
-                                
+
                                         <!-- Botón en forma de corazón -->
                                         <div class="position-relative">
-                                            <!-- Botón en forma de corazón -->
-                                            <button type="button" id="heart-button-{{ a.ID_PRODUCTO_PRO }}" class="btn btn-outline-danger position-absolute" style="top: 10px; right: 10px;" onclick="toggleHeart(this)">
-                                                <i class="fas fa-heart"></i>
-                                            </button>
-                                            <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid' style="width: 200px; height: auto;" />
+                                            <form action="{% url 'agregar_favoritos' a.ID_PRODUCTO_PRO %}"
+                                                method="POST">
+
+                                                {% csrf_token %}
+                                                <!-- Botón en forma de corazón -->
+                                                <button type="submit" id="heart-button-{{ a.ID_PRODUCTO_PRO }}"
+                                                    class="btn btn-outline-danger position-absolute"
+                                                    style="top: 10px; right: 10px;">
+                                                    <i class="fas fa-heart"></i>
+                                                </button>
+                                                <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid'
+                                                    style="width: 200px; height: auto;"
+                                                    onclick="this.closest('form').submit();" />
+                                            </form>
                                         </div>
-                                        
+
                                         <p> Precio: ${{a.PRECIO_PRO}}</p>
                                         <p>Descripccion:<br> {{a.DESCRIPCION_PRO}}</p>
-                                        <form class="text-center mt-3" method="POST" action="{% url 'agregar_carrito' %}">
+                                        <form class="text-center mt-3" method="POST"
+                                            action="{% url 'agregar_carrito' %}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 {% csrf_token %}
-                                                <input type="hidden" name="usuario" value="{{ request.user.id_usuario_usu }}">
+                                                <input type="hidden" name="usuario"
+                                                    value="{{ request.user.id_usuario_usu }}">
                                                 <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                                 <input type="hidden" name="precio" value="{{ a.PRECIO_PRO }}">
                                                 <input type="hidden" name="nombre" value="{{ a.NOMBRE_PRO }}">
-                            
+
                                                 <label class="form-label">Ingrese La Cantidad</label>
-                                                <input type="number" name="cantidad" class="form-control" id="exampleInputEmail1" min="1" aria-describedby="emailHelp">
+                                                <input type="number" name="cantidad" class="form-control"
+                                                    id="exampleInputEmail1" min="1" aria-describedby="emailHelp">
                                             </div>
                                             <div class="justify-content-center">
-                                                <button type="submit" id="Agregar" class="btn btn-secondary">Agregar al carrito</button>
+                                                <button type="submit" id="Agregar" class="btn btn-secondary">Agregar al
+                                                    carrito</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-md-6">
-                                        <form class="text-center mt-3" method="POST" action="{% url 'agregar_resena' %}">
+                                        <form class="text-center mt-3" method="POST"
+                                            action="{% url 'agregar_resena' %}">
                                             {% csrf_token %}
-                                            <input type="hidden" name="usuario" value="{{ request.user.id_usuario_usu }}">
+                                            <input type="hidden" name="usuario"
+                                                value="{{ request.user.id_usuario_usu }}">
                                             <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 <label class="form-label">Ingrese su reseña</label>
-                                                <textarea name="resena" class="form-control" rows="3" required style="resize: none;"></textarea>
+                                                <textarea name="resena" class="form-control" rows="3" required
+                                                    style="resize: none;"></textarea>
                                             </div>
                                             <div class="justify-content-center">
                                                 <button type="submit" class="btn btn-primary">Enviar reseña</button>
@@ -82,15 +99,28 @@
                                         <!-- Reseñas -->
                                         <div class="mt-3">
                                             <h5>Reseñas</h5>
-                                            <div class="reseñas-scroll" style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
+                                            <div class="reseñas-scroll"
+                                                style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
                                                 {% for b in resenasquerry %}
                                                 {% if b.ID_PRODUCTO_RE == a.ID_PRODUCTO_PRO %}
+                                                <!--MODAL DE RESEÑA-->
                                                 <div class="card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{ b.NOMBRE_USU }}</h5>
-                                                        <p class="card-text">{{ b.RESENA_RE }}</p>
+                                                    <div
+                                                        class="card-body d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h5 class="card-title">{{ b.NOMBRE_USU }}</h5>
+                                                            <p class="card-text">{{ b.RESENA_RE }}</p>
+                                                        </div>
+                                                        <form action="{% url 'eliminar_resena' b.ID_RESENA_RE %}"
+                                                            method="post">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
+                                                csrf
                                                 {% endif %}
                                                 {% endfor %}
                                             </div>

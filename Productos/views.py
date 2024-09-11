@@ -33,6 +33,34 @@ def agregar_resena(request):
                 connection.commit()
     return redirect('productos')
 
+
+def eliminar_resena(request, id_resena_re):
+    if request.method == 'POST':
+        with connection.cursor() as cursor:
+            cursor.execute("DELETE FROM resenas WHERE id_resena_re = %s", [id_resena_re])
+            connection.commit()
+    return redirect('productos')
+
+
+def agregar_favoritos(request, id_producto_pro):
+    
+    if request.method == 'POST':
+        id_usuario=0
+        id_usuario = request.user
+        print(id_producto_pro,id_usuario)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT MAX(ID_FAVORITOS) FROM favoritos")
+            max_id = cursor.fetchone()[0]
+            id = 1 if max_id is None else max_id + 1
+            cursor.execute("""
+                    INSERT INTO favoritos (id_favoritos,id_producto_fa,id_usuario_fa)
+                    VALUES (%s,%s, %s)
+                """, [id,id_producto_pro, id_usuario])  
+            connection.commit()
+
+
+    return redirect('productos')
+
 # Mostrar Productos
 def productos(request):
 
@@ -50,6 +78,7 @@ def productos(request):
             for row in cursor.fetchall()
         ]
 
+       
 
         
         
@@ -113,8 +142,15 @@ def productosadmin(request):
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
+        cursor.execute("SELECT * FROM categorias")
+        column_names = [col[0] for col in cursor.description]
+    
+        categoria =[
+            dict(zip(column_names, row))
+            for row in cursor.fetchall()
+        ]
         
-        return render(request, 'AdminProductos.html', {'productos': productos})
+        return render(request, 'AdminProductos.html', {'productos': productos,'categoria':categoria})
 def producto_detalles(request, id_producto_pro):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
@@ -130,22 +166,44 @@ def producto_detalles(request, id_producto_pro):
             'foto_pro': row[5],
             'estado_pro': row[6],
             'categoria_pro': row[7]
+
         }
+        cursor.execute("SELECT * FROM categorias")
+        column_names = [col[0] for col in cursor.description]
+    
+        categoria =[
+            dict(zip(column_names, row))
+            for row in cursor.fetchall()
+        ]
+        
     producto['estado_pro'] = bool(int(producto['estado_pro']))
        
+    
         
 
     if request.method == 'POST':
         action = request.POST.get('action')
         if action == 'Actualizar':
+            
+           
             nombre = request.POST.get('nombre_pro')
             descripcion = request.POST.get('descripcion_pro')
             precio = int(request.POST.get('precio_pro').split(',')[0])
             existencias = int(request.POST.get('existencia_pro'))
-            categoria = request.POST.get('categoria_pro')
+            categoriainput = request.POST.get('categoria_pro')
             estado = 1 if request.POST.get('estado_pro') == 'on' else 0
             foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
             
+              # Iterar sobre cada diccionario en la lista
+            # Encontrar el elemento en la lista de categorías que coincide con categoriainput
+            categoria_encontrada = next((item for item in categoria if item['NOMBRE_CAT'] == categoriainput), None)
+
+            if categoria_encontrada:
+                valor = categoria_encontrada['ID_CATEGORIA_CAT']
+                print("Soy un valor", valor)
+            else:
+                print("Categoría no encontrada")
+                
             if foto is None:
                 with connection.cursor() as cursor:
                     cursor.execute("""
@@ -176,7 +234,7 @@ def producto_detalles(request, id_producto_pro):
                         'categoria_pro': row[7]
                     }
                 producto['estado_pro'] = bool(int(producto['estado_pro']))
-                return render(request, 'ProductoDetalles.html', {'producto': producto})
+                return render(request, 'ProductoDetalles.html', {'producto': producto,'categoria':categoria})
             else:
                 ruta_foto = os.path.join(settings.BASE_DIR, 'Media', 'productos', foto.name)
                 with open(ruta_foto, 'wb+') as destination:
@@ -222,8 +280,7 @@ def producto_detalles(request, id_producto_pro):
                 connection.commit()
 
             return redirect('productosadmin')
-
-    return render(request, 'ProductoDetalles.html', {'producto': producto})
+    return render(request, 'ProductoDetalles.html', {'producto': producto,'categoria':categoria})
 #Administrar Categorias
 def categoriasadmin(request):
     

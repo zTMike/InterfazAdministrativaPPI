@@ -9,4 +9,9 @@ urlpatterns = [
     path('admin/productos/<int:id_producto_pro>/', producto_detalles, name='producto_detalles'),
     path('admin/categoria/<int:id_categoria_cat>/', categoria_detalles, name='categoria_detalles'),
     path('admin/producto/resena', agregar_resena,name='agregar_resena'),
+    path('admin/producto/resena/<int:id_resena_re>/', eliminar_resena, name='eliminar_resena'),
+    path('admin/productos/favoritos/<int:id_producto_pro>/', agregar_favoritos, name='agregar_favoritos'),
+
+ 
+
 ]

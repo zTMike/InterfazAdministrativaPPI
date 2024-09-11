@@ -101,3 +101,15 @@ ADD CONSTRAINT fk_productos_resenas FOREIGN KEY (id_producto_re) REFERENCES prod
 -- Crea una restricción de clave foránea en la columna id_usuario_re de la tabla resenas que hace referencia a id_usuario_usu en la tabla usuarios
 ALTER TABLE resenas
 ADD CONSTRAINT fk_usuarios_resenas FOREIGN KEY (id_usuario_re) REFERENCES usuarios(id_usuario_usu);
+
+-- Crea una restricción de clave primaria en la columna id_favoritos_re de la tabla resenas
+ALTER TABLE favoritos
+ADD CONSTRAINT pk_favoritos PRIMARY KEY (id_favoritos);
+
+-- Crea una restricción de clave foránea en la columna id_producto_fa de la tabla resenas que hace referencia a id_producto_pro en la tabla productos
+ALTER TABLE favoritos
+ADD CONSTRAINT fk_productos_fa FOREIGN KEY (id_producto_fa) REFERENCES productos(id_producto_pro);
+
+-- Crea una restricción de clave foránea en la columna id_usuario_fa de la tabla resenas que hace referencia a id_usuario_usu en la tabla usuarios
+ALTER TABLE favoritos
+ADD CONSTRAINT fk_usuarios_fa FOREIGN KEY (id_usuario_fa) REFERENCES usuarios(id_usuario_usu);

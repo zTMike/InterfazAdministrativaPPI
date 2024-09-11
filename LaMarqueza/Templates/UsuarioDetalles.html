@@ -28,7 +28,6 @@
         <label for="is_active">Está activo:</label><br>
         <input type="checkbox" id="is_active" name="is_active" {% if usuario.is_active %}checked{% endif %}><br>
         <input type="submit" name="action" value="Actualizar">
-        <input type="submit" name="action" value="Eliminar" id="delete-button">
         <script>
             document.getElementById('delete-button').addEventListener('click', function(e) {
                 if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {

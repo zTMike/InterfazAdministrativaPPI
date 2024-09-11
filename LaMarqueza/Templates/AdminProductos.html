@@ -26,7 +26,12 @@
                         <td>{{ productos.DESCRIPCION_PRO }}</td>
                         <td>{{ productos.EXISTENCIA_PRO }}</td>
                         <td>${{ productos.PRECIO_PRO }}</td>
-                        <td>{{ productos.CATEGORIA_PRO_ID }}</td>
+                        {% for categoria in categoria %}
+
+                        {% if productos.CATEGORIA_PRO_ID == categoria.ID_CATEGORIA_CAT%}
+                        <td> {{ categoria.NOMBRE_CAT}} </td>
+                        {% endif %}
+                        {% endfor %}                      
                         <td>
                             {% if productos.ESTADO_PRO == 1 %}
                                 Activado
