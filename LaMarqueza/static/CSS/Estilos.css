@@ -671,3 +671,535 @@
 .dropdown-item:hover {
     color: green !important;
 }
+
+/*style register*/
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 100px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Añadimos un espacio entre los elementos */
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1 1 100%; /* Hace que cada campo ocupe el 100% del ancho por defecto */
+    min-width: 200px;
+}
+
+@media (min-width: 600px) {
+    .form-group {
+        flex: 1 1 calc(50% - 15px); /* Cada campo ocupa el 50% del ancho menos el espacio entre ellos en pantallas más grandes */
+    }
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+}
+
+.messages li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/*style reseña*/
+
+.resena-contenedor {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.card-title {
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 5px; /* Ajusta el margen inferior si es necesario */
+    text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+}
+
+.card-text {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+/* Estilos para mensajes */
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Estilos para reseñas */
+.reseñas-scroll {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.resena-card {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    position: relative;
+    padding-right: 50px; /* Espacio para el botón de eliminar */
+}
+
+.resena-contenedor {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.card-title {
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 5px; /* Ajusta el margen inferior si es necesario */
+    text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+}
+
+.card-text {
+    margin-left: 0;
+    padding-left: 0;
+    word-wrap: break-word; /* Permite que el texto se ajuste al ancho del contenedor */
+}
+
+.delete-button-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.btn-danger {
+    background-color: transparent; /* Fondo transparente */
+    color: #dc3545; /* Texto rojo */
+}
+
+.btn-danger:hover {
+    background-color: #dc3545; /* Fondo rojo al pasar el ratón */
+    color: white; /* Texto blanco al pasar el ratón */
+}
+
+/*Style CrearProductos*/
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 50px;
+        background-color: #f9f9f9;
+        border: 2px solid #a3d5a5; /* Borde verdoso */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        flex: 1 1 100%;
+        min-width: 200px;
+    }
+
+    @media (min-width: 600px) {
+        .form-group {
+            flex: 1 1 calc(50% - 15px);
+        }
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #3d7d3e; /* Color verdoso para el texto */
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #a3d5a5; /* Borde verdoso en los inputs */
+        border-radius: 4px;
+        background-color: #e9f7ec; /* Fondo verdoso claro */
+    }
+
+    .form-control:focus {
+        border-color: #6fbf73; /* Borde más intenso al hacer foco */
+        outline: none;
+        box-shadow: 0 0 5px rgba(111, 191, 115, 0.5); /* Sombra al hacer foco */
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #6fbf73; /* Color verdoso para el botón */
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #5aa25d; /* Color verdoso más oscuro al pasar el cursor */
+    }
+
+    .messages {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    .messages li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .messages .error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .messages .success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    /*Style CrearCategoria*/
+    .container {
+        max-width: 600px; /* Reduce el ancho máximo del contenedor */
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #f9f9f9;
+        border: 2px solid #a3d5a5; /* Borde verdoso */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #3d7d3e; /* Color verdoso para el texto */
+    }
+
+    .form-control {
+        width: 100%;
+        max-width: 400px; /* Limita el ancho de los inputs a 400px */
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #a3d5a5; /* Borde verdoso en los inputs */
+        border-radius: 4px;
+        background-color: #e9f7ec; /* Fondo verdoso claro */
+    }
+
+    .form-control:focus {
+        border-color: #6fbf73; /* Borde más intenso al hacer foco */
+        outline: none;
+        box-shadow: 0 0 5px rgba(111, 191, 115, 0.5); /* Sombra al hacer foco */
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #6fbf73; /* Color verdoso para el botón */
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #5aa25d; /* Color verdoso más oscuro al pasar el cursor */
+    }
+
+    .messages {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    .messages li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    .messages .error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .messages .success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    /*Style AdminUsuarios*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Espacio inferior para separar de la tabla */
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.btn-primary {
+    background-color: #4CAF50; /* Verde suave para el botón */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049; /* Verde más oscuro al pasar el cursor */
+}
+
+/* Estilos para la tabla */
+.table-container {
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    border: 1px solid #a3d5a5; /* Borde verdoso claro */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table thead {
+    background-color: #e9f7ec; /* Fondo verdoso claro para el encabezado */
+}
+
+.table th {
+    color: #3d7d3e; /* Texto verdoso oscuro para el encabezado */
+    padding: 10px;
+    text-align: left;
+}
+
+.table td, .table th {
+    border-bottom: 1px solid #a3d5a5; /* Borde verdoso en las celdas */
+    padding: 10px;
+}
+
+.table tr:hover {
+    background-color: #d4edda; /* Color verde suave al pasar el cursor */
+}
+
+.table-link {
+    color: #3d7d3e; /* Color verdoso para los enlaces en la tabla */
+    text-decoration: none;
+}
+
+.table-link:hover {
+    text-decoration: underline;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    background-color: #eaf0e9; /* Color de fondo suave verde claro */
+    color: #2d6a4f; /* Color de texto verde oscuro */
+    border-bottom: 2px solid #c1d3b7; /* Línea de separación sutil */
+    padding: 1rem;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f6; /* Color de fila alterna suave */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Color de fila impar */
+}
+
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border: 1px solid #dee2e6; /* Borde suave */
+}
+
+.table tbody td {
+    color: #2d6a4f; /* Color de texto verde oscuro */
+}
+
+.table tbody td img {
+    border-radius: 4px; /* Bordes redondeados para imágenes */
+}
+
+.btn-primary {
+    background-color: #4a773c; /* Color de fondo verde oscuro */
+    border-color: #3c6e3c; /* Color del borde verde más oscuro */
+}
+
+.btn-primary:hover {
+    background-color: #3c6e3c; /* Color de fondo al pasar el ratón */
+    border-color: #2b4a2b; /* Color del borde al pasar el ratón */
+}
+
+/*Style CategoriasAdmin*/
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    background-color: #eaf0e9; /* Color de fondo suave verde claro */
+    color: #2d6a4f; /* Color de texto verde oscuro */
+    border-bottom: 2px solid #c1d3b7; /* Línea de separación sutil */
+    padding: 1rem;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f6; /* Color de fila alterna suave */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Color de fila impar */
+}
+
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border: 1px solid #dee2e6; /* Borde suave */
+}
+
+.table tbody td {
+    color: #2d6a4f; /* Color de texto verde oscuro */
+}
+
+.btn-primary {
+    background-color: #4a773c; /* Color de fondo verde oscuro */
+    border-color: #3c6e3c; /* Color del borde verde más oscuro */
+}
+
+.btn-primary:hover {
+    background-color: #3c6e3c; /* Color de fondo al pasar el ratón */
+    border-color: #2b4a2b; /* Color del borde al pasar el ratón */
+}
+
+/*Style ProductoDetalles*/
+
+    .form-container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #eaf4e4; /* Color verde claro de fondo */
+        border: 1px solid #b3d9b3; /* Borde verde suave */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1); /* Sombra verde tenue */
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .form-row label {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .form-row input, .form-row select {
+        flex: 2;
+    }
+
+    .form-row img {
+        max-width: 100%; /* Limitar el ancho máximo al 100% del contenedor */
+        height: auto;
+        margin-top: 10px;
+        border: 1px solid #ccc; /* Opcional: agregar un borde alrededor de la imagen */
+        border-radius: 4px; /* Opcional: agregar bordes redondeados */
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .form-buttons input {
+        flex: 1;
+    }
+

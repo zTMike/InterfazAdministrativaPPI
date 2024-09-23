@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block Administrador %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
     <div>
-        <h1>Categorias</h1>
+        <h1>Categorías</h1>
         <a href="{% url 'crearcategoria' %}" class="btn btn-primary float-right">Crear Categoria</a>
         <table class="table">
             <thead>
@@ -16,16 +17,12 @@
             <tbody>
                 {% for categoria in categorias %}
                     <tr>
-                        
-                        <th scope="row"><a href="{% url 'categoria_detalles' categoria.ID_CATEGORIA_CAT %}">{{ categoria.ID_CATEGORIA_CAT }}</th>
+                        <th scope="row"><a href="{% url 'categoria_detalles' categoria.ID_CATEGORIA_CAT %}">{{ categoria.ID_CATEGORIA_CAT }}</a></th>
                         <td>{{ categoria.NOMBRE_CAT }}</td>
                         <td>{{ categoria.DESCRIPCION_CAT }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
-
-
 {% endblock Administrador %}

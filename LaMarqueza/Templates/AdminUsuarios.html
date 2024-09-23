@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block Administrador %}
-    <div>
-        <h1>Usuarios</h1>
-        <a href="{% url 'crear_usuario' %}" class="btn btn-primary float-right">Crear Usuario</a>
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
+
+<div class="container">
+    <h1>Usuarios</h1>
+    <a href="{% url 'crear_usuario' %}" class="btn btn-primary float-right">Crear Usuario</a>
+    <div class="table-container">
         <table class="table">
             <thead>
                 <tr>
@@ -12,24 +15,22 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Correo</th>
-                    <th scope="col">Telefono</th>
+                    <th scope="col">Teléfono</th>
                 </tr>
             </thead>
             <tbody>
                 {% for usuario in usuarios %}
-                    <tr>
-                        <th scope="row"><a href="{% url 'usuario_detalles' usuario.ID_USUARIO_USU %}">{{ usuario.ID_USUARIO_USU }}</a></th>
-                        <td>{{ usuario.NOMBRE_USU }}</td>
-                        <td>{{ usuario.APELLIDO_USU }}</td>
-                        <td>{{ usuario.CORREO_USU }}</td>
-                        <td>{{ usuario.TELEFONO_USU }}</td>
-                        
-                    </tr>
+                <tr>
+                    <th scope="row"><a href="{% url 'usuario_detalles' usuario.ID_USUARIO_USU %}" class="table-link">{{ usuario.ID_USUARIO_USU }}</a></th>
+                    <td>{{ usuario.NOMBRE_USU }}</td>
+                    <td>{{ usuario.APELLIDO_USU }}</td>
+                    <td>{{ usuario.CORREO_USU }}</td>
+                    <td>{{ usuario.TELEFONO_USU }}</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
-
+</div>
 
 {% endblock Administrador %}

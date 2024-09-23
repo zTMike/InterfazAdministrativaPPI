@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block Administrador %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
+
     <div>
-        
         <h1>Productos</h1>
         <a href="{% url 'crearproducto' %}" class="btn btn-primary float-right">Crear Producto</a>
         <table class="table">
@@ -20,20 +21,18 @@
                 </tr>
             </thead>
             <tbody>
-                
                 {% for productos in productos %}
                     <tr>
-                        <th scope="row"><a href="{% url 'producto_detalles' productos.ID_PRODUCTO_PRO %}">{{ productos.ID_PRODUCTO_PRO }}</th>
+                        <th scope="row"><a href="{% url 'producto_detalles' productos.ID_PRODUCTO_PRO %}">{{ productos.ID_PRODUCTO_PRO }}</a></th>
                         <td>{{ productos.NOMBRE_PRO }}</td>
                         <td>{{ productos.DESCRIPCION_PRO }}</td>
                         <td>{{ productos.EXISTENCIA_PRO }}</td>
                         <td>${{ productos.PRECIO_PRO }}</td>
                         {% for categoria in categoria %}
-
-                        {% if productos.CATEGORIA_PRO_ID == categoria.ID_CATEGORIA_CAT%}
-                        <td> {{ categoria.NOMBRE_CAT}} </td>
-                        {% endif %}
-                        {% endfor %}                      
+                            {% if productos.CATEGORIA_PRO_ID == categoria.ID_CATEGORIA_CAT %}
+                                <td> {{ categoria.NOMBRE_CAT }} </td>
+                            {% endif %}
+                        {% endfor %}
                         <td>
                             {% if productos.ESTADO_PRO == 1 %}
                                 Activado
@@ -41,13 +40,10 @@
                                 Desactivado
                             {% endif %}
                         </td>
-                        <td><img src='/Media/productos/{{productos.FOTO_PRO }}' style="width: 200px; height: auto;" /></td>
+                        <td><img src='/Media/productos/{{ productos.FOTO_PRO }}' style="width: 200px; height: auto;" /></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
-
-
 {% endblock Administrador %}

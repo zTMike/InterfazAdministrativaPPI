@@ -2,23 +2,33 @@
 {% load static %}
 
 {% block Administrador %}
-    
-<form method="post">
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
+<div class="container">
+    <form method="post">
         {% csrf_token %}
 
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
+            {% endfor %}
         </ul>
         {% endif %}
-       
-        <label for="nombre_cat">Nombre de la Categoría:</label><br>
-        <input type="text" id="nombre_cat" name="nombre_cat" value="{{ categoria.nombre_cat }}"><br>
-        <label for="descripcion_cat">Descripción:</label><br>
-        <input type="text" id="descripcion_cat" name="descripcion_cat" value="{{ categoria.descripcion_cat }}"><br>
-        <input type="submit" name="action" value="Crear Categoría">
+
+        <div class="form-group">
+            <label for="nombre_cat">Nombre de la Categoría:</label>
+            <input type="text" id="nombre_cat" name="nombre_cat" value="{{ categoria.nombre_cat }}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion_cat">Descripción:</label>
+            <input type="text" id="descripcion_cat" name="descripcion_cat" value="{{ categoria.descripcion_cat }}" class="form-control">
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" name="action" value="Crear Categoría" class="btn">
+        </div>
     </form>
+</div>
 
 {% endblock Administrador %}

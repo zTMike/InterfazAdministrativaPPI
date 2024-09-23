@@ -1,68 +1,73 @@
 {% extends "Principal.html" %}
 {% load static %}
+
 {% block Titulo %}Registrar{% endblock Titulo %}
 
-
 {% block Boddy %}
+<!-- Enlazar el archivo CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
+
 <div class="card-group card-container2">
     <div class="container d-flex justify-content-center align-items-center loginbot card-container3">
-
-
-        <form method="post" action="{% url 'registrer' %}">
+        <form method="post" action="{% url 'registrer' %}" class="form-container">
             {% csrf_token %}
 
-            <div class="mb-1">
-                <label for="nombre" class="form-label">Nombre *</label>
-                <input type="text" class="form-control" id="nombre" name="nombre">
-            </div>
-            
-            <div class="mb-1">
-                <label for="apellido" class="form-label">Apellido *</label>
-                <input type="text" class="form-control" id="apellido" name="apellido">
-            </div>
-            
-            <div class="mb-1">
-                <label for="telefono" class="form-label">Teléfono *</label>
-                <input type="text" class="form-control" id="telefono" name="telefono">
-            </div>
-            
-            <div class="mb-1">
-                <label for="documento" class="form-label">Documento *</label>
-                <input type="text" class="form-control" id="documento" name="documento">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nombre" class="form-label">Nombre *</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellido" class="form-label">Apellido *</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido">
+                </div>
             </div>
 
-            <div class="mb-1">
-                <label for="email" class="form-label">Correo electrónico *</label>
-                <input type="email" class="form-control" id="email" name="email">
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="documento" class="form-label">Documento *</label>
+                    <input type="text" class="form-control" id="documento" name="documento">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="telefono" class="form-label">Teléfono *</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono">
+                </div>
             </div>
-            <div class="mb-1">
-                <label for="password" class="form-label">Contraseña *</label>
-                <input type="password" class="form-control" id="password" name="password">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="email" class="form-label">Correo electrónico *</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
             </div>
 
-            <div class="mb-1">
-                <label for="password2" class="form-label">Confirmar contraseña *</label>
-                <input type="password" class="form-control" id="password2" name="password2">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="password" class="form-label">Contraseña *</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="password2" class="form-label">Confirmar contraseña *</label>
+                    <input type="password" class="form-control" id="password2" name="password2">
+                </div>
             </div>
-            <div class="mb-1">
+
+            <div class="form-row">
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
                     <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                        {% endfor %}
+                    {% endfor %}
                 </ul>
                 {% endif %}
             </div>
-            <button type="submit" class="btn btn-primary">Registrarse</button>
-            <a href="{% url 'iniciarsesion' %}">
-                <button type="button" class="btn btn-secondary ml-1">Iniciar sesion</button>
-            </a>
+
+            <div class="form-row">
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <a href="{% url 'iniciarsesion' %}">
+                    <button type="button" class="btn btn-secondary ml-1">Iniciar sesión</button>
+                </a>
+            </div>
         </form>
-
-
     </div>
 </div>
-
-
-
 {% endblock Boddy %}
