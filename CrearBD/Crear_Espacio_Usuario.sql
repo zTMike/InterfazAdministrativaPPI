@@ -8,7 +8,7 @@ ALTER DATABASE OPEN;
 DROP TABLESPACE lamarquesabd INCLUDING CONTENTS and DATAFILES;
     
 CREATE TABLESPACE lamarquesabd LOGGING
-DATAFILE 'C:\Users\zTMike\Desktop\Semestre3\BaseDeDatos\Bases\lamarquesa.dbf' size 50M
+DATAFILE 'C:\BD\lamarquesa.dbf' size 50M
 extent management local segment space management auto; 
  
 alter session set "_ORACLE_SCRIPT"=true; 

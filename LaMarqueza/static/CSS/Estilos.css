@@ -665,7 +665,7 @@
 }
 
 .dropdown-item.verde-oscuro {
-    color: green !important;
+    color: #008000 !important;
 }
 
 .dropdown-item:hover {
@@ -683,9 +683,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container {
-    width: 100%;
-}
+
 
 .form-row {
     display: flex;
@@ -719,7 +717,7 @@
 
 .btn {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #008000;
     border: none;
     color: white;
     border-radius: 4px;
@@ -834,7 +832,7 @@
 
 /*Style CrearProductos*/
 
-    .container {
+    .container2 {
         max-width: 800px;
         margin: 0 auto;
         padding: 50px;
@@ -844,10 +842,7 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .form-container {
-        width: 100%;
-    }
-
+   
     .form-row {
         display: flex;
         flex-wrap: wrap;
@@ -922,7 +917,7 @@
         color: #155724;
     }
     /*Style CrearCategoria*/
-    .container {
+    .container2 {
         max-width: 600px; /* Reduce el ancho máximo del contenedor */
         margin: 0 auto;
         padding: 40px;
@@ -1009,7 +1004,7 @@
 }
 
 .btn-primary {
-    background-color: #4CAF50; /* Verde suave para el botón */
+    background-color: #4CAF50 !important; /* Verde suave para el botón */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -1147,8 +1142,8 @@
 }
 
 .btn-primary {
-    background-color: #4a773c; /* Color de fondo verde oscuro */
-    border-color: #3c6e3c; /* Color del borde verde más oscuro */
+    background-color: #4a773c !important; /* Color de fondo verde oscuro */
+    border-color: #3c6e3c !important; /* Color del borde verde más oscuro */
 }
 
 .btn-primary:hover {
@@ -1203,3 +1198,29 @@
         flex: 1;
     }
 
+/* Clase para el botón desactivado (outline) */
+.btn-outline-danger {
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-danger:hover {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Clase para el botón activado (filled) */
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}

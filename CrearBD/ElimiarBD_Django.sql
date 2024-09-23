@@ -14,3 +14,5 @@ DROP TABLE ordenes;
 DROP TABLE productos;
 DROP TABLE categorias;
 DROP TABLE usuarios;
+DROP TABLE resenas;
+DROP TABLE favoritos;
