@@ -72,55 +72,56 @@
                                                 <input type="hidden" name="nombre" value="{{ a.NOMBRE_PRO }}">
 
                                                 <label class="form-label">Ingrese La Cantidad</label>
-                                                <input type="text" name="cantidad" class="form-control cantidad" id="cantidad" min="1" aria-describedby="emailHelp"><br>
+                                                <input type="text" name="cantidad" class="form-control cantidad"
+                                                    id="cantidad" min="1" aria-describedby="emailHelp"><br>
                                                 <div class="cantidadError" style="color: red; display: none;"></div>
-                                                </div>
-                                            <div class="justify-content-center">
-                                                <button type="submit" id="Agregar" class="btn btn-secondary Agregar" disabled>Agregar al carrito</button>
                                             </div>
-                                            
+                                            <div class="justify-content-center">
+                                                <button type="submit" id="Agregar" class="btn btn-secondary Agregar"
+                                                    disabled>Agregar al carrito</button>
+                                            </div>
+
                                         </form>
                                     </div>
                                     <div class="col-md-6">
-                                        <form class="text-center mt-3" method="POST"
-                                            action="{% url 'agregar_resena' %}">
+                                        <form class="text-center mt-3" method="POST" action="{% url 'agregar_resena' %}">
                                             {% csrf_token %}
-                                            <input type="hidden" name="usuario"
-                                                value="{{ request.user.id_usuario_usu }}">
+                                            <input type="hidden" name="usuario" value="{{ request.user.id_usuario_usu }}">
                                             <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 <label class="form-label">Ingrese su reseña</label>
                                                 <textarea name="resena" class="form-control resena" rows="3" id="resena" required style="resize: none;"></textarea><br>
                                                 <div class="resenaError" style="color: red; display: none;"></div>
-                                        </div>
+                                            </div>
                                             <div class="justify-content-center">
-                                                
                                                 <button type="submit" id="EnviarResena" class="btn btn-primary EnviarResena" disabled>Enviar reseña</button>
-                                               
                                             </div>
                                         </form>
                                         <!-- Reseñas -->
                                         <div class="mt-3">
                                             <h5>Reseñas</h5>
-                                            <div class="reseñas-scroll" style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
+                                            <div class="reseñas-scroll"
+                                                style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
                                                 {% for b in resenasquerry %}
-                                                {% if b.ID_PRODUCTO_RE == a.ID_PRODUCTO_PRO %}
-                                                <!--MODAL DE RESEÑA-->
-                                                <div class="card mb-2 resena-card">
-                                                    <div class="card-body position-relative">
-                                                        <div class="resena-contenedor">
-                                                            <h5 class="card-title">{{ b.NOMBRE_USU }}</h5>
-                                                            <p class="card-text">{{ b.RESENA_RE }}</p>
+                                                    {% if b.ID_PRODUCTO_RE == a.ID_PRODUCTO_PRO %}
+                                                        <!--MODAL DE RESEÑA-->
+                                                        <div class="card mb-2 resena-card">
+                                                            <div class="card-body position-relative">
+                                                                <div class="resena-contenedor">
+                                                                    <h5 class="card-title">{{ b.NOMBRE_USU }}</h5>
+                                                                    <p class="card-text">{{ b.RESENA_RE }}</p>
+                                                                </div>
+                                                                {% if user.is_superuser or user.id_usuario_usu == b.id_usuario_usu %}
+                                                                    <form action="{% url 'eliminar_resena' b.ID_RESENA_RE %}" method="post" class="delete-button-form">
+                                                                        {% csrf_token %}
+                                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                                            <i class="fas fa-trash-alt"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                {% endif %}
+                                                            </div>
                                                         </div>
-                                                        <form action="{% url 'eliminar_resena' b.ID_RESENA_RE %}" method="post" class="delete-button-form">
-                                                            {% csrf_token %}
-                                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                {% endif %}
+                                                    {% endif %}
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -135,7 +136,7 @@
             {% endfor %}
         </div>
     </div>
-    
+
 </div>
 
 {% endblock Boddy %}

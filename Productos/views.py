@@ -6,6 +6,12 @@ from django.http import Http404
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import redirect
+from django.db import IntegrityError
+from django.http import HttpResponseBadRequest
+
+
 
 @login_required
 def agregar_resena(request):
@@ -34,13 +40,25 @@ def agregar_resena(request):
     return redirect('productos')
 
 
+@login_required
 def eliminar_resena(request, id_resena_re):
-    if request.method == 'POST':
-        with connection.cursor() as cursor:
-            cursor.execute("DELETE FROM resenas WHERE id_resena_re = %s", [id_resena_re])
-            connection.commit()
-    return redirect('productos')
-
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id_usuario_re FROM resenas WHERE id_resena_re = %s", [id_resena_re])
+        resena = cursor.fetchone()
+    
+    if resena is None:
+        return HttpResponseForbidden("Reseña no encontrada.")
+    
+    id_usuario_re = resena[0]
+    
+    if request.user.is_superuser or request.user.id_usuario_usu == id_usuario_re:
+        if request.method == 'POST':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM resenas WHERE id_resena_re = %s", [id_resena_re])
+                connection.commit()
+        return redirect('productos')
+    else:
+        return HttpResponseForbidden("No tienes permiso para eliminar esta reseña.")
 
 def agregar_favoritos(request, id_producto_pro):
     
