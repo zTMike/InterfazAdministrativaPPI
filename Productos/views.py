@@ -41,7 +41,7 @@ def eliminar_resena(request, id_resena_re):
             connection.commit()
     return redirect('productos')
 
-
+@login_required
 def agregar_favoritos(request, id_producto_pro):
     
     if request.method == 'POST':
@@ -63,8 +63,20 @@ def agregar_favoritos(request, id_producto_pro):
 
 # Mostrar Productos
 def productos(request):
-    user_id = request.user
-    print(user_id)
+    if request.user.is_authenticated:
+        user_id = request.user.id_usuario_usu 
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM favoritos where id_usuario_fa = %s",[user_id])
+            column_names = [col[0] for col in cursor.description]
+            favoritos = [
+                dict(zip(column_names, row))
+                for row in cursor.fetchall()
+            ]
+    else:
+        user_id = None  # Manejar el caso de usuario anónimo
+        favoritos = []
+    
+
     with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM productos where estado_pro = 1")
             column_names = [col[0] for col in cursor.description]
@@ -78,24 +90,9 @@ def productos(request):
                 dict(zip(column_names, row))
                 for row in cursor.fetchall()
             ]
-            if user_id == 1234991936:
-                print("Soy un admin")
-                cursor.execute("SELECT * FROM favoritos where id_usuario_fa = %s",[user_id])
-                column_names = [col[0] for col in cursor.description]
-                favoritos = [
-                    dict(zip(column_names, row))
-                    for row in cursor.fetchall()
-                ]
-            else:
             
-                favoritos = []
-
-
-       
-
         
-        
-
+    print(favoritos)
     return render(request, 'Productos.html', {'productosquerry': productos,'resenasquerry':resenas,'favoritosquerry':favoritos,'user_id':user_id})
 #Administrar Productos
 def crearproducto(request):

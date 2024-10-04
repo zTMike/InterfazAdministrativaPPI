@@ -40,25 +40,48 @@
                             <div class="modal-body text-center">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        
+
                                         <!-- Botón en forma de corazón -->
                                         <div class="position-relative">
-
                                             <form id="favoritos-form-{{ a.ID_PRODUCTO_PRO }}"
-                                            
                                                 action="{% url 'agregar_favoritos' a.ID_PRODUCTO_PRO %}" method="POST">
                                                 {% csrf_token %}
-
-                                                <!-- Botón en forma de corazón -->
-                                                <button type="submit" id="heart-button-{{ a.ID_PRODUCTO_PRO }}"
-                                                    class="btn btn-outline-danger position-absolute"
-                                                    style="top: 10px; right: 10px;" onclick="toggleHeart(this)">
-                                                    <i class="fas fa-heart"></i>
-                                                </button>
+                                                <script>
+                                                    document.addEventListener("DOMContentLoaded", function() {
+                                                        var buttonId = "heart-button-{{ a.ID_PRODUCTO_PRO }}";
+                                                        var form = document.getElementById("favoritos-form-{{ a.ID_PRODUCTO_PRO }}");
+                                                        var isFavorite = false;
+                                                        
+                                                        // Lista de IDs de productos favoritos
+                                                        var favoritosIds = [{% for favorito in favoritosquerry %}{{ favorito.ID_PRODUCTO_FA }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+                                                        
+                                                        // Verificar si el producto actual está en la lista de favoritos
+                                                        if (favoritosIds.includes({{ a.ID_PRODUCTO_PRO }})) {
+                                                            isFavorite = true;
+                                                        }
+                                                        
+                                                        // Crear el botón correspondiente
+                                                        var button = document.createElement("button");
+                                                        button.type = "submit";
+                                                        button.id = buttonId;
+                                                        button.className = isFavorite ? "btn btn-danger position-absolute" : "btn btn-outline-danger position-absolute";
+                                                        button.style.top = "10px";
+                                                        button.style.right = "10px";
+                                                        button.onclick = function() { toggleHeart(this); };
+                                                        button.innerHTML = '<i class="fas fa-heart"></i>';
+                                                        form.appendChild(button);
+                                                    });
+                                                </script>
                                                 <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid'
                                                     style="width: 200px; height: auto;" />
 
                                             </form>
+
+
+
+
+
+
                                         </div>
 
                                         <p> Precio: ${{a.PRECIO_PRO}}</p>
