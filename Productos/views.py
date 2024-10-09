@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .views import *
 from django.db import connection
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404,JsonResponse
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
@@ -47,17 +47,29 @@ def agregar_favoritos(request, id_producto_pro):
     if request.method == 'POST':
         id_usuario=0
         id_usuario = request.user
-        print(id_producto_pro,id_usuario)
         with connection.cursor() as cursor:
-            cursor.execute("SELECT MAX(ID_FAVORITOS) FROM favoritos")
-            max_id = cursor.fetchone()[0]
-            id = 1 if max_id is None else max_id + 1
-            cursor.execute("""
-                    INSERT INTO favoritos (id_favoritos,id_producto_fa,id_usuario_fa)
-                    VALUES (%s,%s, %s)
-                """, [id,id_producto_pro, id_usuario])  
-            connection.commit()
+            cursor.execute("SELECT id_favoritos FROM favoritos WHERE id_usuario_fa = %s AND id_producto_fa = %s", [id_usuario, id_producto_pro])
+            favorito = cursor.fetchone()
+            
+           
+            
 
+            if favorito:
+                # Si el favorito ya existe, eliminarlo
+                cursor.execute("DELETE FROM favoritos WHERE id_favoritos = %s", [favorito[0]])
+                is_favorite = False
+            elif favorito is None:
+                # Si el favorito no existe, crearlo
+                cursor.execute("SELECT MAX(ID_FAVORITOS) FROM favoritos")
+                max_id = cursor.fetchone()[0]
+                id = 1 if max_id is None else max_id + 1
+                cursor.execute("""
+                        INSERT INTO favoritos (id_favoritos,id_producto_fa,id_usuario_fa)
+                        VALUES (%s,%s, %s)
+                    """, [id,id_producto_pro, id_usuario])
+                is_favorite = True
+
+            connection.commit()
 
     return redirect('productos')
 
@@ -92,7 +104,6 @@ def productos(request):
             ]
             
         
-    print(favoritos)
     return render(request, 'Productos.html', {'productosquerry': productos,'resenasquerry':resenas,'favoritosquerry':favoritos,'user_id':user_id})
 #Administrar Productos
 def crearproducto(request):
