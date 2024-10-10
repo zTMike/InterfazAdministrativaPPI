@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .views import *
 from django.db import connection
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404,JsonResponse
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
@@ -59,49 +59,70 @@ def eliminar_resena(request, id_resena_re):
         return redirect('productos')
     else:
         return HttpResponseForbidden("No tienes permiso para eliminar esta reseña.")
-
+@login_required
 def agregar_favoritos(request, id_producto_pro):
     
     if request.method == 'POST':
         id_usuario=0
         id_usuario = request.user
-        print(id_producto_pro,id_usuario)
         with connection.cursor() as cursor:
-            cursor.execute("SELECT MAX(ID_FAVORITOS) FROM favoritos")
-            max_id = cursor.fetchone()[0]
-            id = 1 if max_id is None else max_id + 1
-            cursor.execute("""
-                    INSERT INTO favoritos (id_favoritos,id_producto_fa,id_usuario_fa)
-                    VALUES (%s,%s, %s)
-                """, [id,id_producto_pro, id_usuario])  
-            connection.commit()
+            cursor.execute("SELECT id_favoritos FROM favoritos WHERE id_usuario_fa = %s AND id_producto_fa = %s", [id_usuario, id_producto_pro])
+            favorito = cursor.fetchone()
+            
+           
+            
 
+            if favorito:
+                # Si el favorito ya existe, eliminarlo
+                cursor.execute("DELETE FROM favoritos WHERE id_favoritos = %s", [favorito[0]])
+                is_favorite = False
+            elif favorito is None:
+                # Si el favorito no existe, crearlo
+                cursor.execute("SELECT MAX(ID_FAVORITOS) FROM favoritos")
+                max_id = cursor.fetchone()[0]
+                id = 1 if max_id is None else max_id + 1
+                cursor.execute("""
+                        INSERT INTO favoritos (id_favoritos,id_producto_fa,id_usuario_fa)
+                        VALUES (%s,%s, %s)
+                    """, [id,id_producto_pro, id_usuario])
+                is_favorite = True
+
+            connection.commit()
 
     return redirect('productos')
 
 # Mostrar Productos
 def productos(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id_usuario_usu 
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM favoritos where id_usuario_fa = %s",[user_id])
+            column_names = [col[0] for col in cursor.description]
+            favoritos = [
+                dict(zip(column_names, row))
+                for row in cursor.fetchall()
+            ]
+    else:
+        user_id = None  # Manejar el caso de usuario anónimo
+        favoritos = []
+    
 
-   with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM productos where estado_pro = 1")
-        column_names = [col[0] for col in cursor.description]
-        productos = [
-            dict(zip(column_names, row))
-            for row in cursor.fetchall()
-        ] 
-        cursor.execute("SELECT resenas.id_resena_re,resenas.id_producto_re,resenas.resena_re,usuarios.nombre_usu FROM resenas inner join usuarios on resenas.id_usuario_re = usuarios.id_usuario_usu")
-        column_names = [col[0] for col in cursor.description]
-        resenas = [
-            dict(zip(column_names, row))
-            for row in cursor.fetchall()
-        ]
-
-       
-
+    with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM productos where estado_pro = 1")
+            column_names = [col[0] for col in cursor.description]
+            productos = [
+                dict(zip(column_names, row))
+                for row in cursor.fetchall()
+            ] 
+            cursor.execute("SELECT resenas.id_resena_re,resenas.id_producto_re,resenas.resena_re,usuarios.nombre_usu FROM resenas inner join usuarios on resenas.id_usuario_re = usuarios.id_usuario_usu")
+            column_names = [col[0] for col in cursor.description]
+            resenas = [
+                dict(zip(column_names, row))
+                for row in cursor.fetchall()
+            ]
+            
         
-        
-
-        return render(request, 'Productos.html', {'productosquerry': productos,'resenasquerry':resenas})
+    return render(request, 'Productos.html', {'productosquerry': productos,'resenasquerry':resenas,'favoritosquerry':favoritos,'user_id':user_id})
 #Administrar Productos
 def crearproducto(request):
     if request.method == 'POST':

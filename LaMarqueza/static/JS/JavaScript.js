@@ -1,5 +1,13 @@
-
+function toggleHeart(button) {
+    button.classList.toggle('btn-danger');
+    button.classList.toggle('btn-outline-danger');
+}
 document.addEventListener('DOMContentLoaded', function () {
+
+    
+
+
+    
     const cantidadInputs = document.getElementsByClassName('cantidad');
     const cantidadErrors = document.getElementsByClassName('cantidadError');
     const agregarButtons = document.getElementsByClassName('Agregar');

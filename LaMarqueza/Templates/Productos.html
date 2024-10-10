@@ -43,20 +43,45 @@
 
                                         <!-- Botón en forma de corazón -->
                                         <div class="position-relative">
-                                            <form action="{% url 'agregar_favoritos' a.ID_PRODUCTO_PRO %}"
-                                                method="POST">
-
+                                            <form id="favoritos-form-{{ a.ID_PRODUCTO_PRO }}"
+                                                action="{% url 'agregar_favoritos' a.ID_PRODUCTO_PRO %}" method="POST">
                                                 {% csrf_token %}
-                                                <!-- Botón en forma de corazón -->
-                                                <button type="submit" id="heart-button-{{ a.ID_PRODUCTO_PRO }}"
-                                                    class="btn btn-outline-danger position-absolute"
-                                                    style="top: 10px; right: 10px;">
-                                                    <i class="fas fa-heart"></i>
-                                                </button>
+                                                <script>
+                                                    document.addEventListener("DOMContentLoaded", function() {
+                                                        var buttonId = "heart-button-{{ a.ID_PRODUCTO_PRO }}";
+                                                        var form = document.getElementById("favoritos-form-{{ a.ID_PRODUCTO_PRO }}");
+                                                        var isFavorite = false;
+                                                        
+                                                        // Lista de IDs de productos favoritos
+                                                        var favoritosIds = [{% for favorito in favoritosquerry %}{{ favorito.ID_PRODUCTO_FA }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+                                                        
+                                                        // Verificar si el producto actual está en la lista de favoritos
+                                                        if (favoritosIds.includes({{ a.ID_PRODUCTO_PRO }})) {
+                                                            isFavorite = true;
+                                                        }
+                                                        
+                                                        // Crear el botón correspondiente
+                                                        var button = document.createElement("button");
+                                                        button.type = "submit";
+                                                        button.id = buttonId;
+                                                        button.className = isFavorite ? "btn btn-danger position-absolute" : "btn btn-outline-danger position-absolute";
+                                                        button.style.top = "10px";
+                                                        button.style.right = "10px";
+                                                        button.onclick = function() { toggleHeart(this); };
+                                                        button.innerHTML = '<i class="fas fa-heart"></i>';
+                                                        form.appendChild(button);
+                                                    });
+                                                </script>
                                                 <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid'
-                                                    style="width: 200px; height: auto;"
-                                                    onclick="this.closest('form').submit();" />
+                                                    style="width: 200px; height: auto;" />
+
                                             </form>
+
+
+
+
+
+
                                         </div>
 
                                         <p> Precio: ${{a.PRECIO_PRO}}</p>
@@ -73,11 +98,13 @@
 
                                                 <label class="form-label">Ingrese La Cantidad</label>
                                                 <input type="text" name="cantidad" class="form-control cantidad"
+                                                   
                                                     id="cantidad" min="1" aria-describedby="emailHelp"><br>
                                                 <div class="cantidadError" style="color: red; display: none;"></div>
                                             </div>
                                             <div class="justify-content-center">
                                                 <button type="submit" id="Agregar" class="btn btn-secondary Agregar"
+                                                   
                                                     disabled>Agregar al carrito</button>
                                             </div>
 
@@ -90,17 +117,21 @@
                                             <input type="hidden" name="producto" value="{{ a.ID_PRODUCTO_PRO }}">
                                             <div class="mb-3 w-75 mx-auto">
                                                 <label class="form-label">Ingrese su reseña</label>
-                                                <textarea name="resena" class="form-control resena" rows="3" id="resena" required style="resize: none;"></textarea><br>
+                                                <textarea name="resena" class="form-control resena" rows="3" id="resena"
+                                                    required style="resize: none;"></textarea><br>
                                                 <div class="resenaError" style="color: red; display: none;"></div>
-                                            </div>
+                                                </div>
                                             <div class="justify-content-center">
+                                                
                                                 <button type="submit" id="EnviarResena" class="btn btn-primary EnviarResena" disabled>Enviar reseña</button>
+                                               
                                             </div>
                                         </form>
                                         <!-- Reseñas -->
                                         <div class="mt-3">
                                             <h5>Reseñas</h5>
                                             <div class="reseñas-scroll"
+                                               
                                                 style="max-height: 200px; overflow-y: auto; padding-right: 15px;">
                                                 {% for b in resenasquerry %}
                                                     {% if b.ID_PRODUCTO_RE == a.ID_PRODUCTO_PRO %}
@@ -112,7 +143,8 @@
                                                                     <p class="card-text">{{ b.RESENA_RE }}</p>
                                                                 </div>
                                                                 {% if user.is_superuser or user.id_usuario_usu == b.id_usuario_usu %}
-                                                                    <form action="{% url 'eliminar_resena' b.ID_RESENA_RE %}" method="post" class="delete-button-form">
+                                                                    <form action="{% url 'eliminar_resena' b.ID_RESENA_RE %}"
+                                                            method="post" class="delete-button-form">
                                                                         {% csrf_token %}
                                                                         <button type="submit" class="btn btn-danger btn-sm">
                                                                             <i class="fas fa-trash-alt"></i>
@@ -136,7 +168,8 @@
             {% endfor %}
         </div>
     </div>
-
+    
 </div>
+
 
 {% endblock Boddy %}
