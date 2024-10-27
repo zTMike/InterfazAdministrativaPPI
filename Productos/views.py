@@ -6,7 +6,7 @@ from django.http import Http404,JsonResponse
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
-
+#Rese;as
 @login_required
 def agregar_resena(request):
     
@@ -32,15 +32,13 @@ def agregar_resena(request):
                 """, [id_resena_re,producto,usuario,resena])
                 connection.commit()
     return redirect('productos')
-
-
 def eliminar_resena(request, id_resena_re):
     if request.method == 'POST':
         with connection.cursor() as cursor:
             cursor.execute("DELETE FROM resenas WHERE id_resena_re = %s", [id_resena_re])
             connection.commit()
     return redirect('productos')
-
+#Agregar Favoritos
 @login_required
 def agregar_favoritos(request, id_producto_pro):
     
@@ -72,7 +70,6 @@ def agregar_favoritos(request, id_producto_pro):
             connection.commit()
 
     return redirect('productos')
-
 # Mostrar Productos
 def productos(request):
     if request.user.is_authenticated:
@@ -366,35 +363,32 @@ def categoria_detalles(request, id_categoria_cat):
 
     return render(request, 'CategoriaDetalles.html', {'categoria': categoria})
 def crearcategoria(request):
-    
-
-
     if request.method == 'POST':
         with connection.cursor() as cursor:
-        
             cursor.execute("SELECT MAX(ID_CATEGORIA_CAT) FROM categorias")
             max_id = cursor.fetchone()[0]
-
-           
             next_id = 1 if max_id is None else max_id + 1
-
 
         nombre = request.POST.get('nombre_cat')
         descripcion = request.POST.get('descripcion_cat')
-        
-        
+
         if not nombre or not descripcion:
             messages.error(request, 'Todos los campos son obligatorios')
+            raise ValueError('No se pudo crear la categoria')
             return redirect('crearcategoria')
         else:
-            with connection.cursor() as cursor:
-                cursor.execute("""
-                    INSERT INTO categorias (id_categoria_cat,nombre_cat, descripcion_cat)
-                    VALUES (%s, %s, %s)
-                """, [next_id,nombre, descripcion])
-                connection.commit()
-            messages.success(request, 'Categoria Creada Correctamente')
-            return redirect('categoriasadmin')
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute("""
+                        INSERT INTO categorias (id_categoria_cat, nombre_cat, descripcion_cat)
+                        VALUES (%s, %s, %s)
+                    """, [next_id, nombre, descripcion])
+                    connection.commit()
+                messages.success(request, 'Categoria Creada Correctamente')
+                return redirect('categoriasadmin')
+            except Exception as e:
+                messages.error(request, f'Error al crear la categoría: {str(e)}')
+                return redirect('crearcategoria')
     return render(request, 'CrearCategoria.html')
 
 

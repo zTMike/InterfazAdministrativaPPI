@@ -103,6 +103,9 @@ DATABASES = {
         'PASSWORD': '31415926',
         'HOST': 'localhost',
         'PORT': '1521',
+        'TEST': {
+            'MIRROR': 'default',  # Nombre de la base de datos de prueba
+        },
     }
 }
 

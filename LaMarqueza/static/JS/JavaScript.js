@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
 
-
     
     const cantidadInputs = document.getElementsByClassName('cantidad');
     const cantidadErrors = document.getElementsByClassName('cantidadError');
@@ -106,8 +105,49 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
+    const form2 = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+
+    form2.addEventListener('submit', function (event) {
+        const emailValue = emailInput.value.trim();
+        let isValid = true;
+
+        // Validar Correo
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+            isValid = false;
+            emailError.textContent = 'Correo inválido. Debe contener un @ y ser un correo válido.';
+            emailError.style.display = 'block';
+        } else {
+            emailError.textContent = '';
+            emailError.style.display = 'none';
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevenir el envío del formulario si no es válido
+        }
+    });
+     const emailValue = emailInput.value.trim();
+        let isValid = true;
+
+        // Validar Correo
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+            isValid = false;
+            emailError.textContent = 'Correo inválido. Debe contener un @ y ser un correo válido.';
+            emailError.style.display = 'block';
+        } else {
+            emailError.textContent = '';
+            emailError.style.display = 'none';
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevenir el envío del formulario si no es válido
+        }
+    
+
+
 //------------------Validacion de datos de usuario------------------
-       const form = document.querySelector('form');
+    const form = document.querySelector('form');
     const idInput = document.getElementById('id_usuario_usu');
     const nombreInput = document.getElementById('nombre_usu');
     const apellidoInput = document.getElementById('apellido_usu');
