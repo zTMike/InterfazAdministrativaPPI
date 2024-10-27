@@ -107,39 +107,57 @@ def crearproducto(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre_pro')
         descripcion = request.POST.get('descripcion_pro')
-        precio = int(float(request.POST.get('precio_pro').replace(',', '.')))
+        precio = request.POST.get('precio_pro')
         stock = request.POST.get('stock_pro')
         categoria = request.POST.get('categoria_pro')
         foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
-        estado = 1 if request.POST.get('estado_pro') == 'on' else 0
+        estado = '1' if request.POST.get('estado_pro') == 'on' else '0'
         
+        print(f'nombre: {nombre}, descripcion: {descripcion}, precio: {precio}, stock: {stock}, categoria: {categoria}, foto: {foto}, estado: {estado}')
+
+        required_fields = [nombre, descripcion, precio, stock, categoria, foto]
+        if not all(required_fields):
+            messages.error(request, 'Todos los campos son obligatorios')
+            raise ValueError('todos los campos son requeridos')
+            return redirect('crearproducto')
+        # Validar el valor de estado
+        if estado not in ['0', '1']:
+            messages.error(request, 'Estado inválido')
+            raise ValueError('Estado inválido')
+        try:
+            precio = float(precio)
+            stock = int(stock)
+            categoria = int(categoria)
+        except ValueError:
+            messages.error(request, 'Formato de número incorrecto')
+            raise ValueError('Formato de número incorrecto')
+
         with connection.cursor() as cursor:
-        
             cursor.execute("SELECT MAX(ID_PRODUCTO_PRO) FROM productos")
             max_id = cursor.fetchone()[0]
-
-           
             id_producto_pro = 1 if max_id is None else max_id + 1
 
-        
-        if not nombre or not descripcion or not precio or not stock or not categoria  or not foto:
-            messages.error(request, 'Todos los campos son obligatorios')
-            return redirect('crearproducto')
-        else:
-            # Guardar el archivo subido en el directorio \Media\productos de tu proyecto
-            ruta_foto = os.path.join(settings.BASE_DIR, 'Media', 'productos', foto.name)
-            with open(ruta_foto, 'wb+') as destination:
-                for chunk in foto.chunks():
-                    destination.write(chunk)
+            try:
 
-            with connection.cursor() as cursor:
+                ruta_foto = os.path.join(settings.BASE_DIR, 'Media', 'productos', foto.name)
+                with open(ruta_foto, 'wb+') as destination:
+                    for chunk in foto.chunks():
+                        destination.write(chunk)
+
+
                 cursor.execute("""
-                    INSERT INTO productos (id_producto_pro,nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id,estado_pro,foto_pro)
-                    VALUES (%s,%s, %s, %s, %s, %s, %s, %s)
-                """, [id_producto_pro,nombre, descripcion, precio, stock, categoria, estado, foto.name])  # Guardar solo el nombre de la foto en la base de datos
+                    INSERT INTO productos (id_producto_pro, nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id, estado_pro, foto_pro)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """, [id_producto_pro, nombre, descripcion, precio, stock, categoria, estado, foto])
                 connection.commit()
-            messages.success(request, 'Producto Creado Correctamente')
-            return redirect('productosadmin')
+                messages.success(request, 'Producto Creado Correctamente')
+                request.custom_success = 'Producto Creado Correctamente'
+                return redirect('productosadmin')
+            except Exception as e:
+                messages.error(request, f'Error al crear el producto: {str(e)}')
+                raise ValueError(f'No se pudo crear el Producto')
+
+    
     
     # Obtener todas las categorías
     with connection.cursor() as cursor:
@@ -374,7 +392,7 @@ def crearcategoria(request):
 
         if not nombre or not descripcion:
             messages.error(request, 'Todos los campos son obligatorios')
-            raise ValueError('No se pudo crear la categoria')
+            raise ValueError('Faltan Datos')
             return redirect('crearcategoria')
         else:
             try:
@@ -384,11 +402,10 @@ def crearcategoria(request):
                         VALUES (%s, %s, %s)
                     """, [next_id, nombre, descripcion])
                     connection.commit()
-                messages.success(request, 'Categoria Creada Correctamente')
+                request.custom_success = 'Categoria Creada Correctamente'
                 return redirect('categoriasadmin')
             except Exception as e:
-                messages.error(request, f'Error al crear la categoría: {str(e)}')
-                return redirect('crearcategoria')
+                raise ValueError('No se pudo crear Categoria')
     return render(request, 'CrearCategoria.html')
 
 

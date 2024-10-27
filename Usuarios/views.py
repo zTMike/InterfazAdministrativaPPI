@@ -25,6 +25,7 @@ def login_view(request):
     if user is not None:
         login(request, user)
         return redirect('index')
+    
     else:
         try:
             Usuario.objects.get(correo_usu=correo_usu)  
@@ -98,21 +99,50 @@ def crear_usuario(request):
         telefono = request.POST.get('telefono_usu')
         password = request.POST.get('password_usu')
         
-        password = make_password(password)
+        if password == '':
+            messages.error(request, 'Todos los campos son obligatorios')
+            raise ValueError('todos los campos son obligatorios')
+            return redirect('crear_usuario')
+        else:
+            password = make_password(password)
+        print(password)
+        
         
         is_staff = 1 if request.POST.get('is_staff', False) == 'on' else 0
         is_active = 1
-        if not nombre or not apellido or not correo or not telefono or not password:
+           
+        required_fields = [id_usuario_usu, nombre, apellido, correo, telefono, password]
+        if not all(required_fields):
             messages.error(request, 'Todos los campos son obligatorios')
+            raise ValueError('todos los campos son obligatorios')
             return redirect('crear_usuario')
-        else:
+            
+        try:
+            
             with connection.cursor() as cursor:
-               cursor.execute("""INSERT INTO usuarios (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
-                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                            """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_active, is_staff])
-                            
-            messages.success(request, 'Usuario Creado Correctamente')
-            return redirect('usuarios')
+                # Verificar si el usuario ya existe
+                cursor.execute("SELECT * FROM usuarios WHERE id_usuario_usu = %s", [id_usuario_usu])
+                row = cursor.fetchone()
+                if row is not None and row[0] == int(id_usuario_usu):
+                    request.custom_success = 'Usuario Ya existe'
+                    return redirect('crear_usuario')
+                
+
+                
+                
+
+                cursor.execute("""
+                    INSERT INTO usuarios (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_active, is_staff])
+                connection.commit()
+                messages.success(request, 'Usuario Creado Correctamente')
+                request.custom_success = 'Usuario Creado Correctamente'
+                return redirect('usuarios')
+        except Exception as e:
+            raise ValueError(f'No se pudo crear el Usuario: {e}')
+                
+        
     return render(request, 'CrearUsuario.html')
 
 

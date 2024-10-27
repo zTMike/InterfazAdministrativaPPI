@@ -17,6 +17,8 @@ def carrito(request,usuario):
             productos_carrito = ["Vacio"]
             total = 0
         else:
+
+
             with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM detalles_carritos WHERE id_carrito_dcar = %s", [carrito[0]])
                 column_names = [col[0] for col in cursor.description]
@@ -105,6 +107,7 @@ def agregar_carrito(request):
 
 def total_carrito(request):
     diccionario = request.POST.get("carrito")
+    
     diccionario = diccionario.replace("Decimal('", "").replace("')", "")  # Eliminar "Decimal(' " y " ')"
     lista = ast.literal_eval(diccionario)
 
@@ -119,9 +122,11 @@ def total_carrito(request):
         fecha_ord = datetime.now()
         estado_ord = 'P'
         total=0
+       
         for diccionario in lista:
             total=total+diccionario['SUBTOTAL_DCAR']
-        cursor.execute("INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD) VALUES (%s, %s, %s, %s, %s)", [id_orden_ord, usuario, fecha_ord, estado_ord, total])
+            
+        cursor.execute("INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD,idcupon orden) VALUES (%s, %s, %s, %s, %s)", [id_orden_ord, usuario, fecha_ord, estado_ord, total])
         
         
         for diccionario in lista:
@@ -133,21 +138,8 @@ def total_carrito(request):
             
         cursor.execute("DELETE FROM detalles_carritos WHERE ID_CARRITO_DCAR = %s", [diccionario['ID_CARRITO_DCAR']])
         cursor.execute("DELETE FROM carritos WHERE ID_CARRITO_CAR = %s", [diccionario['ID_CARRITO_DCAR']])
-        
-
-
     
-        
-    
-    
-    
-
-    
-
-
-
-
-
+    raise ValueError('Venta Creada Correctamente')
     return redirect('index')
 
 def ordenes(request):
