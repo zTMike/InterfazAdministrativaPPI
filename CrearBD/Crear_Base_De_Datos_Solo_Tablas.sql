@@ -60,6 +60,11 @@ CREATE TABLE carritos (
   id_usuario_car NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+
+ALTER TABLE CARRITOS 
+    ADD(id_cupon NUMBER(10),
+     estado NUMBER(1));
+
 CREATE TABLE detalles_carritos (
   id_detalle_dcar NUMBER(10) NOT NULL,
   cantidad_dcar NUMBER(10) NOT NULL,
@@ -83,3 +88,10 @@ CREATE TABLE favoritos (
   id_usuario_fa NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+CREATE TABLE cupones (
+  id_cupon NUMBER(10) NOT NULL PRIMARY KEY,
+  cod VARCHAR2(20) UNIQUE NOT NULL,
+  cant NUMBER(10) NOT NULL,
+  porcentaje  DECIMAL(5, 4) NOT NULL,
+  estado NUMBER(1)
+)

@@ -11,6 +11,11 @@ urlpatterns = [
     path('admin/producto/resena', agregar_resena,name='agregar_resena'),
     path('admin/producto/resena/<int:id_resena_re>/', eliminar_resena, name='eliminar_resena'),
     path('admin/productos/favoritos/<int:id_producto_pro>/', agregar_favoritos, name='agregar_favoritos'),
+    path('admin/crearCupon/', crearcupon, name='cupones'),
+    path('admin/Cupones/', cuponessadmin,name='cuponessadmin'),
+    path('cupones/eliminar/<int:id_cupon>/', eliminar_cupon, name='eliminar_cupon'),
+
+
 
  
 

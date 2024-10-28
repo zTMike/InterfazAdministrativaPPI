@@ -39,6 +39,87 @@ def agregar_resena(request):
                 connection.commit()
     return redirect('productos')
 
+@login_required
+def eliminar_cupon(request, id_cupon):
+    try:
+        with connection.cursor() as cursor:
+            # Eliminar el cupón de la base de datos
+            cursor.execute("DELETE FROM cupones WHERE id_cupon = %s", [id_cupon])
+        
+        messages.success(request, 'Cupón eliminado exitosamente.')
+    except Exception as e:
+        messages.error(request, f'Error al eliminar el cupón: {str(e)}')
+    
+    return redirect('cuponessadmin')  # Redirige a la vista que muestra todos los cupones
+
+@login_required
+def cuponessadmin(request):
+    cupones = []
+    with connection.cursor() as cursor:
+        # Obtener todos los cupones de la base de datos
+        cursor.execute("SELECT id_cupon, cod, cant, porcentaje, estado FROM cupones")
+        rows = cursor.fetchall()
+        
+        for row in rows:
+            cupon = {
+                'ID_CUPON': row[0],
+                'COD': row[1],
+                'CANT': row[2],
+                'PORCENTAJE': row[3],
+                'ESTADO': row[4]
+            }
+            cupones.append(cupon)
+
+    return render(request, 'AdminCupones.html', {'cupones': cupones})
+
+
+@login_required
+def crearcupon(request):
+    if request.method == 'POST':
+        try:
+            codigo_cupon = request.POST.get('codigo_cupon')
+            cantidad = int(request.POST.get('cantidad'))
+            if cantidad <= 0:
+                messages.error(request, 'La cantidad debe ser mayor que 0.')
+                return redirect('crearcupon')
+            porcentaje = float(request.POST.get('porcentaje'))
+            activo = request.POST.get('activo') == 'True'
+
+            with connection.cursor() as cursor:
+                # Obtener el siguiente ID disponible para id_cupon
+                cursor.execute("SELECT NVL(MAX(id_cupon), 0) + 1 FROM cupones")
+                next_id = cursor.fetchone()[0]
+
+                # Insertar el nuevo cupón
+                cursor.execute("""
+                    DECLARE
+                        v_id_cupon NUMBER := :next_id;
+                        v_cod VARCHAR2(20) := :codigo_cupon;
+                        v_cant NUMBER := :cantidad;
+                        v_porcentaje NUMBER := :porcentaje;
+                        v_estado NUMBER(1) := :activo;
+                    BEGIN
+                        INSERT INTO cupones (id_cupon, cod, cant, porcentaje, estado)
+                        VALUES (v_id_cupon, v_cod, v_cant, v_porcentaje, v_estado);
+                    END;
+                """, {
+                    'next_id': next_id,
+                    'codigo_cupon': codigo_cupon,
+                    'cantidad': cantidad,
+                    'porcentaje': porcentaje,
+                    'activo': 1 if activo else 0
+                })
+
+            messages.success(request, 'Cupón creado exitosamente.')
+            return redirect('crearcupon')
+        except ValueError as e:
+            messages.error(request, f'Error de conversión de datos: {str(e)}')
+        except Exception as e:
+            messages.error(request, f'Error al crear el cupón: {str(e)}')
+
+    return render(request, 'CuponesDetalles.html')
+
+
 
 @login_required
 def eliminar_resena(request, id_resena_re):

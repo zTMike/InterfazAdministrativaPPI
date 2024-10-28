@@ -113,3 +113,7 @@ ADD CONSTRAINT fk_productos_fa FOREIGN KEY (id_producto_fa) REFERENCES productos
 -- Crea una restricción de clave foránea en la columna id_usuario_fa de la tabla resenas que hace referencia a id_usuario_usu en la tabla usuarios
 ALTER TABLE favoritos
 ADD CONSTRAINT fk_usuarios_fa FOREIGN KEY (id_usuario_fa) REFERENCES usuarios(id_usuario_usu);
+
+
+ALTER TABLE carritos
+ADD CONSTRAINT fk_id_cupon FOREIGN KEY (id_cupon) REFERENCES cupones(id_cupon);
