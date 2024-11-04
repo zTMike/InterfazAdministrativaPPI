@@ -2,6 +2,7 @@ import ast
 from datetime import datetime
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db import connection
 
 from Ventas.models import Carrito
@@ -108,48 +109,46 @@ def total_carrito(request):
     diccionario = diccionario.replace("Decimal('", "").replace("')", "")  # Eliminar "Decimal(' " y " ')"
     lista = ast.literal_eval(diccionario)
 
+    print(diccionario)
+    
 
-    id_carro=lista[0]['ID_CARRITO_DCAR']
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT id_usuario_car FROM carritos WHERE ID_CARRITO_CAR = %s", [id_carro])
-        usuario = cursor.fetchone()[0]
-        cursor.execute("SELECT MAX(id_orden_ord) FROM ORDENES")
-        max_id = cursor.fetchone()[0]
-        id_orden_ord = 1 if max_id is None else max_id + 1
-        fecha_ord = datetime.now()
-        estado_ord = 'P'
-        total=0
-        for diccionario in lista:
-            total=total+diccionario['SUBTOTAL_DCAR']
-        cursor.execute("INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD) VALUES (%s, %s, %s, %s, %s)", [id_orden_ord, usuario, fecha_ord, estado_ord, total])
-        
-        
-        for diccionario in lista:
-            cursor.execute("SELECT MAX(id_detalle_det) FROM DETALLES_ORDENES")
+    
+
+    if not lista:
+        messages.error(request, 'Carrito vacío')
+        return redirect('index')
+    else:
+
+        id_carro = lista[0]['ID_CARRITO_DCAR']
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT id_usuario_car FROM carritos WHERE ID_CARRITO_CAR = %s", [id_carro])
+            usuario = cursor.fetchone()
+            if usuario is None:
+                messages.error(request, 'Carrito no encontrado')
+                return redirect('index')
+            usuario = usuario[0]
+            cursor.execute("SELECT MAX(id_orden_ord) FROM ORDENES")
             max_id = cursor.fetchone()[0]
-            id_detalle_det = 1 if max_id is None else max_id + 1
-            cursor.execute("INSERT INTO detalles_ordenes (ID_DETALLE_DET, CANTIDAD_DET, CANTIDAD_ENTREGADA_DET,PRECIO_DET, SUBTOTAL_DET, ID_PRODUCTO_DET_ID, ID_ORDEN_DET_ID) VALUES (%s, %s, %s, %s, %s, %s, %s)",[id_detalle_det, diccionario['CANTIDAD_DCAR'],0,diccionario['PRECIO_DCAR'], diccionario['SUBTOTAL_DCAR'],diccionario['ID_PRODUCTO_DCAR'], id_orden_ord])
-            cursor.execute("UPDATE productos SET existencia_pro = existencia_pro - %s WHERE id_producto_pro = %s", [diccionario['CANTIDAD_DCAR'], diccionario['ID_PRODUCTO_DCAR']])
-            
-        cursor.execute("DELETE FROM detalles_carritos WHERE ID_CARRITO_DCAR = %s", [diccionario['ID_CARRITO_DCAR']])
-        cursor.execute("DELETE FROM carritos WHERE ID_CARRITO_CAR = %s", [diccionario['ID_CARRITO_DCAR']])
-        
+            id_orden_ord = 1 if max_id is None else max_id + 1
+            fecha_ord = datetime.now()
+            estado_ord = 'P'
+            total = 0
+            for diccionario in lista:
+                total = total + diccionario['SUBTOTAL_DCAR']
+            cursor.execute("INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD) VALUES (%s, %s, %s, %s, %s)", [id_orden_ord, usuario, fecha_ord, estado_ord, total])
 
+            for diccionario in lista:
+                cursor.execute("SELECT MAX(id_detalle_det) FROM DETALLES_ORDENES")
+                max_id = cursor.fetchone()[0]
+                id_detalle_det = 1 if max_id is None else max_id + 1
+                cursor.execute("INSERT INTO detalles_ordenes (ID_DETALLE_DET, CANTIDAD_DET, CANTIDAD_ENTREGADA_DET, PRECIO_DET, SUBTOTAL_DET, ID_PRODUCTO_DET_ID, ID_ORDEN_DET_ID) VALUES (%s, %s, %s, %s, %s, %s, %s)", [id_detalle_det, diccionario['CANTIDAD_DCAR'], 0, diccionario['PRECIO_DCAR'], diccionario['SUBTOTAL_DCAR'], diccionario['ID_PRODUCTO_DCAR'], id_orden_ord])
+                cursor.execute("UPDATE productos SET existencia_pro = existencia_pro - %s WHERE id_producto_pro = %s", [diccionario['CANTIDAD_DCAR'], diccionario['ID_PRODUCTO_DCAR']])
 
-    
-        
-    
-    
-    
+            cursor.execute("DELETE FROM detalles_carritos WHERE ID_CARRITO_DCAR = %s", [diccionario['ID_CARRITO_DCAR']])
+            cursor.execute("DELETE FROM carritos WHERE ID_CARRITO_CAR = %s", [diccionario['ID_CARRITO_DCAR']])
 
-    
-
-
-
-
-
+        messages.success(request, 'Orden creada correctamente')
     return redirect('index')
-
 def ordenes(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM ordenes ORDER BY ID_ORDEN_ORD")
@@ -218,7 +217,6 @@ def actualizar_cantidad_entregada(request, id_detalle):
         """, [nueva_cantidad_entregada, id_detalle])
 
     return redirect('Detalles_detalles_orden', id_orden=id_detalle)
-
 
 def cancelarpedido(request, id_orden):
     

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from .models import Usuario
 from django.contrib.auth import logout
 from django.contrib import messages
-from django.db import connection
+from django.db import IntegrityError, connection
 from django.http import Http404
 from django.contrib.auth.hashers import make_password
 
@@ -42,28 +42,42 @@ def register_view(request):
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
-         # Comprueba si los campos están vacíos
+        
+        # Comprueba si los campos están vacíos
         if not nombre or not apellido or not telefono or not documento or not email or not password or not password2:
             messages.error(request, 'Todos los campos son obligatorios')
             return redirect('registrarse')
-        else:
-            if password != password2:
-                # Las contraseñas no coinciden
-                messages.error(request, 'Las contraseñas no coinciden')
-                return redirect('registrarse')
-            else:
-                
-                username = request.POST['email']
-                password= request.POST['password']
-                Usuario.objects.create_user(id_usuario_usu=documento, correo_usu=username, contrasena_usu=password, nombre_usu=nombre, apellido_usu=apellido, telefono_usu=telefono)
-                user = authenticate(request, username=username, password=password)
-                if user is not None:
-                    login(request, user)
-                    return redirect('index')
-                return redirect('index')
-
-        # Aquí continúa tu lógica de registro...
-
+        
+        # Comprueba si las contraseñas coinciden
+        if password != password2:
+            messages.error(request, 'Las contraseñas no coinciden')
+            return redirect('registrarse')
+        
+        # Comprueba si el correo ya está registrado
+        if Usuario.objects.filter(correo_usu=email).exists():
+            messages.error(request, 'Correo ya registrado')
+            return redirect('registrarse')
+        
+        # Comprueba si el correo es válido
+        if '@' not in email or '.' not in email:
+            messages.error(request, 'Correo inválido')
+            return redirect('registrarse')
+        
+        
+        
+        try:
+            # Crear el usuario
+            Usuario.objects.create_user(id_usuario_usu=documento, correo_usu=email, contrasena_usu=password, nombre_usu=nombre, apellido_usu=apellido, telefono_usu=telefono)
+            user = authenticate(request, username=email, password=password)
+            messages.success(request, 'Usuario Creado Correctamente')
+            if user is not None:
+                login(request, user)
+            return redirect('index')
+        except Exception as e:
+            
+            messages.error(request, 'Datos inválidos')
+            return redirect('registrarse')
+    
     # Si el método no es POST, renderiza la página de registro normalmente
     return render(request, 'registration/register.html')
 
@@ -82,7 +96,6 @@ def usuarios(request):
         ]
         return render(request, 'AdminUsuarios.html', {'usuarios': usuariosquery})
 
-
 def iniciarsesion(request):
     return render(request, 'registration/login.html')
 
@@ -91,7 +104,7 @@ def registrarse(request):
 
 def crear_usuario(request):
     if request.method == 'POST':
-        id_usuario_usu =request.POST.get('id_usuario_usu')
+        id_usuario_usu = request.POST.get('id_usuario_usu')
         nombre = request.POST.get('nombre_usu')
         apellido = request.POST.get('apellido_usu')
         correo = request.POST.get('correo_usu')
@@ -102,19 +115,40 @@ def crear_usuario(request):
         
         is_staff = 1 if request.POST.get('is_staff', False) == 'on' else 0
         is_active = 1
+
+        # Validar que todos los campos obligatorios tengan contenido
         if not nombre or not apellido or not correo or not telefono or not password:
             messages.error(request, 'Todos los campos son obligatorios')
             return redirect('crear_usuario')
-        else:
-            with connection.cursor() as cursor:
-               cursor.execute("""INSERT INTO usuarios (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
-                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                            """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_active, is_staff])
-                            
-            messages.success(request, 'Usuario Creado Correctamente')
-            return redirect('usuarios')
-    return render(request, 'CrearUsuario.html')
 
+        try:
+            with connection.cursor() as cursor:
+                # Verificar si el usuario ya existe
+                cursor.execute("SELECT * FROM usuarios WHERE id_usuario_usu = %s", [id_usuario_usu])
+                row = cursor.fetchone()
+                if row is not None:
+                    messages.error(request, 'Usuario Ya existe')
+                    return redirect('crear_usuario')
+
+                # Insertar el nuevo usuario
+                cursor.execute("""
+                    INSERT INTO usuarios (id_usuario_usu, nombre_usu, apellido_usu, correo_usu, telefono_usu, password, is_active, is_staff)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """, [id_usuario_usu, nombre, apellido, correo, telefono, password, is_active, is_staff])
+                connection.commit()
+                messages.success(request, 'Usuario Creado Correctamente')
+                return redirect('usuarios')
+        except IntegrityError as e:
+            if 'ORA-00001' in str(e):
+                messages.error(request, 'El correo electrónico ya está registrado')
+            else:
+                messages.error(request, f'Error al crear el usuario: {str(e)}')
+            return redirect('crear_usuario')
+        except Exception as e:
+            messages.error(request, f'No se pudo crear el Usuario: {str(e)}')
+            return redirect('crear_usuario')
+
+    return render(request, 'CrearUsuario.html')
 
 def usuario_detalles (request, id_usuario_usu):
 
@@ -192,8 +226,6 @@ def usuario_detalles (request, id_usuario_usu):
                 
             return redirect('usuarios')
     return render(request, 'UsuarioDetalles.html', {'usuario': usuario})
-
-
 
 def perfil(request):
     usuario_id = request.user.id_usuario_usu  # Asegúrate de que esto obtiene el ID correcto del usuario

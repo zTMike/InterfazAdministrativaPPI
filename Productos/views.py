@@ -6,6 +6,9 @@ from django.http import Http404,JsonResponse
 from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
+from django.db import connection, IntegrityError
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 @login_required
 def agregar_resena(request):
@@ -108,53 +111,83 @@ def productos(request):
 #Administrar Productos
 def crearproducto(request):
     if request.method == 'POST':
-        nombre = request.POST.get('nombre_pro')
-        descripcion = request.POST.get('descripcion_pro')
-        precio = int(float(request.POST.get('precio_pro').replace(',', '.')))
-        stock = request.POST.get('stock_pro')
-        categoria = request.POST.get('categoria_pro')
-        foto = request.FILES.get('foto_pro')  # Obtener el archivo subido
-        estado = 1 if request.POST.get('estado_pro') == 'on' else 0
-        
         with connection.cursor() as cursor:
-        
             cursor.execute("SELECT MAX(ID_PRODUCTO_PRO) FROM productos")
             max_id = cursor.fetchone()[0]
+            id_producto = 1 if max_id is None else max_id + 1
 
-           
-            id_producto_pro = 1 if max_id is None else max_id + 1
 
+        nombre = request.POST.get('nombre_pro')
+        descripcion = request.POST.get('descripcion_pro')
+        precio = request.POST.get('precio_pro')
+        cantidad = request.POST.get('stock_pro')
+        estado = request.POST.get('estado_pro')
+        foto = request.FILES.get('foto_pro')
+        categoria = request.POST.get('categoria_pro')
         
-        if not nombre or not descripcion or not precio or not stock or not categoria  or not foto:
-            messages.error(request, 'Todos los campos son obligatorios')
+        
+
+        # Validar que todos los campos obligatorios tengan contenido
+        if not id_producto or not nombre or not precio or not cantidad or not foto or not estado or not categoria or not descripcion:
+            messages.error(request, f'Todos los campos son obligatorios')
+            print("Mensaje de error: Todos los campos son obligatorios")
             return redirect('crearproducto')
-        else:
-            # Guardar el archivo subido en el directorio \Media\productos de tu proyecto
-            ruta_foto = os.path.join(settings.BASE_DIR, 'Media', 'productos', foto.name)
-            with open(ruta_foto, 'wb+') as destination:
-                for chunk in foto.chunks():
-                    destination.write(chunk)
 
+        try:
+            # Intenta convertir precios y cantidades
+            precio = int(float(precio.replace(',', '.')))
+            cantidad = int(cantidad)
+            estado = int(estado)
+        except ValueError:
+            messages.error(request, 'Formato de número incorrecto')
+            print("Mensaje de error: Formato de número incorrecto")
+            return redirect('crearproducto')
+
+        try:
+            # Guardar la imagen y crear el producto
+            foto_path = default_storage.save(os.path.join('productos', foto.name), ContentFile(foto.read()))
+            print(f"Foto guardada en: {foto_path}")
+
+            # Verificar si el producto ya existe
             with connection.cursor() as cursor:
-                cursor.execute("""
-                    INSERT INTO productos (id_producto_pro,nombre_pro, descripcion_pro, precio_pro, existencia_pro, categoria_pro_id,estado_pro,foto_pro)
-                    VALUES (%s,%s, %s, %s, %s, %s, %s, %s)
-                """, [id_producto_pro,nombre, descripcion, precio, stock, categoria, estado, foto.name])  # Guardar solo el nombre de la foto en la base de datos
-                connection.commit()
-            messages.success(request, 'Producto Creado Correctamente')
-            return redirect('productosadmin')
-    
-    # Obtener todas las categorías
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM categorias")
-        column_names = [col[0] for col in cursor.description]
-        categorias = [
-            dict(zip(column_names, row))
-            for row in cursor.fetchall()
-        ]
+                cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto])
+                row = cursor.fetchone()
+                if row is not None:
+                    messages.error(request, 'Producto Ya existe')
+                    print("Mensaje de error: Producto Ya existe")
+                    return redirect('crearproducto')
 
-    # Pasar las categorías a la plantilla
-    return render(request, 'CrearProductos.html', {'categorias': categorias})
+                # Insertar el nuevo producto
+                cursor.execute(""" 
+                    INSERT INTO productos (id_producto_pro, nombre_pro, descripcion_pro, precio_pro, existencia_pro, foto_pro, estado_pro, categoria_pro_id) 
+                    VALUES (%s, %s, %s, %s, %s ,%s, %s ,%s)
+                """, [id_producto, nombre, descripcion, precio, cantidad, foto_path, estado, categoria])
+                connection.commit()
+
+            messages.success(request, 'Producto Creado Correctamente')
+            print("Mensaje de éxito: Producto Creado Correctamente")
+            return redirect('productosadmin')
+
+        except IntegrityError as e:
+            messages.error(request, f'Error al crear el producto')
+            print("Mensaje de error: Error al crear el producto")
+            return redirect('crearproducto')
+        except Exception as e:
+            messages.error(request, f'Error al crear el producto')
+            print("Mensaje de error: Error al crear el producto")
+            return redirect('crearproducto')
+    elif request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM categorias")
+            column_names = [col[0] for col in cursor.description]
+
+            categoria = [
+                dict(zip(column_names, row))
+                for row in cursor.fetchall()
+            ]
+   
+    return render(request, 'CrearProductos.html', {'categorias': categoria})
+
 def productosadmin(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM productos ORDER BY id_producto_pro")
@@ -365,40 +398,41 @@ def categoria_detalles(request, id_categoria_cat):
             return redirect('categoriasadmin')
 
     return render(request, 'CategoriaDetalles.html', {'categoria': categoria})
+
+
 def crearcategoria(request):
-    
-
-
     if request.method == 'POST':
         with connection.cursor() as cursor:
-        
             cursor.execute("SELECT MAX(ID_CATEGORIA_CAT) FROM categorias")
             max_id = cursor.fetchone()[0]
-
-           
             next_id = 1 if max_id is None else max_id + 1
-
 
         nombre = request.POST.get('nombre_cat')
         descripcion = request.POST.get('descripcion_cat')
-        
-        
+
         if not nombre or not descripcion:
             messages.error(request, 'Todos los campos son obligatorios')
+            print("Todos los campos son obligatorios")
             return redirect('crearcategoria')
-        else:
+        
+
+        try:
             with connection.cursor() as cursor:
                 cursor.execute("""
-                    INSERT INTO categorias (id_categoria_cat,nombre_cat, descripcion_cat)
+                    INSERT INTO categorias (id_categoria_cat, nombre_cat, descripcion_cat)
                     VALUES (%s, %s, %s)
-                """, [next_id,nombre, descripcion])
+                """, [next_id, nombre, descripcion])
                 connection.commit()
             messages.success(request, 'Categoria Creada Correctamente')
             return redirect('categoriasadmin')
+        except IntegrityError as e:
+            if 'ORA-00001' in str(e):
+                messages.error(request, 'La categoría ya existe')
+            else:
+                messages.error(request, f'Error al crear la categoría')
+            return redirect('crearcategoria')
+        except Exception as e:
+            messages.error(request, f'Error al crear la categoría')
+            return redirect('crearcategoria')
+
     return render(request, 'CrearCategoria.html')
-
-
-
-
-
-
