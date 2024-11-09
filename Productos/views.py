@@ -204,6 +204,9 @@ def productosadmin(request):
             for row in cursor.fetchall()
         ]
         
+        print(productos)
+        print(categoria)
+
         return render(request, 'AdminProductos.html', {'productos': productos,'categoria':categoria})
 def producto_detalles(request, id_producto_pro):
     with connection.cursor() as cursor:
@@ -239,7 +242,7 @@ def producto_detalles(request, id_producto_pro):
         action = request.POST.get('action')
         if action == 'Actualizar':
             
-           
+            id_producto_pro = request.POST.get('id_producto')
             nombre = request.POST.get('nombre_pro')
             descripcion = request.POST.get('descripcion_pro')
             precio = int(request.POST.get('precio_pro').split(',')[0])
@@ -252,6 +255,10 @@ def producto_detalles(request, id_producto_pro):
             # Encontrar el elemento en la lista de categorías que coincide con categoriainput
             categoria_encontrada = next((item for item in categoria if item['NOMBRE_CAT'] == categoriainput), None)
 
+
+            print(id_producto_pro,nombre, descripcion, precio, existencias, categoria_encontrada, estado, foto)
+
+
             if categoria_encontrada:
                 valor = categoria_encontrada['ID_CATEGORIA_CAT']
                 print("Soy un valor", valor)
@@ -259,6 +266,7 @@ def producto_detalles(request, id_producto_pro):
                 print("Categoría no encontrada")
                 
             if foto is None:
+                
                 with connection.cursor() as cursor:
                     cursor.execute("""
                         UPDATE productos
@@ -269,9 +277,11 @@ def producto_detalles(request, id_producto_pro):
                         categoria_pro_id = %s,
                         estado_pro = %s
                         WHERE id_producto_pro = %s
-                    """, [nombre, descripcion, precio, existencias, categoria, estado, id_producto_pro])
+                    """, [nombre, descripcion, precio, existencias, valor, estado, id_producto_pro])
+                    print("Producto Actualizado Correctamente")
                     connection.commit()
-                messages.success(request, 'Producto Actualizado Correctamente')
+                
+                
                 with connection.cursor() as cursor:
                     cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
                     row = cursor.fetchone()
@@ -287,16 +297,18 @@ def producto_detalles(request, id_producto_pro):
                         'estado_pro': row[6],
                         'categoria_pro': row[7]
                     }
+
+               
                 producto['estado_pro'] = bool(int(producto['estado_pro']))
+                
                 return render(request, 'ProductoDetalles.html', {'producto': producto,'categoria':categoria})
             else:
                 ruta_foto = os.path.join(settings.BASE_DIR, 'Media', 'productos', foto.name)
                 with open(ruta_foto, 'wb+') as destination:
                     for chunk in foto.chunks():
                         destination.write(chunk)
-
-                
-
+                foto_path = f'productos/{foto.name}'
+                print (foto.name)
                 with connection.cursor() as cursor:
                     cursor.execute("""
                         UPDATE productos
@@ -308,14 +320,18 @@ def producto_detalles(request, id_producto_pro):
                         estado_pro = %s,
                         foto_pro = %s
                         WHERE id_producto_pro = %s
-                    """, [nombre, descripcion, precio, existencias, categoria, estado, foto.name, id_producto_pro])
+                    """, [nombre, descripcion, precio, existencias, valor, estado, foto_path, id_producto_pro])
                     connection.commit()
-                messages.success(request, 'Producto Actualizado Correctamente')
+              
+                
                 with connection.cursor() as cursor:
                     cursor.execute("SELECT * FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
                     row = cursor.fetchone()
+
+                    print(row)
                     if row is None:
                         messages.error(request, 'Producto no encontrado')
+
                     producto = {
                         'id_producto_pro': row[0],
                         'nombre_pro': row[1],
@@ -326,8 +342,8 @@ def producto_detalles(request, id_producto_pro):
                         'estado_pro': row[6],
                         'categoria_pro': row[7]
                     }
-                    producto['estado_pro'] = bool(int(request.POST.get('estado_pro')))
-                return render(request, 'ProductoDetalles.html', {'producto': producto})
+
+                return render(request, 'ProductoDetalles.html', {'producto': producto,'categoria':categoria})
         elif action == 'Eliminar':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM productos WHERE id_producto_pro = %s", [id_producto_pro])
