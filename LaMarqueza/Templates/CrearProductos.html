@@ -12,31 +12,35 @@
             <ul class="messages">
                 {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
+                    {% endfor %}
             </ul>
             {% endif %}
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="nombre_pro">Nombre del Producto:</label>
-                    <input type="text" id="nombre_pro" name="nombre_pro" value="{{ producto.nombre_pro }}" class="form-control">
+                    <input type="text" id="nombre_pro" name="nombre_pro" value="{{ producto.nombre_pro }}"
+                        class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label for="descripcion_pro">Descripción:</label>
-                    <input type="text" id="descripcion_pro" name="descripcion_pro" value="{{ producto.descripcion_pro }}" class="form-control">
+                    <input type="text" id="descripcion_pro" name="descripcion_pro"
+                        value="{{ producto.descripcion_pro }}" class="form-control">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="precio_pro">Precio:</label>
-                    <input type="text" id="precio_pro" name="precio_pro" value="{{ producto.precio_pro }}" class="form-control">
+                    <input type="text" id="precio_pro" name="precio_pro" value="{{ producto.precio_pro }}"
+                        class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label for="stock_pro">Stock:</label>
-                    <input type="text" id="stock_pro" name="stock_pro" value="{{ producto.stock_pro }}" class="form-control">
+                    <input type="text" id="stock_pro" name="stock_pro" value="{{ producto.stock_pro }}"
+                        class="form-control">
                 </div>
             </div>
 
@@ -66,7 +70,7 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn">Crear Producto</button>
+                <button type="submit" id="Crear Producto" class="btn">Crear Producto</button>
             </div>
         </form>
     </div>

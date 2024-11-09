@@ -7,6 +7,7 @@ DROP TABLE categorias;
 DROP TABLE usuarios;
 
 
+
 CREATE TABLE categorias (
   id_categoria_cat NUMBER(10) NOT NULL,
   nombre_cat VARCHAR2(50) NOT NULL,
