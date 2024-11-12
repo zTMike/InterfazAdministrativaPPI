@@ -3,11 +3,26 @@ from datetime import datetime
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.db import connection
+from django.contrib.auth import get_user_model
+
 
 from Ventas.models import Carrito
 
-def carrito(request,usuario):
+def carrito(request, usuario):
     documento = usuario
+
+    # Verificar si el carrito tiene ID_CUPON y ESTADO en NULL
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT ID_CUPON, ESTADO, ID_USUARIO_CAR
+            FROM carritos 
+            WHERE ID_USUARIO_CAR = %s AND ID_CUPON IS NULL AND ESTADO IS NULL
+        """, [usuario])
+        carrito = cursor.fetchone()
+
+    mostrar_campo_cupon = False
+    if carrito and carrito[0] is None and carrito[1] is None:
+        mostrar_campo_cupon = True
 
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM carritos WHERE id_usuario_car = %s", [documento])
@@ -26,9 +41,82 @@ def carrito(request,usuario):
                 ]
                 total = sum(producto['SUBTOTAL_DCAR'] for producto in productos_carrito)
 
-    
+    # Pasar la variable mostrar_campo_cupon al template
+    return render(request, 'Carrito.html', {
+        'carrito': productos_carrito, 
+        'total': total, 
+        'info_carrito': carrito,
+        'mostrar_campo_cupon': mostrar_campo_cupon  # Pasar la variable aquí
+    })
 
-    return render(request, 'Carrito.html', {'carrito': productos_carrito, 'total': total})
+
+
+@login_required
+def validar_cupon(request, usuario):
+    documento = usuario
+
+    if request.method == 'POST':
+        cod = request.POST.get('cod')
+
+        # Verificar si el código de cupón existe en la tabla 'cupones'
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT ID_CUPON, ESTADO 
+                FROM cupones 
+                WHERE COD = %s
+            """, [cod])
+            cupon = cursor.fetchone()
+
+        if cupon:
+            id_cupon = cupon[0]
+            estado = cupon[1]
+
+
+
+            # Verificar si el carrito del usuario tiene ID_CUPON y ESTADO en NULL
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT ID_CARRITO_CAR 
+                    FROM carritos 
+                    WHERE ID_USUARIO_CAR = %s AND ID_CUPON IS NULL AND ESTADO IS NULL
+                """, [usuario])
+                carrito = cursor.fetchone()
+
+                cursor.execute("""
+                    SELECT porcentaje
+                    FROM cupones
+                    WHERE ID_CUPON = : id_cupon
+                """, {'id_cupon': id_cupon})
+                cupon = cursor.fetchone()
+
+                print('Porcentaje fino', cupon)
+        
+            if carrito:
+                # Si el carrito existe, actualizar la tabla 'carritos' con el ID_CUPON y ESTADO
+                carrito_id = carrito[0]
+                with connection.cursor() as cursor:
+                    cursor.execute("""
+                        UPDATE carritos 
+                        SET ID_CUPON = %s, ESTADO = %s 
+                        WHERE ID_CARRITO_CAR = %s
+                    """, [id_cupon, estado, carrito_id])
+
+                return redirect('carrito', usuario=usuario)
+
+            else:
+                return render(request, 'Carrito.html', {
+                    'error': 'No se ha encontrado un carrito válido para este usuario.'
+                })
+
+        else:
+            return render(request, 'Carrito.html', {
+                'error': 'El código de cupón no es válido.'
+            })
+
+    return redirect('carrito', usuario=usuario)
+
+
+
 
 def eliminar_del_carrito(request, item_id):
     user_id = request.user.id_usuario_usu
@@ -103,52 +191,91 @@ def agregar_carrito(request):
 
     return redirect('carrito', usuario=documento)
 
+from decimal import Decimal
+
 def total_carrito(request):
     diccionario = request.POST.get("carrito")
     diccionario = diccionario.replace("Decimal('", "").replace("')", "")  # Eliminar "Decimal(' " y " ')"
     lista = ast.literal_eval(diccionario)
 
-
-    id_carro=lista[0]['ID_CARRITO_DCAR']
+    id_carro = lista[0]['ID_CARRITO_DCAR']
+    
     with connection.cursor() as cursor:
         cursor.execute("SELECT id_usuario_car FROM carritos WHERE ID_CARRITO_CAR = %s", [id_carro])
         usuario = cursor.fetchone()[0]
+        
         cursor.execute("SELECT MAX(id_orden_ord) FROM ORDENES")
         max_id = cursor.fetchone()[0]
         id_orden_ord = 1 if max_id is None else max_id + 1
         fecha_ord = datetime.now()
-        estado_ord = 'P'
-        total=0
-        for diccionario in lista:
-            total=total+diccionario['SUBTOTAL_DCAR']
-        cursor.execute("INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD) VALUES (%s, %s, %s, %s, %s)", [id_orden_ord, usuario, fecha_ord, estado_ord, total])
+        estado_ord = 'P'  
+        total = 0
         
+        for diccionario in lista:
+            total += diccionario['SUBTOTAL_DCAR']
+        
+        cursor.execute("""
+            SELECT ID_CUPON
+            FROM carritos
+            WHERE ID_CARRITO_CAR = %s
+        """, [id_carro])
+        id_cupon = cursor.fetchone()
+
+        if id_cupon and id_cupon[0] is not None:
+            cursor.execute("""
+                SELECT PORCENTAJE
+                FROM cupones
+                WHERE ID_CUPON = %s
+            """, [id_cupon[0]])
+            cupon = cursor.fetchone()
+            
+            if cupon:
+                porcentaje = cupon[0]
+                porcentaje_float = float(porcentaje)
+                precio_descuento = total * (porcentaje_float / 100)  # Calcular descuento
+                total_con_descuento = total - precio_descuento  # Aplicar el descuento al total
+                
+                cursor.execute("""
+                    INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD, PRECIO_DESCUENTO, PORCENTAJE)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """, [id_orden_ord, usuario, fecha_ord, estado_ord, total_con_descuento, precio_descuento, porcentaje])
+                
+            else:
+                cursor.execute("""
+                    INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, [id_orden_ord, usuario, fecha_ord, estado_ord, total])
+        else:
+            cursor.execute("""
+                INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD)
+                VALUES (%s, %s, %s, %s, %s)
+            """, [id_orden_ord, usuario, fecha_ord, estado_ord, total])
         
         for diccionario in lista:
             cursor.execute("SELECT MAX(id_detalle_det) FROM DETALLES_ORDENES")
-            max_id = cursor.fetchone()[0]
-            id_detalle_det = 1 if max_id is None else max_id + 1
-            cursor.execute("INSERT INTO detalles_ordenes (ID_DETALLE_DET, CANTIDAD_DET, CANTIDAD_ENTREGADA_DET,PRECIO_DET, SUBTOTAL_DET, ID_PRODUCTO_DET_ID, ID_ORDEN_DET_ID) VALUES (%s, %s, %s, %s, %s, %s, %s)",[id_detalle_det, diccionario['CANTIDAD_DCAR'],0,diccionario['PRECIO_DCAR'], diccionario['SUBTOTAL_DCAR'],diccionario['ID_PRODUCTO_DCAR'], id_orden_ord])
-            cursor.execute("UPDATE productos SET existencia_pro = existencia_pro - %s WHERE id_producto_pro = %s", [diccionario['CANTIDAD_DCAR'], diccionario['ID_PRODUCTO_DCAR']])
+            max_id_det = cursor.fetchone()[0]
+            id_detalle_det = 1 if max_id_det is None else max_id_det + 1
             
-        cursor.execute("DELETE FROM detalles_carritos WHERE ID_CARRITO_DCAR = %s", [diccionario['ID_CARRITO_DCAR']])
-        cursor.execute("DELETE FROM carritos WHERE ID_CARRITO_CAR = %s", [diccionario['ID_CARRITO_DCAR']])
+            cursor.execute("""
+                INSERT INTO detalles_ordenes (ID_DETALLE_DET, CANTIDAD_DET, CANTIDAD_ENTREGADA_DET, PRECIO_DET, SUBTOTAL_DET, ID_PRODUCTO_DET_ID, ID_ORDEN_DET_ID)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, [id_detalle_det, diccionario['CANTIDAD_DCAR'], 0, diccionario['PRECIO_DCAR'], diccionario['SUBTOTAL_DCAR'], diccionario['ID_PRODUCTO_DCAR'], id_orden_ord])
+            
+            cursor.execute("""
+                UPDATE productos SET existencia_pro = existencia_pro - %s WHERE id_producto_pro = %s
+            """, [diccionario['CANTIDAD_DCAR'], diccionario['ID_PRODUCTO_DCAR']])
         
-
-
-    
+        cursor.execute("""
+            DELETE FROM detalles_carritos WHERE ID_CARRITO_DCAR = %s
+        """, [diccionario['ID_CARRITO_DCAR']])
         
-    
-    
-    
+        cursor.execute("""
+            DELETE FROM carritos WHERE ID_CARRITO_CAR = %s
+        """, [diccionario['ID_CARRITO_DCAR']])
 
-    
-
-
+    return redirect('ordenes')  
 
 
-
-    return redirect('index')
 
 def ordenes(request):
     with connection.cursor() as cursor:

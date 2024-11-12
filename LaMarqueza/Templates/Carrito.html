@@ -3,22 +3,17 @@
 {% block Titulo %}Carrito{% endblock Titulo %}
 
 {% block Boddy %}
-
-{% if carrito.0 == 'Vacio' %}
 <div class="container">
-    <h1 class="my-4 text-center">Carrito</h1>
-    <p class="my-4 text-center">El carrito está vacío</p>
+    <h1 class="my-4">Carrito</h1>
 
+    {% if carrito.0 == 'Vacio' %}
+    <p class="my-4 text-center">El carrito está vacío</p>
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 text-center">
             <img src='{% static "IMG/Error Carrito.png" %}' class="img-fluid rounded-circle w-50" alt="..." />
         </div>
     </div>
-</div>
-
-{% else %}
-<div class="container">
-    <h1 class="my-4">Carrito</h1>
+    {% else %}
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -27,41 +22,49 @@
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Subtotal</th>
-                    <th scope="col">Eliminar del carrito</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in carrito %}
-                    <tr>
-                        <td>{{ item.NOMBRE_PRODUCTO_DCAR }}</td>
-                        <td>{{ item.CANTIDAD_DCAR }}</td>
-                        <td>${{ item.PRECIO_DCAR }}</td>
-                        <td>${{ item.SUBTOTAL_DCAR }}</td>
-                        <td>
-                            <form method="POST" action="{% url 'eliminar_del_carrito' item.ID_DETALLE_DCAR %}">
+                <tr>
+                    <td>{{ item.NOMBRE_PRODUCTO_DCAR }}</td>
+                    <td>{{ item.CANTIDAD_DCAR }}</td>
+                    <td>${{ item.PRECIO_DCAR }}</td>
+                    <td>${{ item.SUBTOTAL_DCAR }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <!-- Botón de eliminación -->
+                            <form method="POST" action="{% url 'eliminar_del_carrito' item.ID_DETALLE_DCAR %}" class="me-2">
                                 {% csrf_token %}
                                 <input type="hidden" name="carrito_id" value="{{ item.ID_CARRITO_DCAR }}">
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>
-                        </td>
-                    </tr>
+                            {% if request.user.is_authenticated %}
+                            <!-- Input de cupón, si corresponde -->
+                            {% if mostrar_campo_cupon %}
+                                <form method="POST" action="{% url 'validar_cupon' request.user.id_usuario_usu %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="cod" placeholder="Introduce tu cupón" class="form-control">
+                                    <button type="submit" class="btn btn-primary">Aplicar Cupón</button>
+                                </form>
+                            {% else %}
+                                <p>No hay un cupón disponible para aplicar.</p>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-right">Total:</td>
-                    <td>${{ total }}</td> <!-- Asegúrate de pasar 'total' desde tu vista -->
-                </tr>
-            </tfoot>
         </table>
     </div>
-    
-    <form class="text-center" method="POST" action="{% url 'totalizar'%}">
+
+    <form class="text-center" method="POST" action="{% url 'totalizar' %}">
         {% csrf_token %}
         <input type="hidden" name="carrito" value="{{ carrito }}">
         <button type="submit" id="Totalizar" class="btn btn-primary">Totalizar</button>
     </form>
+    {% endif %}
 </div>
-{% endif %}
-
 {% endblock Boddy %}

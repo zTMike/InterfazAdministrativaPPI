@@ -2,39 +2,130 @@
 {% load static %}
 
 {% block Administrador %}
-    
-<form method="post" >
+<style>
+    :root {
+        --color-primary: #4CAF50;
+        --color-primary-light: #81C784;
+        --color-primary-dark: #388E3C;
+        --color-background: #E8F5E9;
+        --color-text: #1B5E20;
+        --color-text-light: #2E7D32;
+        --color-border: #A5D6A7;
+    }
+
+    .form-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--color-background);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form-container h2 {
+        text-align: center;
+        color: var(--color-primary-dark);
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--color-text);
+    }
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: #FFFFFF;
+        color: var(--color-text);
+    }
+    .form-group input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: var(--color-primary);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-submit:hover {
+        background-color: var(--color-primary-dark);
+    }
+</style>
+
+<div class="form-container">
+    <h2>Editar Usuario</h2>
+    <form method="post">
         {% csrf_token %}
 
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
         </ul>
         {% endif %}
-        <label for="id_usuario_usu">ID:</label><br>
-        <input type="text" id="id_usuario_usu" name="id_usuario_usu" value="{{ usuario.id_usuario_usu }}" readonly><br>
-        <label for="nombre_usu">Nombre:</label><br>
-        <input type="text" id="nombre_usu" name="nombre_usu" value="{{ usuario.nombre_usu }}"><br>
-        <label for="apellido_usu">Apellido:</label><br>
-        <input type="text" id="apellido_usu" name="apellido_usu" value="{{ usuario.apellido_usu }}"><br>
-        <label for="correo_usu">Correo:</label><br>
-        <input type="text" id="correo_usu" name="correo_usu" value="{{ usuario.correo_usu }}"><br>
-        <label for="telefono_usu">Teléfono:</label><br>
-        <input type="text" id="telefono_usu" name="telefono_usu" value="{{ usuario.telefono_usu }}"><br>
-        <label for="is_staff">Es staff:</label><br>
-        <input type="checkbox" id="is_staff" name="is_staff" {% if usuario.is_staff %}checked{% endif %}><br>
-        <label for="is_active">Está activo:</label><br>
-        <input type="checkbox" id="is_active" name="is_active" {% if usuario.is_active %}checked{% endif %}><br>
-        <input type="submit" name="action" value="Actualizar">
-        <script>
-            document.getElementById('delete-button').addEventListener('click', function(e) {
-                if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-                    e.preventDefault();
-                }
-            });
-            </script>
- </form>
 
+        <div class="form-group">
+            <label for="id_usuario_usu">ID:</label>
+            <input type="text" id="id_usuario_usu" name="id_usuario_usu" value="{{ usuario.id_usuario_usu }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="nombre_usu">Nombre:</label>
+            <input type="text" id="nombre_usu" name="nombre_usu" value="{{ usuario.nombre_usu }}">
+        </div>
+
+        <div class="form-group">
+            <label for="apellido_usu">Apellido:</label>
+            <input type="text" id="apellido_usu" name="apellido_usu" value="{{ usuario.apellido_usu }}">
+        </div>
+
+        <div class="form-group">
+            <label for="correo_usu">Correo:</label>
+            <input type="email" id="correo_usu" name="correo_usu" value="{{ usuario.correo_usu }}">
+        </div>
+
+        <div class="form-group">
+            <label for="telefono_usu">Teléfono:</label>
+            <input type="tel" id="telefono_usu" name="telefono_usu" value="{{ usuario.telefono_usu }}">
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="is_staff" name="is_staff" {% if usuario.is_staff %}checked{% endif %}>
+                Es staff
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="is_active" name="is_active" {% if usuario.is_active %}checked{% endif %}>
+                Está activo
+            </label>
+        </div>
+
+        <button type="submit" name="action" value="Actualizar" class="btn-submit">Actualizar</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('delete-button').addEventListener('click', function(e) {
+        if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+            e.preventDefault();
+        }
+    });
+</script>
 {% endblock Administrador %}

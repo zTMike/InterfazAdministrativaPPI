@@ -7,7 +7,6 @@ from django.conf import settings
 import os
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect
 from django.db import IntegrityError
 from django.http import HttpResponseBadRequest
 
@@ -43,20 +42,18 @@ def agregar_resena(request):
 def eliminar_cupon(request, id_cupon):
     try:
         with connection.cursor() as cursor:
-            # Eliminar el cupón de la base de datos
             cursor.execute("DELETE FROM cupones WHERE id_cupon = %s", [id_cupon])
         
         messages.success(request, 'Cupón eliminado exitosamente.')
     except Exception as e:
         messages.error(request, f'Error al eliminar el cupón: {str(e)}')
     
-    return redirect('cuponessadmin')  # Redirige a la vista que muestra todos los cupones
+    return redirect('cuponessadmin')  
 
 @login_required
 def cuponessadmin(request):
     cupones = []
     with connection.cursor() as cursor:
-        # Obtener todos los cupones de la base de datos
         cursor.execute("SELECT id_cupon, cod, cant, porcentaje, estado FROM cupones")
         rows = cursor.fetchall()
         
@@ -118,6 +115,9 @@ def crearcupon(request):
             messages.error(request, f'Error al crear el cupón: {str(e)}')
 
     return render(request, 'CuponesDetalles.html')
+
+
+
 
 
 
