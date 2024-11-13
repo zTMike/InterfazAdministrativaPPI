@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 
 from Ventas.models import Carrito
@@ -18,7 +19,6 @@ def carrito(request, usuario):
     carrito_dict=[]
 
     
-
     # Verificar si el carrito tiene ID_CUPON y ESTADO en NULL
     with connection.cursor() as cursor:
         cursor.execute("""
@@ -27,7 +27,7 @@ def carrito(request, usuario):
             WHERE ID_USUARIO_CAR = %s 
         """, [usuario])
         carrito = cursor.fetchone()
-        print (carrito)
+
         if carrito is not None:
             column_names = [col[0] for col in cursor.description]
             carrito_dict = dict(zip(column_names, carrito))
@@ -94,59 +94,50 @@ def validar_cupon(request, usuario):
         # Verificar si el código de cupón existe en la tabla 'cupones'
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT ID_CUPON, ESTADO 
+                SELECT ID_CUPON, ESTADO, CANT
                 FROM cupones 
                 WHERE COD = %s
             """, [cod])
             cupon = cursor.fetchone()
 
         if cupon:
-            id_cupon = cupon[0]
-            estado = cupon[1]
+            id_cupon, estado, cant = cupon
 
-
-
-            # Verificar si el carrito del usuario tiene ID_CUPON y ESTADO en NULL
-            with connection.cursor() as cursor:
-                cursor.execute("""
-                    SELECT ID_CARRITO_CAR 
-                    FROM carritos 
-                    WHERE ID_USUARIO_CAR = %s AND ID_CUPON IS NULL AND ESTADO IS NULL
-                """, [usuario])
-                carrito = cursor.fetchone()
-
-                cursor.execute("""
-                    SELECT porcentaje
-                    FROM cupones
-                    WHERE ID_CUPON = : id_cupon
-                """, {'id_cupon': id_cupon})
-                cupon = cursor.fetchone()
-
-                print('Porcentaje fino', cupon)
-        
-            if carrito:
-                # Si el carrito existe, actualizar la tabla 'carritos' con el ID_CUPON y ESTADO
-                carrito_id = carrito[0]
+            # Verificar si la cantidad del cupón es 0
+            if cant == 0:
+                messages.error(request, "Cupón agotado.")
+            else:
+                messages.success(request, "Cupón válido, puedes continuar.")
+                
+                # Verificar si el carrito del usuario tiene ID_CUPON y ESTADO en NULL
                 with connection.cursor() as cursor:
                     cursor.execute("""
-                        UPDATE carritos 
-                        SET ID_CUPON = %s, ESTADO = %s 
-                        WHERE ID_CARRITO_CAR = %s
-                    """, [id_cupon, estado, carrito_id])
+                        SELECT ID_CARRITO_CAR 
+                        FROM carritos 
+                        WHERE ID_USUARIO_CAR = %s AND ID_CUPON IS NULL AND ESTADO IS NULL
+                    """, [usuario])
+                    carrito = cursor.fetchone()
 
-                return redirect('carrito', usuario=usuario)
+                if carrito:
+                    # Si el carrito existe, actualizar la tabla 'carritos' con el ID_CUPON y ESTADO
+                    carrito_id = carrito[0]
+                    with connection.cursor() as cursor:
+                        cursor.execute("""
+                            UPDATE carritos 
+                            SET ID_CUPON = %s, ESTADO = %s 
+                            WHERE ID_CARRITO_CAR = %s
+                        """, [id_cupon, estado, carrito_id])
 
-            else:
-                return render(request, 'Carrito.html', {
-                    'error': 'No se ha encontrado un carrito válido para este usuario.'
-                })
-
+                    # Confirmar los cambios en la base de datos
+                    connection.commit()
+                    return redirect('carrito', usuario=usuario)
+                else:
+                    messages.error(request, "No se ha encontrado un carrito válido para este usuario.")
         else:
-            return render(request, 'Carrito.html', {
-                'error': 'El código de cupón no es válido.'
-            })
+            messages.error(request, "El código de cupón no es válido.")
 
     return redirect('carrito', usuario=usuario)
+
 
 
 
@@ -256,7 +247,7 @@ def total_carrito(request):
 
         if id_cupon and id_cupon[0] is not None:
             cursor.execute("""
-                SELECT PORCENTAJE
+                SELECT PORCENTAJE, CANT
                 FROM cupones
                 WHERE ID_CUPON = %s
             """, [id_cupon[0]])
@@ -265,9 +256,14 @@ def total_carrito(request):
             if cupon:
                 porcentaje = cupon[0]
                 precio_descuento = Decimal(total) * porcentaje  # Convertir total a Decimal
-                #Cursor para consultar cantidad de x cupon
-                #Le restas 1 a esa cantidad y se la mandas al mismo cupon
-                 
+                cant = cupon[1] - 1
+
+
+                cursor.execute("""
+                    UPDATE cupones
+                    SET CANT = %s
+                    WHERE ID_CUPON = %s
+                """, [cant, id_cupon[0]])
                         
                 cursor.execute("""
                     INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD, PRECIO_DESCUENTO, PORCENTAJE)

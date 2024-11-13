@@ -1,8 +1,22 @@
 {% extends "Principal.html" %}
 {% load static %}
 {% block Titulo %}Carrito{% endblock Titulo %}
+<style>
+
+</style>
 
 {% block Boddy %}
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div
+        class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+        {{ message }}
+        <button type="button" class="close" onclick="this.parentElement.style.display='none';">×</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 <div class="container">
     <h1 class="my-4">Carrito</h1>
 
@@ -43,7 +57,7 @@
                             </form>
                         </div>
                     </td>
-                    
+
                 </tr>
                 {% endfor %}
 
@@ -51,25 +65,18 @@
             <tfoot>
                 {% if info_carrito.ID_CUPON is not None %}
                 <tr>
-                    <td colspan="3" class="text-right">Valor del Descuento:</td>
-                    <td>-${{ valordescuento }}</td> 
+                    <td colspan="3" class="text-right valor-descuento">Valor del Descuento:</td>
+                    <td class="valor-descuento">-${{ valordescuento }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-right">Total con descuento:</td>
-                    <td>${{ totalcondescuento }}</td> 
+                    <td colspan="3" class="text-right total-con-descuento">Total con descuento:</td>
+                    <td class="total-con-descuento">${{ totalcondescuento }}</td>
                     <td colspan="3" class="text-right">Descuento: {{ porcentaje }}%</td>
                 </tr>
-
-
                 {% endif %}
-                
                 <tr>
-                    <td colspan="3" class="text-right">Total Sin Descuento:</td>
-                    <td>${{ total }}</td> 
-                    
-                </tr>
-                <tr>
-                   
+                    <td colspan="3" class="text-right total-sin-descuento">Total Sin Descuento:</td>
+                    <td class="total-sin-descuento">${{ total }}</td>
                 </tr>
             </tfoot>
         </table>
