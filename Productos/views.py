@@ -66,6 +66,7 @@ def cuponessadmin(request):
                 'ESTADO': row[4]
             }
             cupones.append(cupon)
+            print(cupones)
 
     return render(request, 'AdminCupones.html', {'cupones': cupones})
 

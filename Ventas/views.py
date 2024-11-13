@@ -10,23 +10,44 @@ from Ventas.models import Carrito
 
 def carrito(request, usuario):
     documento = usuario
+    infocupon=[]
+    total = 0
+    totalcondescuento = 0
+    valordescuento = 0
+    porcentaje = 0
+    carrito_dict=[]
+
+    
 
     # Verificar si el carrito tiene ID_CUPON y ESTADO en NULL
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT ID_CUPON, ESTADO, ID_USUARIO_CAR
             FROM carritos 
-            WHERE ID_USUARIO_CAR = %s AND ID_CUPON IS NULL AND ESTADO IS NULL
+            WHERE ID_USUARIO_CAR = %s 
         """, [usuario])
         carrito = cursor.fetchone()
-
+        print (carrito)
+        if carrito is not None:
+            column_names = [col[0] for col in cursor.description]
+            carrito_dict = dict(zip(column_names, carrito))
+            if carrito_dict['ID_CUPON'] is not None:
+                cursor.execute("""select * from cupones where id_cupon = %s""", [carrito_dict['ID_CUPON']])
+                infocupon = cursor.fetchone()
+           
+            
     mostrar_campo_cupon = False
+
+    
     if carrito and carrito[0] is None and carrito[1] is None:
         mostrar_campo_cupon = True
 
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM carritos WHERE id_usuario_car = %s", [documento])
         carrito = cursor.fetchone()
+        if carrito is not None:
+            column_names = [col[0] for col in cursor.description]
+            carrito_dict = dict(zip(column_names, carrito))
 
         if carrito is None:
             productos_carrito = ["Vacio"]
@@ -40,13 +61,25 @@ def carrito(request, usuario):
                     for row in cursor.fetchall()
                 ]
                 total = sum(producto['SUBTOTAL_DCAR'] for producto in productos_carrito)
+                if mostrar_campo_cupon is False:
+                    totalcondescuento = round(total-(total * infocupon[3]), 2)
+                    valordescuento=round((total * infocupon[3]), 2)
+                    porcentaje = int(infocupon[3] * 100)
 
+
+    
+    print(carrito_dict)
     # Pasar la variable mostrar_campo_cupon al template
     return render(request, 'Carrito.html', {
         'carrito': productos_carrito, 
         'total': total, 
-        'info_carrito': carrito,
-        'mostrar_campo_cupon': mostrar_campo_cupon  # Pasar la variable aquí
+        'totalcondescuento':totalcondescuento,
+        'valordescuento':valordescuento,
+        'porcentaje':porcentaje,
+        'info_carrito': carrito_dict,
+        'mostrar_campo_cupon': mostrar_campo_cupon,
+        'infocupon':infocupon # Pasar la variable aquí
+    
     })
 
 
@@ -231,14 +264,15 @@ def total_carrito(request):
             
             if cupon:
                 porcentaje = cupon[0]
-                porcentaje_float = float(porcentaje)
-                precio_descuento = total * (porcentaje_float / 100)  # Calcular descuento
-                total_con_descuento = total - precio_descuento  # Aplicar el descuento al total
-                
+                precio_descuento = Decimal(total) * porcentaje  # Convertir total a Decimal
+                #Cursor para consultar cantidad de x cupon
+                #Le restas 1 a esa cantidad y se la mandas al mismo cupon
+                 
+                        
                 cursor.execute("""
                     INSERT INTO ordenes (ID_ORDEN_ORD, ID_USUARIO_ORD, FECHA_ORD, ESTADO_ORD, TOTAL_ORD, PRECIO_DESCUENTO, PORCENTAJE)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
-                """, [id_orden_ord, usuario, fecha_ord, estado_ord, total_con_descuento, precio_descuento, porcentaje])
+                """, [id_orden_ord, usuario, fecha_ord, estado_ord, total, precio_descuento, porcentaje])
                 
             else:
                 cursor.execute("""
@@ -285,9 +319,26 @@ def ordenes(request):
             dict(zip(column_names, row))
             for row in cursor.fetchall()
         ]
+    print(ordenes)
+    # Perform the required operations
+    for orden in ordenes:
+        precio_descuento = orden.get('PRECIO_DESCUENTO', 0) or 0
+        total_ord = orden.get('TOTAL_ORD', 0) or 0
+        
+        # Calculate values
+        valor_descuento =  precio_descuento
+        total_con_descuento =  total_ord - precio_descuento
+        total_sin_descuento = total_ord
+        porcentaje_descuento = (valor_descuento / total_ord) * 100 if total_ord != 0 else 0
 
-        return render(request, 'AdminOrdenes.html', {'ordenes': ordenes})
-     
+        # Add new keys to the dictionary
+        orden['VALOR_DESCUENTO'] = round(valor_descuento, 2)
+        orden['TOTAL_CON_DESCUENTO'] = round(total_con_descuento, 2)
+        orden['TOTAL_SIN_DESCUENTO'] = round(total_sin_descuento, 2)
+        orden['PORCENTAJE_DESCUENTO'] = round(porcentaje_descuento)
+    print(ordenes)
+    return render(request, 'AdminOrdenes.html', {'ordenes': ordenes})
+
 def ordenes_detalles(request, id_orden):
     with connection.cursor() as cursor:
         cursor.execute("""

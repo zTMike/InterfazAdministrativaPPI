@@ -35,30 +35,58 @@
                     <td>
                         <div class="d-flex align-items-center">
                             <!-- Botón de eliminación -->
-                            <form method="POST" action="{% url 'eliminar_del_carrito' item.ID_DETALLE_DCAR %}" class="me-2">
+                            <form method="POST" action="{% url 'eliminar_del_carrito' item.ID_DETALLE_DCAR %}"
+                                class="me-2">
                                 {% csrf_token %}
                                 <input type="hidden" name="carrito_id" value="{{ item.ID_CARRITO_DCAR }}">
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>
-                            {% if request.user.is_authenticated %}
-                            <!-- Input de cupón, si corresponde -->
-                            {% if mostrar_campo_cupon %}
-                                <form method="POST" action="{% url 'validar_cupon' request.user.id_usuario_usu %}">
-                                    {% csrf_token %}
-                                    <input type="text" name="cod" placeholder="Introduce tu cupón" class="form-control">
-                                    <button type="submit" class="btn btn-primary">Aplicar Cupón</button>
-                                </form>
-                            {% else %}
-                                <p>No hay un cupón disponible para aplicar.</p>
-                            {% endif %}
-                            {% endif %}
                         </div>
                     </td>
+                    
                 </tr>
                 {% endfor %}
+
             </tbody>
+            <tfoot>
+                {% if info_carrito.ID_CUPON is not None %}
+                <tr>
+                    <td colspan="3" class="text-right">Valor del Descuento:</td>
+                    <td>-${{ valordescuento }}</td> 
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-right">Total con descuento:</td>
+                    <td>${{ totalcondescuento }}</td> 
+                    <td colspan="3" class="text-right">Descuento: {{ porcentaje }}%</td>
+                </tr>
+
+
+                {% endif %}
+                
+                <tr>
+                    <td colspan="3" class="text-right">Total Sin Descuento:</td>
+                    <td>${{ total }}</td> 
+                    
+                </tr>
+                <tr>
+                   
+                </tr>
+            </tfoot>
         </table>
     </div>
+
+    {% if request.user.is_authenticated %}
+    <!-- Input de cupón, si corresponde -->
+    {% if mostrar_campo_cupon %}
+    <form method="POST" action="{% url 'validar_cupon' request.user.id_usuario_usu %}">
+        {% csrf_token %}
+        <input type="text" name="cod" placeholder="Introduce tu cupón" class="form-control">
+        <button type="submit" class="btn btn-primary">Aplicar Cupón</button>
+    </form>
+    {% else %}
+    <p>No hay un cupón disponible para aplicar.</p>
+    {% endif %}
+    {% endif %}
 
     <form class="text-center" method="POST" action="{% url 'totalizar' %}">
         {% csrf_token %}

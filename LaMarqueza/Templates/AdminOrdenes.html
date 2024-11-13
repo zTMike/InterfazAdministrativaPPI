@@ -12,7 +12,10 @@
                     <th scope="col">Usuario</th>
                     <th scope="col">Fecha Creacion</th>
                     <th scope="col">Estado</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">Valor Descuento</th>
+                    <th scope="col">Total Con descuento</th>
+                    <th scope="col">Total sin descuento</th>
+                    <th scope="col" >Porcentaje del descuento</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +36,11 @@
                                 Entregado
                             {% endif %}
                         </td>
+                        <td>${{ orden.VALOR_DESCUENTO }}</td>
+                        <td>${{ orden.TOTAL_CON_DESCUENTO }}</td>
                         <td>${{ orden.TOTAL_ORD }}</td>
+                        <td>{{ orden.PORCENTAJE_DESCUENTO }}%</td>
+
                     </tr>
                 {% endfor %}
             </tbody>
