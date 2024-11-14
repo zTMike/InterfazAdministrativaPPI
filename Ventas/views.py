@@ -335,7 +335,9 @@ def ordenes(request):
     print(ordenes)
     return render(request, 'AdminOrdenes.html', {'ordenes': ordenes})
 
+
 def ordenes_detalles(request, id_orden):
+    # Consulta para los detalles de la orden
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT detalles_ordenes.*, productos.NOMBRE_PRO, ordenes.ESTADO_ORD
@@ -345,13 +347,33 @@ def ordenes_detalles(request, id_orden):
             WHERE detalles_ordenes.ID_ORDEN_DET_ID = %s
         """, [id_orden])
         column_names = [col[0] for col in cursor.description]
-        detalles = [
-            dict(zip(column_names, row))
-            for row in cursor.fetchall()
-        ]
+        detalles = [dict(zip(column_names, row)) for row in cursor.fetchall()]
 
-        
-        return render(request, 'OrdenesDetalles.html', {'detalles': detalles})
+    # Consulta los valores de descuento y total de la orden
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT PRECIO_DESCUENTO, TOTAL_ORD FROM ordenes WHERE ID_ORDEN_ORD = %s", [id_orden])
+        result = cursor.fetchone()
+        if result:
+            precio_descuento, total_ord = result
+            precio_descuento = precio_descuento or 0
+            total_ord = total_ord or 0
+
+            valor_descuento = precio_descuento
+            total_con_descuento = total_ord - precio_descuento
+            total_sin_descuento = total_ord
+            porcentaje_descuento = (valor_descuento / total_ord) * 100 if total_ord != 0 else 0
+
+            descuentos = {
+                'VALOR_DESCUENTO': round(valor_descuento, 2),
+                'TOTAL_CON_DESCUENTO': round(total_con_descuento, 2),
+                'TOTAL_SIN_DESCUENTO': round(total_sin_descuento, 2),
+                'PORCENTAJE_DESCUENTO': round(porcentaje_descuento)
+            }
+        else:
+            descuentos = {}
+
+    return render(request, 'OrdenesDetalles.html', {'detalles': detalles, 'descuentos': descuentos})
+
     
 def actualizar_orden(request):
     id_orden = request.POST.get('id_orden')
