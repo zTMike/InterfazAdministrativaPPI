@@ -610,7 +610,7 @@
 }
 
 .loginbot{
-    height: 80vh;
+    
 }
 
 .containermap {
@@ -1155,6 +1155,7 @@
 
     .form-container {
         width: 80%;
+        
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
@@ -1162,6 +1163,7 @@
         border: 1px solid #b3d9b3; /* Borde verde suave */
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1); /* Sombra verde tenue */
+        
     }
 
     .form-row {
@@ -1224,3 +1226,4 @@
     background-color: #c82333;
     border-color: #bd2130;
 }
+
