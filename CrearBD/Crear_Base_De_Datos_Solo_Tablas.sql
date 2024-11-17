@@ -44,6 +44,8 @@ CREATE TABLE ordenes (
   id_usuario_ord NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+
+
 CREATE TABLE detalles_ordenes (
   id_detalle_det NUMBER(10) NOT NULL,
   cantidad_det NUMBER(10) NOT NULL,
@@ -60,6 +62,15 @@ CREATE TABLE carritos (
   id_usuario_car NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+ALTER TABLE carritos 
+    ADD(id_cupon NUMBER(10),
+     estado NUMBER(1));
+
+ALTER TABLE ordenes
+ ADD(PRECIO_DESCUENTO NUMBER(10, 2),
+      porcentaje  DECIMAL(5, 4));
+
+
 CREATE TABLE detalles_carritos (
   id_detalle_dcar NUMBER(10) NOT NULL,
   cantidad_dcar NUMBER(10) NOT NULL,
@@ -69,6 +80,7 @@ CREATE TABLE detalles_carritos (
   id_carrito_dcar NUMBER(10) NOT NULL,
   nombre_producto_dcar VARCHAR2(50) NOT NULL
 ) TABLESPACE lamarquesabd;
+
 
 CREATE TABLE resenas (
   id_resena_re NUMBER(10) NOT NULL,
@@ -83,3 +95,10 @@ CREATE TABLE favoritos (
   id_usuario_fa NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+CREATE TABLE cupones (
+  id_cupon NUMBER(10) NOT NULL PRIMARY KEY,
+  cod VARCHAR2(20) UNIQUE NOT NULL,
+  cant NUMBER(10) NOT NULL,
+  porcentaje  DECIMAL(5, 4) NOT NULL,
+  estado NUMBER(1)
+)

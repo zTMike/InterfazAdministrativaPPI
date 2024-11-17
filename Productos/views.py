@@ -9,6 +9,11 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection, IntegrityError
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.http import HttpResponseForbidden
+from django.db import IntegrityError
+from django.http import HttpResponseBadRequest
+
+
 
 @login_required
 def agregar_resena(request):
@@ -36,14 +41,109 @@ def agregar_resena(request):
                 connection.commit()
     return redirect('productos')
 
-
-def eliminar_resena(request, id_resena_re):
-    if request.method == 'POST':
+@login_required
+def eliminar_cupon(request, id_cupon):
+    try:
         with connection.cursor() as cursor:
-            cursor.execute("DELETE FROM resenas WHERE id_resena_re = %s", [id_resena_re])
-            connection.commit()
-    return redirect('productos')
+            cursor.execute("DELETE FROM cupones WHERE id_cupon = %s", [id_cupon])
+        
+        messages.success(request, 'Cupón eliminado exitosamente.')
+    except Exception as e:
+        messages.error(request, f'Error al eliminar el cupón: {str(e)}')
+    
+    return redirect('cuponessadmin')  
 
+@login_required
+def cuponessadmin(request):
+    cupones = []
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id_cupon, cod, cant, porcentaje, estado FROM cupones")
+        rows = cursor.fetchall()
+        
+        for row in rows:
+            cupon = {
+                'ID_CUPON': row[0],
+                'COD': row[1],
+                'CANT': row[2],
+                'PORCENTAJE': row[3],
+                'ESTADO': row[4]
+            }
+            cupones.append(cupon)
+            print(cupones)
+
+    return render(request, 'AdminCupones.html', {'cupones': cupones})
+
+
+@login_required
+def crearcupon(request):
+    if request.method == 'POST':
+        try:
+            codigo_cupon = request.POST.get('codigo_cupon')
+            cantidad = int(request.POST.get('cantidad'))
+            if cantidad <= 0:
+                messages.error(request, 'La cantidad debe ser mayor que 0.')
+                return redirect('crearcupon')
+            porcentaje = float(request.POST.get('porcentaje'))
+            activo = request.POST.get('activo') == 'True'
+
+            with connection.cursor() as cursor:
+                # Obtener el siguiente ID disponible para id_cupon
+                cursor.execute("SELECT NVL(MAX(id_cupon), 0) + 1 FROM cupones")
+                next_id = cursor.fetchone()[0]
+
+                # Insertar el nuevo cupón
+                cursor.execute("""
+                    DECLARE
+                        v_id_cupon NUMBER := :next_id;
+                        v_cod VARCHAR2(20) := :codigo_cupon;
+                        v_cant NUMBER := :cantidad;
+                        v_porcentaje NUMBER := :porcentaje;
+                        v_estado NUMBER(1) := :activo;
+                    BEGIN
+                        INSERT INTO cupones (id_cupon, cod, cant, porcentaje, estado)
+                        VALUES (v_id_cupon, v_cod, v_cant, v_porcentaje, v_estado);
+                    END;
+                """, {
+                    'next_id': next_id,
+                    'codigo_cupon': codigo_cupon,
+                    'cantidad': cantidad,
+                    'porcentaje': porcentaje,
+                    'activo': 1 if activo else 0
+                })
+
+            messages.success(request, 'Cupón creado exitosamente.')
+            return redirect('crearcupon')
+        except ValueError as e:
+            messages.error(request, f'Error de conversión de datos: {str(e)}')
+        except Exception as e:
+            messages.error(request, f'Error al crear el cupón: {str(e)}')
+
+    return render(request, 'CuponesDetalles.html')
+
+
+
+
+
+
+@login_required
+def eliminar_resena(request, id_resena_re):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id_usuario_re FROM resenas WHERE id_resena_re = %s", [id_resena_re])
+        resena = cursor.fetchone()
+    
+    if resena is None:
+        return HttpResponseForbidden("Reseña no encontrada.")
+    
+    id_usuario_re = resena[0]
+    
+    if request.user.is_superuser or request.user.id_usuario_usu == id_usuario_re:
+        if request.method == 'POST':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM resenas WHERE id_resena_re = %s", [id_resena_re])
+                connection.commit()
+        return redirect('productos')
+    else:
+        return HttpResponseForbidden("No tienes permiso para eliminar esta reseña.")
 @login_required
 def agregar_favoritos(request, id_producto_pro):
     
