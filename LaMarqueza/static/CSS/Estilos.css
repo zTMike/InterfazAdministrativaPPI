@@ -613,7 +613,7 @@
     font-size: 75%;
 }
 
-.loginbot {
+.loginbot{
     height: 80vh;
 }
 
@@ -1235,17 +1235,16 @@ body {
     background-color: #e8f5e9;
 }
 
-.form-container {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #eaf4e4;
-    border: 1px solid #b3d9b3;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1);
-    /* Sombra verde tenue */
-}
+    .form-container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #eaf4e4; /* Color verde claro de fondo */
+        border: 1px solid #b3d9b3; /* Borde verde suave */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1); /* Sombra verde tenue */
+    }
 
 .form-row {
     display: flex;
@@ -1307,166 +1306,3 @@ body {
     background-color: #c82333;
     border-color: #bd2130;
 }
-
-
-/*Estilo CuponesDetalles********************/
-body {
-    background-color: #e8f5e9;
-    font-family: Arial, sans-serif;
-}
-
-.cupon-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 1rem auto;
-    margin-top: -5rem;
-    /* Empuja el contenedor hacia arriba */
-    max-width: 500px;
-    padding: 2rem;
-}
-
-
-.cupon-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.cupon-input-group {
-    margin-bottom: 1.5rem;
-}
-
-.cupon-label {
-    color: #2e7d32;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.cupon-input {
-    border: 1px solid #81c784;
-    border-radius: 4px;
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
-}
-
-.cupon-checkbox-group {
-    align-items: center;
-    display: flex;
-}
-
-.cupon-checkbox-group .cupon-label {
-    margin-bottom: 0;
-    margin-right: 1rem;
-}
-
-.cupon-checkbox {
-    height: 1.25rem;
-    width: 1.25rem;
-}
-
-.cupon-button {
-    background-color: #4caf50;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    max-width: 200px;
-}
-
-.cupon-button:hover {
-    background-color: #45a049;
-}
-
-.cupon-messages {
-    background-color: #c8e6c9;
-    border-left: 5px solid #4caf50;
-    list-style-type: none;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
-
-.cupon-messages li {
-    color: #1b5e20;
-}
-
-.cupon-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-
-/********************ESTILO AdminCupones*/
-.coupon-container {
-    background-color: #e8f5e9;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.coupon-title {
-    color: #2e7d32;
-    margin-bottom: 20px;
-}
-
-.btn-create-coupon {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    float: right;
-    margin-bottom: 20px;
-}
-
-.coupon-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-}
-
-.coupon-table th, .coupon-table td {
-    border: 1px solid #c8e6c9;
-    padding: 12px;
-    text-align: left;
-}
-
-.coupon-table th {
-    background-color: #a5d6a7;
-    color: #1b5e20;
-}
-
-.status-active {
-    color: #4caf50;
-    font-weight: bold;
-}
-
-.status-inactive {
-    color: #f44336;
-    font-weight: bold;
-}
-
-.btn-delete-coupon {
-    background-color: #ef5350;
-    color: white;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 3px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
