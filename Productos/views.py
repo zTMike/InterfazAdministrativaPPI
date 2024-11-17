@@ -62,7 +62,7 @@ def cuponessadmin(request):
                 'ID_CUPON': row[0],
                 'COD': row[1],
                 'CANT': row[2],
-                'PORCENTAJE': row[3],
+                'PORCENTAJE': round(row[3] * 100, 0),
                 'ESTADO': row[4]
             }
             cupones.append(cupon)
@@ -81,6 +81,7 @@ def crearcupon(request):
                 messages.error(request, 'La cantidad debe ser mayor que 0.')
                 return redirect('crearcupon')
             porcentaje = float(request.POST.get('porcentaje'))
+            porcentaje = round(porcentaje / 100, 2)
             activo = request.POST.get('activo') == 'True'
 
             with connection.cursor() as cursor:
@@ -108,17 +109,11 @@ def crearcupon(request):
                     'activo': 1 if activo else 0
                 })
 
-            messages.success(request, 'Cupón creado exitosamente.')
-            return redirect('crearcupon')
+                messages.success(request, 'Cupón creado exitosamente.')
+                return redirect('cuponessadmin')
         except ValueError as e:
-            messages.error(request, f'Error de conversión de datos: {str(e)}')
-        except Exception as e:
-            messages.error(request, f'Error al crear el cupón: {str(e)}')
-
-    return render(request, 'CuponesDetalles.html')
-
-
-
+            print(e)
+    return render(request, 'CrearCupones.html')
 
 
 
