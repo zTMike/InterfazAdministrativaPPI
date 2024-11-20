@@ -2,24 +2,106 @@
 {% load static %}
 
 {% block Administrador %}
-    
-<form method="post" >
+<style>
+    :root {
+        --color-primary: #4CAF50;
+        --color-primary-light: #81C784;
+        --color-primary-dark: #388E3C;
+        --color-background: #E8F5E9;
+        --color-text: #1B5E20;
+        --color-text-light: #2E7D32;
+        --color-border: #A5D6A7;
+    }
+
+    .form-container {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: var(--color-background);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-container h2 {
+        text-align: center;
+        color: var(--color-primary-dark);
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: #FFFFFF;
+        color: var(--color-text);
+    }
+
+    .form-group input[type="text"]:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: var(--color-primary);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: var(--color-primary-dark);
+    }
+</style>
+
+<div class="form-container">
+    <h2>Editar Categoría</h2>
+    <form method="post">
         {% csrf_token %}
 
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
         </ul>
         {% endif %}
-        <label for="id_categoria_cat">ID de la Categoría:</label><br>
-        <input type="text" id="id_categoria_cat" name="id_categoria_cat" value="{{ categoria.id_categoria_cat }}" readonly><br>
-        <label for="nombre_cat">Nombre de la Categoría:</label><br>
-        <input type="text" id="nombre_cat" name="nombre_cat" value="{{ categoria.nombre_cat }}"><br>
-        <label for="descripcion_cat">Descripción:</label><br>
-        <input type="text" id="descripcion_cat" name="descripcion_cat" value="{{ categoria.descripcion_cat }}"><br>
-        <input type="submit" name="action" value="Actualizar">
- </form>
 
+        <div class="form-group">
+            <label for="id_categoria_cat">ID de la Categoría:</label>
+            <input type="text" id="id_categoria_cat" name="id_categoria_cat" value="{{ categoria.id_categoria_cat }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="nombre_cat">Nombre de la Categoría:</label>
+            <input type="text" id="nombre_cat" name="nombre_cat" value="{{ categoria.nombre_cat }}">
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion_cat">Descripción:</label>
+            <input type="text" id="descripcion_cat" name="descripcion_cat" value="{{ categoria.descripcion_cat }}">
+        </div>
+
+        <button type="submit" name="action" value="Actualizar" class="btn-submit">Actualizar</button>
+    </form>
+</div>
 {% endblock Administrador %}

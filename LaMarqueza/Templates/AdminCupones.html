@@ -1,0 +1,62 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+            {{ message }}
+            <button type="button" class="close" onclick="this.parentElement.style.display='none';">×</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+<div class="coupon-container">
+    <h1 class="coupon-title " style="color: black !important;">Cupones</h1>
+    <a href="{% url 'cupones' %}" class="btn btn-primary float-right">Crear Cupón</a>
+    <table class="table coupon-table">
+        <thead>
+            <tr>
+                <th scope="col">ID Cupón</th>
+                <th scope="col">Código</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Porcentaje</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cupon in cupones %}
+                <tr>
+                    <td>{{ cupon.ID_CUPON }}</td>
+                    <td>{{ cupon.COD }}</td>
+                    <td>{{ cupon.CANT }}</td>
+                    <td>{{ cupon.PORCENTAJE }}%</td>
+                    <td>
+                        {% if cupon.ESTADO == 1 %}
+                            <span class="status-active">Activo</span>
+                        {% else %}
+                            <span class="status-inactive">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a id="eliminar_cupon{{ cupon.ID_CUPON }}" href="{% url 'eliminar_cupon' cupon.ID_CUPON %}" class="btn btn-delete-coupon">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    document.getElementById('eliminar_cupon{{ cupon.ID_CUPON }}').addEventListener('click', function(e) {
+        if (!confirm('¿Estás seguro de que quieres eliminar este Cupon?')) {
+            e.preventDefault();
+        }
+    });
+</script>
+{% endblock Administrador %}

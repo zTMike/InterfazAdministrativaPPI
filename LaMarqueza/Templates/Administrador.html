@@ -4,24 +4,26 @@
 
 {% block Boddy %}
 <ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="{% url 'usuarios' %}">Usuarios</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="Productos" href="{% url  'productosadmin' %}">Productos</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url  'categoriasadmin' %}">Categorias de Producto</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url  'ordenes' %}">Ordenes</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="{% url  'perfil' %}">Perfil</a>
-  </li>
-</ul>
-<div style="padding: 10%;">
-
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="{% url 'usuarios' %}">Usuarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="Productos" href="{% url 'productosadmin' %}">Productos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'categoriasadmin' %}">Categorias de Producto</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'cuponessadmin' %}">Cupones</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'ordenes' %}">Ordenes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " href="{% url 'perfil' %}" >Perfil</a>
+    </li>
+  </ul>
+  <div style="padding: 10%;">
 
   {% block Administrador%}
 

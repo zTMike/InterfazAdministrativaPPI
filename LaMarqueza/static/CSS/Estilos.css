@@ -21,9 +21,11 @@
 }
 
 .reseñas-scroll {
-    max-height: 200px; /* Ajusta la altura según tus necesidades */
+    max-height: 200px;
+    /* Ajusta la altura según tus necesidades */
     overflow-y: auto;
-    padding-right: 15px; /* Añade un poco de espacio para el scroll */
+    padding-right: 15px;
+    /* Añade un poco de espacio para el scroll */
 }
 
 
@@ -345,13 +347,14 @@
 .Nosotros {
     text-align: center;
     /*Se centra el texto*/
-   
+
 }
 
 .NosotrosText {
     padding-top: 20px;
     /*Agrega a productos un espaciado superior*/
-    font-size: 20px; /* Ajusta este valor a tus necesidades */
+    font-size: 20px;
+    /* Ajusta este valor a tus necesidades */
     text-align: center;
     /*Se centra el texto*/
 
@@ -563,7 +566,7 @@
     padding-bottom: 5%;
 }
 
-.NosotrosPag{
+.NosotrosPag {
     font-size: 260%;
     margin-top: 5%;
 
@@ -573,18 +576,18 @@
     margin-top: 20%;
 }
 
-.EspacioCardNosotros{
+.EspacioCardNosotros {
     margin-top: 6%;
-    
+
 }
 
-.EspacioCardNosotros2{
+.EspacioCardNosotros2 {
     margin-bottom: 4%;
     font-weight: bold;
     font-size: 120%;
 }
 
-.productoscol{
+.productoscol {
     margin-bottom: 10%;
 }
 
@@ -592,7 +595,8 @@
     max-width: 300px;
     height: auto;
 }
-#Agregar{
+
+#Agregar {
     background-color: #008000 !important;
     border-color: #008000 !important;
     margin-bottom: 3%;
@@ -600,7 +604,7 @@
     font-size: 75%;
 }
 
-#Agregar:hover{
+#Agregar:hover {
     background-color: #ffffff !important;
     border-color: #008000 !important;
     color: #008000;
@@ -615,14 +619,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ajusta esto según tus necesidades */
-    width: 100%; /* Asegúrate de que el contenedor ocupe todo el ancho disponible */
+    height: 100vh;
+    /* Ajusta esto según tus necesidades */
+    width: 100%;
+    /* Asegúrate de que el contenedor ocupe todo el ancho disponible */
 }
 
 .map-container {
     position: relative;
-    width: 80%; /* Ajusta esto para cambiar el tamaño del mapa */
-    height: 80%; /* Ajusta esto para cambiar el tamaño del mapa */
+    width: 80%;
+    /* Ajusta esto para cambiar el tamaño del mapa */
+    height: 80%;
+    /* Ajusta esto para cambiar el tamaño del mapa */
     overflow: hidden;
 }
 
@@ -636,25 +644,30 @@
 
 .H1Contacto {
     text-align: center;
-    color: #4CAF50; /* Cambia esto al color que prefieras */
-    font-size: 2.5em; /* Cambia esto al tamaño que prefieras */
-    padding: 20px 0; /* Añade un poco de espacio arriba y abajo del título */
+    color: #4CAF50;
+    /* Cambia esto al color que prefieras */
+    font-size: 2.5em;
+    /* Cambia esto al tamaño que prefieras */
+    padding: 20px 0;
+    /* Añade un poco de espacio arriba y abajo del título */
 }
 
 .card-centered {
 
-    margin-left:  40%;
+    margin-left: 40%;
 }
+
 .my-image {
-    width: 100%!important;
-    height: 70%!important;
+    width: 100% !important;
+    height: 70% !important;
 }
 
 .card-container2 {
     background-color: #0e6d2b;
 }
+
 .card-container3 {
-    background-color: #ffffff!important;
+    background-color: #ffffff !important;
 }
 
 .dropdown-item:active {
@@ -686,18 +699,21 @@
 .form-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px; /* Añadimos un espacio entre los elementos */
+    gap: 15px;
+    /* Añadimos un espacio entre los elementos */
     margin-bottom: 15px;
 }
 
 .form-group {
-    flex: 1 1 100%; /* Hace que cada campo ocupe el 100% del ancho por defecto */
+    flex: 1 1 100%;
+    /* Hace que cada campo ocupe el 100% del ancho por defecto */
     min-width: 200px;
 }
 
 @media (min-width: 600px) {
     .form-group {
-        flex: 1 1 calc(50% - 15px); /* Cada campo ocupa el 50% del ancho menos el espacio entre ellos en pantallas más grandes */
+        flex: 1 1 calc(50% - 15px);
+        /* Cada campo ocupa el 50% del ancho menos el espacio entre ellos en pantallas más grandes */
     }
 }
 
@@ -757,8 +773,10 @@
 .card-title {
     margin-left: 0;
     padding-left: 0;
-    margin-bottom: 5px; /* Ajusta el margen inferior si es necesario */
-    text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+    margin-bottom: 5px;
+    /* Ajusta el margen inferior si es necesario */
+    text-align: left;
+    /* Asegura que el texto esté alineado a la izquierda */
 }
 
 .card-text {
@@ -791,7 +809,8 @@
 
 .card-body {
     position: relative;
-    padding-right: 50px; /* Espacio para el botón de eliminar */
+    padding-right: 50px;
+    /* Espacio para el botón de eliminar */
 }
 
 .resena-contenedor {
@@ -802,14 +821,17 @@
 .card-title {
     margin-left: 0;
     padding-left: 0;
-    margin-bottom: 5px; /* Ajusta el margen inferior si es necesario */
-    text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+    margin-bottom: 5px;
+    /* Ajusta el margen inferior si es necesario */
+    text-align: left;
+    /* Asegura que el texto esté alineado a la izquierda */
 }
 
 .card-text {
     margin-left: 0;
     padding-left: 0;
-    word-wrap: break-word; /* Permite que el texto se ajuste al ancho del contenedor */
+    word-wrap: break-word;
+    /* Permite que el texto se ajuste al ancho del contenedor */
 }
 
 .delete-button-form {
@@ -819,171 +841,194 @@
 }
 
 .btn-danger {
-    background-color: transparent; /* Fondo transparente */
-    color: #dc3545; /* Texto rojo */
+    background-color: transparent;
+    /* Fondo transparente */
+    color: #dc3545;
+    /* Texto rojo */
 }
 
 .btn-danger:hover {
-    background-color: #dc3545; /* Fondo rojo al pasar el ratón */
-    color: white; /* Texto blanco al pasar el ratón */
+    background-color: #dc3545;
+    /* Fondo rojo al pasar el ratón */
+    color: white;
+    /* Texto blanco al pasar el ratón */
 }
 
 /*Style CrearProductos*/
 
-    .container2 {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 50px;
-        background-color: #f9f9f9;
-        border: 2px solid #a3d5a5; /* Borde verdoso */
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+.container2 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border: 2px solid #a3d5a5;
+    /* Borde verdoso */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-   
-    .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-bottom: 15px;
-    }
 
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1 1 100%;
+    min-width: 200px;
+}
+
+@media (min-width: 600px) {
     .form-group {
-        flex: 1 1 100%;
-        min-width: 200px;
+        flex: 1 1 calc(50% - 15px);
     }
+}
 
-    @media (min-width: 600px) {
-        .form-group {
-            flex: 1 1 calc(50% - 15px);
-        }
-    }
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #3d7d3e;
+    /* Color verdoso para el texto */
+}
 
-    .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #3d7d3e; /* Color verdoso para el texto */
-    }
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #a3d5a5;
+    /* Borde verdoso en los inputs */
+    border-radius: 4px;
+    background-color: #e9f7ec;
+    /* Fondo verdoso claro */
+}
 
-    .form-control {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #a3d5a5; /* Borde verdoso en los inputs */
-        border-radius: 4px;
-        background-color: #e9f7ec; /* Fondo verdoso claro */
-    }
+.form-control:focus {
+    border-color: #6fbf73;
+    /* Borde más intenso al hacer foco */
+    outline: none;
+    box-shadow: 0 0 5px rgba(111, 191, 115, 0.5);
+    /* Sombra al hacer foco */
+}
 
-    .form-control:focus {
-        border-color: #6fbf73; /* Borde más intenso al hacer foco */
-        outline: none;
-        box-shadow: 0 0 5px rgba(111, 191, 115, 0.5); /* Sombra al hacer foco */
-    }
+.btn {
+    padding: 10px 20px;
+    background-color: #6fbf73;
+    /* Color verdoso para el botón */
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-    .btn {
-        padding: 10px 20px;
-        background-color: #6fbf73; /* Color verdoso para el botón */
-        border: none;
-        color: white;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.btn:hover {
+    background-color: #5aa25d;
+    /* Color verdoso más oscuro al pasar el cursor */
+}
 
-    .btn:hover {
-        background-color: #5aa25d; /* Color verdoso más oscuro al pasar el cursor */
-    }
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
 
-    .messages {
-        list-style-type: none;
-        padding: 0;
-        margin-bottom: 15px;
-    }
+.messages li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
 
-    .messages li {
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 4px;
-    }
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
 
-    .messages .error {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
 
-    .messages .success {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    /*Style CrearCategoria*/
-    .container2 {
-        max-width: 600px; /* Reduce el ancho máximo del contenedor */
-        margin: 0 auto;
-        padding: 40px;
-        background-color: #f9f9f9;
-        border: 2px solid #a3d5a5; /* Borde verdoso */
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+/*Style CrearCategoria*/
+.container2 {
+    max-width: 600px;
+    /* Reduce el ancho máximo del contenedor */
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border: 2px solid #a3d5a5;
+    /* Borde verdoso */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-    .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #3d7d3e; /* Color verdoso para el texto */
-    }
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #3d7d3e;
+    /* Color verdoso para el texto */
+}
 
-    .form-control {
-        width: 100%;
-        max-width: 400px; /* Limita el ancho de los inputs a 400px */
-        padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 15px;
-        border: 1px solid #a3d5a5; /* Borde verdoso en los inputs */
-        border-radius: 4px;
-        background-color: #e9f7ec; /* Fondo verdoso claro */
-    }
+.form-control {
+    width: 100%;
+    max-width: 400px;
+    /* Limita el ancho de los inputs a 400px */
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #a3d5a5;
+    /* Borde verdoso en los inputs */
+    border-radius: 4px;
+    background-color: #e9f7ec;
+    /* Fondo verdoso claro */
+}
 
-    .form-control:focus {
-        border-color: #6fbf73; /* Borde más intenso al hacer foco */
-        outline: none;
-        box-shadow: 0 0 5px rgba(111, 191, 115, 0.5); /* Sombra al hacer foco */
-    }
+.form-control:focus {
+    border-color: #6fbf73;
+    /* Borde más intenso al hacer foco */
+    outline: none;
+    box-shadow: 0 0 5px rgba(111, 191, 115, 0.5);
+    /* Sombra al hacer foco */
+}
 
-    .btn {
-        padding: 10px 20px;
-        background-color: #6fbf73; /* Color verdoso para el botón */
-        border: none;
-        color: white;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.btn {
+    padding: 10px 20px;
+    background-color: #6fbf73;
+    /* Color verdoso para el botón */
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-    .btn:hover {
-        background-color: #5aa25d; /* Color verdoso más oscuro al pasar el cursor */
-    }
+.btn:hover {
+    background-color: #5aa25d;
+    /* Color verdoso más oscuro al pasar el cursor */
+}
 
-    .messages {
-        list-style-type: none;
-        padding: 0;
-        margin-bottom: 15px;
-    }
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
 
-    .messages li {
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 4px;
-    }
+.messages li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
 
-    .messages .error {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
 
-    .messages .success {
-        background-color: #d4edda;
-        color: #155724;
-    }
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
 
-    /*Style AdminUsuarios*/
+/*Style AdminUsuarios*/
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -994,7 +1039,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px; /* Espacio inferior para separar de la tabla */
+    margin-bottom: 20px;
+    /* Espacio inferior para separar de la tabla */
 }
 
 .header h1 {
@@ -1002,7 +1048,8 @@
 }
 
 .btn-primary {
-    background-color: #4CAF50 !important; /* Verde suave para el botón */
+    background-color: #4CAF50 !important;
+    /* Verde suave para el botón */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -1015,7 +1062,8 @@
 }
 
 .btn-primary:hover {
-    background-color: #45a049; /* Verde más oscuro al pasar el cursor */
+    background-color: #45a049;
+    /* Verde más oscuro al pasar el cursor */
 }
 
 /* Estilos para la tabla */
@@ -1027,39 +1075,46 @@
     width: 100%;
     border-collapse: collapse;
     background-color: #f9f9f9;
-    border: 1px solid #a3d5a5; /* Borde verdoso claro */
+    border: 1px solid #a3d5a5;
+    /* Borde verdoso claro */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .table thead {
-    background-color: #e9f7ec; /* Fondo verdoso claro para el encabezado */
+    background-color: #e9f7ec;
+    /* Fondo verdoso claro para el encabezado */
 }
 
 .table th {
-    color: #3d7d3e; /* Texto verdoso oscuro para el encabezado */
+    color: #3d7d3e;
+    /* Texto verdoso oscuro para el encabezado */
     padding: 10px;
     text-align: left;
 }
 
 .table td, .table th {
-    border-bottom: 1px solid #a3d5a5; /* Borde verdoso en las celdas */
+    border-bottom: 1px solid #a3d5a5;
+    /* Borde verdoso en las celdas */
     padding: 10px;
 }
 
 .table tr:hover {
-    background-color: #d4edda; /* Color verde suave al pasar el cursor */
+    background-color: #d4edda;
+    /* Color verde suave al pasar el cursor */
 }
 
 .table-link {
-    color: #3d7d3e; /* Color verdoso para los enlaces en la tabla */
+    color: #3d7d3e;
+    /* Color verdoso para los enlaces en la tabla */
     text-decoration: none;
 }
 
 .table-link:hover {
     text-decoration: underline;
 }
+
 .table {
     width: 100%;
     margin-bottom: 1rem;
@@ -1068,42 +1123,54 @@
 }
 
 .table thead th {
-    background-color: #eaf0e9; /* Color de fondo suave verde claro */
-    color: #2d6a4f; /* Color de texto verde oscuro */
-    border-bottom: 2px solid #c1d3b7; /* Línea de separación sutil */
+    background-color: #eaf0e9;
+    /* Color de fondo suave verde claro */
+    color: #2d6a4f;
+    /* Color de texto verde oscuro */
+    border-bottom: 2px solid #c1d3b7;
+    /* Línea de separación sutil */
     padding: 1rem;
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f9f9f6; /* Color de fila alterna suave */
+    background-color: #f9f9f6;
+    /* Color de fila alterna suave */
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #ffffff; /* Color de fila impar */
+    background-color: #ffffff;
+    /* Color de fila impar */
 }
 
 .table td, .table th {
     padding: 0.75rem;
     vertical-align: top;
-    border: 1px solid #dee2e6; /* Borde suave */
+    border: 1px solid #dee2e6;
+    /* Borde suave */
 }
 
 .table tbody td {
-    color: #2d6a4f; /* Color de texto verde oscuro */
+    color: #2d6a4f;
+    /* Color de texto verde oscuro */
 }
 
 .table tbody td img {
-    border-radius: 4px; /* Bordes redondeados para imágenes */
+    border-radius: 4px;
+    /* Bordes redondeados para imágenes */
 }
 
 .btn-primary {
-    background-color: #4a773c; /* Color de fondo verde oscuro */
-    border-color: #3c6e3c; /* Color del borde verde más oscuro */
+    background-color: #4a773c;
+    /* Color de fondo verde oscuro */
+    border-color: #3c6e3c;
+    /* Color del borde verde más oscuro */
 }
 
 .btn-primary:hover {
-    background-color: #3c6e3c; /* Color de fondo al pasar el ratón */
-    border-color: #2b4a2b; /* Color del borde al pasar el ratón */
+    background-color: #3c6e3c;
+    /* Color de fondo al pasar el ratón */
+    border-color: #2b4a2b;
+    /* Color del borde al pasar el ratón */
 }
 
 /*Style CategoriasAdmin*/
@@ -1115,41 +1182,56 @@
 }
 
 .table thead th {
-    background-color: #eaf0e9; /* Color de fondo suave verde claro */
-    color: #2d6a4f; /* Color de texto verde oscuro */
-    border-bottom: 2px solid #c1d3b7; /* Línea de separación sutil */
+    background-color: #eaf0e9;
+    /* Color de fondo suave verde claro */
+    color: #2d6a4f;
+    /* Color de texto verde oscuro */
+    border-bottom: 2px solid #c1d3b7;
+    /* Línea de separación sutil */
     padding: 1rem;
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f9f9f6; /* Color de fila alterna suave */
+    background-color: #f9f9f6;
+    /* Color de fila alterna suave */
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #ffffff; /* Color de fila impar */
+    background-color: #ffffff;
+    /* Color de fila impar */
 }
 
 .table td, .table th {
     padding: 0.75rem;
     vertical-align: top;
-    border: 1px solid #dee2e6; /* Borde suave */
+    border: 1px solid #dee2e6;
+    /* Borde suave */
 }
 
 .table tbody td {
-    color: #2d6a4f; /* Color de texto verde oscuro */
+    color: #2d6a4f;
+    /* Color de texto verde oscuro */
 }
 
 .btn-primary {
-    background-color: #4a773c !important; /* Color de fondo verde oscuro */
-    border-color: #3c6e3c !important; /* Color del borde verde más oscuro */
+    background-color: #4a773c !important;
+    /* Color de fondo verde oscuro */
+    border-color: #3c6e3c !important;
+    /* Color del borde verde más oscuro */
 }
 
 .btn-primary:hover {
-    background-color: #3c6e3c; /* Color de fondo al pasar el ratón */
-    border-color: #2b4a2b; /* Color del borde al pasar el ratón */
+    background-color: #3c6e3c;
+    /* Color de fondo al pasar el ratón */
+    border-color: #2b4a2b;
+    /* Color del borde al pasar el ratón */
 }
 
 /*Style ProductoDetalles*/
+
+body {
+    background-color: #e8f5e9;
+}
 
     .form-container {
         width: 80%;
@@ -1162,39 +1244,39 @@
         box-shadow: 0 4px 8px rgba(0, 128, 0, 0.1); /* Sombra verde tenue */
     }
 
-    .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-bottom: 15px;
-    }
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
 
-    .form-row label {
-        flex: 1;
-        margin-right: 10px;
-    }
+.form-row label {
+    flex: 1;
+    margin-right: 10px;
+}
 
-    .form-row input, .form-row select {
-        flex: 2;
-    }
+.form-row input, .form-row select {
+    flex: 2;
+}
 
-    .form-row img {
-        max-width: 100%; /* Limitar el ancho máximo al 100% del contenedor */
-        height: auto;
-        margin-top: 10px;
-        border: 1px solid #ccc; /* Opcional: agregar un borde alrededor de la imagen */
-        border-radius: 4px; /* Opcional: agregar bordes redondeados */
-    }
+.form-row img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-    .form-buttons {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-    }
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
 
-    .form-buttons input {
-        flex: 1;
-    }
+.form-buttons input {
+    flex: 1;
+}
 
 /* Clase para el botón desactivado (outline) */
 .btn-outline-danger {

@@ -3,6 +3,38 @@
 Frescura Del Campo es un proyecto web desarrollado en Django para gestionar los pedidos de la finca "La Marquesa".
 Este sistema permite a los clientes realizar pedidos de productos agrícolas como huevos, frutas, verduras, semillas y fertilizantes, mejorando la experiencia de compra en línea.
 
+
+![Django](https://img.shields.io/badge/Django-4.x-green)
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
+
+## Índice
+
+- [Inicio](#inicio)
+- [Productos](#productos)
+- [Administrador](#administrador)
+- [Características](#características)
+- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Contribuciones](#contribuciones)
+- [Licencia](#licencia)
+
+
+## Inicio
+
+![Pagina principal](Media/README/Principal.png)
+
+## Productos
+
+![Producto](Media/README/Productos.png)
+![Informacion de producto](Media/README/InfoProducto.png)
+
+## Administrador
+![Descripcion de la Imagen 3](Media/README/Administrador%20de%20productos.png)
+
 ## Características
 
 - Gestión de pedidos en línea de productos agrícolas.
@@ -13,11 +45,14 @@ Este sistema permite a los clientes realizar pedidos de productos agrícolas com
 
 ## Tecnologías Utilizadas
 
-- **Backend:** Django
-- **Frontend:** HTML, CSS, JavaScript
-- **Base de datos:** OracleDB
-- **Control de versiones:** Git
-- **Hosting:** (se esta probando Heroku)
+| Tecnología   | Descripción                          |
+|--------------|--------------------------------------|
+| **Backend**  | Django                               |
+| **Frontend** | HTML, CSS, JavaScript                |
+| **Base de datos** | OracleDB                        |
+| **Control de versiones** | Git                      |
+| **Hosting**  | (se está probando Heroku)            |
+
 
 ## Requisitos
 

@@ -1,0 +1,47 @@
+{% extends "Administrador.html" %}
+{% load static %}
+
+{% block Administrador %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+            {{ message }}
+            <button type="button" class="close" onclick="this.parentElement.style.display='none';">×</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="cupon-container">
+    <form action="{% url 'cupones' %}" method="POST" class="cupon-form">
+            {% csrf_token %}
+
+        <div class="cupon-input-group">
+            <label for="codigo_cupon" class="cupon-label">Código del Cupón:</label>
+            <input type="text" id="codigo_cupon" name="codigo_cupon" class="cupon-input" required>
+        </div>
+
+        <div class="cupon-input-group">
+            <label for="cantidad" class="cupon-label">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" class="cupon-input" min="1" required>
+        </div>        
+
+        <div class="cupon-input-group">
+            <label for="porcentaje" class="cupon-label">Porcentaje de Descuento:</label>
+            <input type="number" id="porcentaje" name="porcentaje" min="1" max="99" step="1" class="cupon-input" required>
+        </div>
+
+        <div class="cupon-input-group cupon-checkbox-group">
+            <label for="activo" class="cupon-label">¿Está Activo?</label>
+            <input type="checkbox" id="activo" name="activo" value="True" class="cupon-checkbox">
+        </div>
+
+        <div class="cupon-actions">
+            <input type="submit" name="action" value="Crear Cupón" class="cupon-button">
+        </div>
+    </form>
+</div>
+{% endblock Administrador %}

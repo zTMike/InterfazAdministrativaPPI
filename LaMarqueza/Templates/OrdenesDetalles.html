@@ -1,6 +1,16 @@
 {% extends "Administrador.html" %}
 {% load static %}
 
+<style>
+    .total-sin-descuento, .valor-descuento, .total-con-descuento, .porcentaje-descuento {
+    color: #4CAF50; /* Color verde claro */
+    font-weight: bold;
+    }   
+
+    .text-right {
+        text-align: right;
+    }
+</style>
 {% block Administrador %}
     <div>
         
@@ -45,6 +55,20 @@
                         <td>${{ item.SUBTOTAL_DET }}</td>
                     </tr>
                 {% endfor %}
+                    <tr>
+                        <td colspan="5" class="text-right total-sin-descuento">Total Sin Descuento:</td>
+                        <td class="total-sin-descuento">${{ descuentos.TOTAL_SIN_DESCUENTO }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-right valor-descuento">Valor Descuento:</td>
+                        <td class="valor-descuento">${{ descuentos.VALOR_DESCUENTO }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-right total-con-descuento">Total con Descuento:</td>
+                        <td class="total-con-descuento">${{ descuentos.TOTAL_CON_DESCUENTO }}</td>
+                        <td colspan="4" class="text-right porcentaje-descuento">Descuento: {{ descuentos.PORCENTAJE_DESCUENTO }}%</td>
+
+                    </tr>
             </tbody>
         </table>
 

@@ -16,3 +16,4 @@ DROP TABLE categorias;
 DROP TABLE usuarios;
 DROP TABLE resenas;
 DROP TABLE favoritos;
+DROP TABLE cupones;
