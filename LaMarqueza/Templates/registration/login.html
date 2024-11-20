@@ -12,9 +12,9 @@
     <div class="container d-flex justify-content-center align-items-center loginbot card-container3">
 
         <div class="d-flex">
-    
+
             <form method="post" action="{% url 'login' %}">
-    
+
                 {% csrf_token %}
                 {% if messages %}
                 <ul class="messages">
@@ -23,7 +23,7 @@
                         {% endfor %}
                 </ul>
                 {% endif %}
-    
+
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo electrónico *</label>
                     <input type="email" class="form-control" id="email" name="email">
@@ -33,14 +33,15 @@
                     <input type="password" class="form-control" id="password" name="password">
                     <a href="" class="OlvideMclave"> Olvide Mi Contraseña</a>
                 </div>
-                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                <a href="{% url 'registrarse' %}"><button type="button" class="btn btn-primary">Registrate</button></a>
-    
-    
+                <button type="submit" id="Iniciar sesión" class="btn btn-primary">Iniciar sesión</button>
+                <a href="{% url 'registrarse' %}"><button type="button" id="Registrate"
+                        class="btn btn-primary">Registrate</button></a>
+
+
             </form>
-    
+
         </div>
-    
+
     </div>
 
 

@@ -9,7 +9,7 @@
 
 <div class="card-group card-container2">
     <div class="container d-flex justify-content-center align-items-center loginbot card-container3">
-        <form method="post" action="{% url 'registrer' %}" class="form-container">
+        <form method="post" action="{% url 'registrer' %}" class="form-container SubirForm">
             {% csrf_token %}
 
             <div class="form-row">
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-                <div class="form-row">
+            <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="documento" class="form-label">Documento *</label>
                     <input type="text" class="form-control" id="documento" name="documento">
@@ -56,13 +56,13 @@
                 <ul class="messages">
                     {% for message in messages %}
                     <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                    {% endfor %}
+                        {% endfor %}
                 </ul>
                 {% endif %}
             </div>
 
             <div class="form-row">
-                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="submit" id="Registrarse" class="btn btn-primary">Registrarse</button>
                 <a href="{% url 'iniciarsesion' %}">
                     <button type="button" class="btn btn-secondary ml-1">Iniciar sesión</button>
                 </a>

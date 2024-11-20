@@ -4,46 +4,46 @@
 {% block Administrador %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/Estilos.css' %}">
 
-    <div>
-        <h1>Productos</h1>
-        <a href="{% url 'crearproducto' %}" class="btn btn-primary float-right">Crear Producto</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID Producto</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Existencias</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Estados</th>
-                    <th scope="col">Foto</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for productos in productos %}
-                    <tr>
-                        <th scope="row"><a href="{% url 'producto_detalles' productos.ID_PRODUCTO_PRO %}">{{ productos.ID_PRODUCTO_PRO }}</a></th>
-                        <td>{{ productos.NOMBRE_PRO }}</td>
-                        <td>{{ productos.DESCRIPCION_PRO }}</td>
-                        <td>{{ productos.EXISTENCIA_PRO }}</td>
-                        <td>${{ productos.PRECIO_PRO }}</td>
-                        {% for categoria in categoria %}
-                            {% if productos.CATEGORIA_PRO_ID == categoria.ID_CATEGORIA_CAT %}
-                                <td> {{ categoria.NOMBRE_CAT }} </td>
-                            {% endif %}
-                        {% endfor %}
-                        <td>
-                            {% if productos.ESTADO_PRO == 1 %}
-                                Activado
-                            {% else %}
-                                Desactivado
-                            {% endif %}
-                        </td>
-                        <td><img src='/Media/{{ productos.FOTO_PRO }}' style="width: 200px; height: auto;" /></td>
-                    </tr>
+<div>
+    <h1>Productos</h1>
+    <a href="{% url 'crearproducto' %}" id="Crear Producto" class="btn btn-primary float-right">Crear Producto</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID Producto</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Existencias</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Estados</th>
+                <th scope="col">Foto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for productos in productos %}
+            <tr>
+                <th scope="row"><a href="{% url 'producto_detalles' productos.ID_PRODUCTO_PRO %}">{{productos.ID_PRODUCTO_PRO }}</a></th>
+                <td>{{ productos.NOMBRE_PRO }}</td>
+                <td>{{ productos.DESCRIPCION_PRO }}</td>
+                <td>{{ productos.EXISTENCIA_PRO }}</td>
+                <td>${{ productos.PRECIO_PRO }}</td>
+                {% for categoria in categoria %}
+                {% if productos.CATEGORIA_PRO_ID == categoria.ID_CATEGORIA_CAT %}
+                <td> {{ categoria.NOMBRE_CAT }} </td>
+                {% endif %}
                 {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                <td>
+                    {% if productos.ESTADO_PRO == 1 %}
+                    Activado
+                    {% else %}
+                    Desactivado
+                    {% endif %}
+                </td>
+                <td><img src='/Media/{{ productos.FOTO_PRO }}' style="width: 200px; height: auto;" /></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock Administrador %}

@@ -609,9 +609,7 @@
     font-size: 75%;
 }
 
-.loginbot{
-    height: 80vh;
-}
+
 
 .containermap {
     display: flex;
@@ -1224,3 +1222,4 @@
     background-color: #c82333;
     border-color: #bd2130;
 }
+
