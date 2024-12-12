@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.db import IntegrityError
 from django.http import HttpResponseBadRequest
-
+from django.core.mail import send_mail
 
 
 @login_required
@@ -70,6 +70,33 @@ def cuponessadmin(request):
 
     return render(request, 'AdminCupones.html', {'cupones': cupones})
 
+
+
+@login_required
+def enviar_correos(request):
+    if request.method == "POST":
+       
+        asunto=request.POST.get('subject')
+        mensaje=request.POST.get('message')
+        
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT CORREO_USU FROM usuarios WHERE IS_STAFF = 0")
+            usuarios_comunes = cursor.fetchall()
+        lista_correos = [correo[0] for correo in usuarios_comunes]
+        print(lista_correos)
+
+        #Hacer Consultar De Correos
+        send_mail(
+        asunto,#Asunto
+        mensaje,#Mensaje
+        'allisonsernalopera@gmail.com',  # Desde este correo
+        lista_correos,  # Lista de correos
+        fail_silently=False,
+    )
+        
+    return render(request, 'Correos.html')
+
+    
 
 @login_required
 def crearcupon(request):

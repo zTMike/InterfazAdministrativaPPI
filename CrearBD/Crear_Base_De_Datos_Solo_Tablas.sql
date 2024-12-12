@@ -102,3 +102,44 @@ CREATE TABLE cupones (
   porcentaje  DECIMAL(5, 4) NOT NULL,
   estado NUMBER(1)
 )
+
+CREATE TABLE correos_enviados (
+    id_correo NUMBER PRIMARY KEY,
+    asunto VARCHAR2(300) NOT NULL,
+    mensaje CLOB NOT NULL,
+    fecha_envio DATE DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE correo_destinatarios (
+    id NUMBER PRIMARY KEY,
+    id_correo NUMBER NOT NULL,
+    id_usuario NUMBER NOT NULL,
+    FOREIGN KEY (id_correo) REFERENCES correos_enviados(id_correo),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario_usu)
+);
+
+/*Secuencias*/
+CREATE SEQUENCE correo_enviados_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE correo_destinatarios_seq START WITH 1 INCREMENT BY 1;
+
+/*triggers*/
+-- trigger para id_correo
+CREATE OR REPLACE TRIGGER correo_enviados_trigger
+BEFORE INSERT ON correos_enviados
+FOR EACH ROW
+BEGIN
+    SELECT correo_enviados_seq.NEXTVAL
+    INTO :new.id_correo
+    FROM dual;
+END;
+/
+
+-- trigger para id en correo_destinatarios
+CREATE OR REPLACE TRIGGER correo_destinatarios_trigger
+BEFORE INSERT ON correo_destinatarios
+FOR EACH ROW
+BEGIN
+    SELECT correo_destinatarios_seq.NEXTVAL
+    INTO :new.id
+    FROM dual;
+END;
+/

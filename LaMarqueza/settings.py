@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Ventas',
     'Productos',
     'Usuarios',
+    'LaMarqueza',
 ]
 JAZZMIN_SETTINGS = {
     "site_title": "Admin Finca La Marqueza",
@@ -55,6 +56,15 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Bienvenido a la administración de la Finca La Marqueza",
 
 }
+
+#configuracion del correo:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  #proveedor que se usara para enviar los correos
+EMAIL_PORT = 587 #puertos que nos ayudan a conexiones seguras usando STARTTLS 
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'allisonsernalopera@gmail.com'
+EMAIL_HOST_PASSWORD = 'vrbopotykfimdnbs'
+
 
 
 

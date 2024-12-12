@@ -14,6 +14,7 @@ urlpatterns = [
     path('admin/crearCupon/', crearcupon, name='cupones'),
     path('admin/Cupones/', cuponessadmin,name='cuponessadmin'),
     path('cupones/eliminar/<int:id_cupon>/', eliminar_cupon, name='eliminar_cupon'),
+    path('admin/correos/', enviar_correos, name='enviar_correos'),
 
 
 

@@ -21,3 +21,8 @@ Crear bd y ejecutar proyecto
 
 holi
 
+1) pip install celery[redis]
+2) Crea un archivo celery.py en el directorio principal de tu proyecto.
+3) Configura Redis como el backend de tareas.
+4) redis-server
+.\redis-server.exe

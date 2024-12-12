@@ -1459,6 +1459,102 @@ body {
 }
 
 
+/**************ESTILO CORREOS*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eafaf1;
+    color: #2d5540; 
+}
+
+
+.correo-container {
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.correo-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+
+.correo-input, 
+.correo-textarea, 
+.correo-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #c5e6d0; 
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #ffffff; 
+    color: #2d5540; 
+    transition: border-color 0.3s ease-in-out;
+}
+
+.correo-input:focus, 
+.correo-textarea:focus, 
+.correo-select:focus {
+    border-color: #8cd2a3;
+    outline: none;
+}
+
+
+.correo-button {
+    background-color: #8cd2a3; 
+    color: #ffffff; 
+    font-size: 16px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.correo-button:hover {
+    background-color: #6fb586; 
+}
+
+
+.messages {
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-success {
+    background-color: #6fb586; 
+}
+
+.alert-danger {
+    background-color: #d9534f; 
+}
+
+.alert .close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
 
 
 
