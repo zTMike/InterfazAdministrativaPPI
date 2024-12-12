@@ -14,7 +14,7 @@
                 <!-- Agrega el id del producto al data-bs-target -->
                 <a data-bs-toggle="modal" data-bs-target="#ModalProductos{{ a.ID_PRODUCTO_PRO  }}">
                     <div class="card shadow-sm Mproducto img-huevos productoscol">
-                        <img src='/Media/productos/{{a.FOTO_PRO}}' />
+                        <img src='/Media/{{a.FOTO_PRO}}' />
                         <div class="card-body">
                             <h5 class="card-title">{{a.NOMBRE_PRO}}</h5>
                             <p>${{a.PRECIO_PRO}}</p>
@@ -72,7 +72,7 @@
                                                         form.appendChild(button);
                                                     });
                                                 </script>
-                                                <img src='/Media/productos/{{a.FOTO_PRO}}' class='modal-image img-fluid'
+                                                <img src='/Media/{{a.FOTO_PRO}}' class='modal-image img-fluid'
                                                     style="width: 200px; height: auto;" />
 
                                             </form>

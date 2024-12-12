@@ -2,6 +2,7 @@ import ast
 from datetime import datetime
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db import connection
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -414,7 +415,6 @@ def actualizar_cantidad_entregada(request, id_detalle):
         """, [nueva_cantidad_entregada, id_detalle])
 
     return redirect('Detalles_detalles_orden', id_orden=id_detalle)
-
 
 def cancelarpedido(request, id_orden):
     

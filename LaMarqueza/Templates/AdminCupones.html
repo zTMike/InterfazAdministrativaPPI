@@ -17,8 +17,8 @@
 
 
 <div class="coupon-container">
-    <h1 class="coupon-title">Cupones</h1>
-    <a href="{% url 'cupones' %}" class="btn btn-create-coupon">Crear Cupón</a>
+    <h1 class="coupon-title " style="color: black !important;">Cupones</h1>
+    <a href="{% url 'cupones' %}" class="btn btn-primary float-right">Crear Cupón</a>
     <table class="table coupon-table">
         <thead>
             <tr>
@@ -33,7 +33,7 @@
         <tbody>
             {% for cupon in cupones %}
                 <tr>
-                    <th scope="row">{{ cupon.ID_CUPON }}</th>
+                    <td>{{ cupon.ID_CUPON }}</td>
                     <td>{{ cupon.COD }}</td>
                     <td>{{ cupon.CANT }}</td>
                     <td>{{ cupon.PORCENTAJE }}%</td>
@@ -45,11 +45,18 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'eliminar_cupon' cupon.ID_CUPON %}" class="btn btn-delete-coupon">Eliminar</a>
+                        <a id="eliminar_cupon{{ cupon.ID_CUPON }}" href="{% url 'eliminar_cupon' cupon.ID_CUPON %}" class="btn btn-delete-coupon">Eliminar</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+<script>
+    document.getElementById('eliminar_cupon{{ cupon.ID_CUPON }}').addEventListener('click', function(e) {
+        if (!confirm('¿Estás seguro de que quieres eliminar este Cupon?')) {
+            e.preventDefault();
+        }
+    });
+</script>
 {% endblock Administrador %}

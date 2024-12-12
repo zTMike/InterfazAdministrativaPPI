@@ -114,6 +114,6 @@ ADD CONSTRAINT fk_productos_fa FOREIGN KEY (id_producto_fa) REFERENCES productos
 ALTER TABLE favoritos
 ADD CONSTRAINT fk_usuarios_fa FOREIGN KEY (id_usuario_fa) REFERENCES usuarios(id_usuario_usu);
 
-
+-- Crea una restricción de clave primaria en la columna id_cupon de la tabla cupones
 ALTER TABLE carritos
 ADD CONSTRAINT fk_id_cupon FOREIGN KEY (id_cupon) REFERENCES cupones(id_cupon);

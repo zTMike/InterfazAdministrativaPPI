@@ -6,13 +6,15 @@ DROP TABLE productos;
 DROP TABLE categorias;
 DROP TABLE usuarios;
 
-
+-- Create tables
+-- Table: categorias
 CREATE TABLE categorias (
   id_categoria_cat NUMBER(10) NOT NULL,
   nombre_cat VARCHAR2(50) NOT NULL,
   descripcion_cat VARCHAR2(255) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+-- Table: productos
 CREATE TABLE productos ( 
   id_producto_pro NUMBER(10) NOT NULL,
   nombre_pro VARCHAR2(50) NOT NULL,
@@ -24,6 +26,7 @@ CREATE TABLE productos (
   categoria_pro_id NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+-- Table: usuarios
 CREATE TABLE usuarios (
   id_usuario_usu NUMBER(15) NOT NULL,
   nombre_usu VARCHAR2(50) NOT NULL,
@@ -36,16 +39,19 @@ CREATE TABLE usuarios (
   is_staff NUMBER(1) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+
+-- Table: ordenes
 CREATE TABLE ordenes (
   id_orden_ord NUMBER(10) NOT NULL,
   fecha_ord DATE NOT NULL,
   total_ord NUMBER(10),
   estado_ord VARCHAR2(1) NOT NULL,
-  id_usuario_ord NUMBER(10) NOT NULL
+  id_usuario_ord NUMBER(10) NOT NULL,
+  PRECIO_DESCUENTO NUMBER(10, 2),
+  porcentaje  DECIMAL(5, 4)
 ) TABLESPACE lamarquesabd;
 
-
-
+-- Table: detalles_ordenes
 CREATE TABLE detalles_ordenes (
   id_detalle_det NUMBER(10) NOT NULL,
   cantidad_det NUMBER(10) NOT NULL,
@@ -56,21 +62,18 @@ CREATE TABLE detalles_ordenes (
   id_orden_det_id NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+
+-- Table: carritos
 CREATE TABLE carritos (
   id_carrito_car NUMBER(10) NOT NULL,
   total_car NUMBER(10),
   id_usuario_car NUMBER(10) NOT NULL
+  id_cupon NUMBER(10),
+  estado NUMBER(1)
 ) TABLESPACE lamarquesabd;
 
-ALTER TABLE carritos 
-    ADD(id_cupon NUMBER(10),
-     estado NUMBER(1));
 
-ALTER TABLE ordenes
- ADD(PRECIO_DESCUENTO NUMBER(10, 2),
-      porcentaje  DECIMAL(5, 4));
-
-
+-- Table: detalles_carritos
 CREATE TABLE detalles_carritos (
   id_detalle_dcar NUMBER(10) NOT NULL,
   cantidad_dcar NUMBER(10) NOT NULL,
@@ -81,7 +84,7 @@ CREATE TABLE detalles_carritos (
   nombre_producto_dcar VARCHAR2(50) NOT NULL
 ) TABLESPACE lamarquesabd;
 
-
+-- Table: resenas
 CREATE TABLE resenas (
   id_resena_re NUMBER(10) NOT NULL,
   id_producto_re NUMBER(10) NOT NULL,
@@ -89,12 +92,14 @@ CREATE TABLE resenas (
   resena_re VARCHAR2(255) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+-- Table: favoritos
 CREATE TABLE favoritos (
   id_favoritos NUMBER(10) NOT NULL,
   id_producto_fa NUMBER(10) NOT NULL,
   id_usuario_fa NUMBER(10) NOT NULL
 ) TABLESPACE lamarquesabd;
 
+-- Table: cupones
 CREATE TABLE cupones (
   id_cupon NUMBER(10) NOT NULL PRIMARY KEY,
   cod VARCHAR2(20) UNIQUE NOT NULL,
